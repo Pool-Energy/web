@@ -1,12 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Inject, ViewChild, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { EventService } from '../../core/services/event.service';
+import { Router } from '@angular/router';
 
-//Logout
-import { environment } from '../../../environments/environment';
+import { EventService } from '../../core/services/event.service';
 import { AuthenticationService } from '../../core/services/auth.service';
 import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
-import { Router } from '@angular/router';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 
 // Language
