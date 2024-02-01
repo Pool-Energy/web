@@ -13,6 +13,8 @@ export class DataService {
 
   private _blocks$ = new BehaviorSubject<any[]>([]);
   private _launchers$ = new Subject<any[]>();
+  private _payouts$ = new BehaviorSubject<any[]>([]);
+  private _payoutaddrs$ = new BehaviorSubject<any[]>([]);
 
   constructor(
     private httpClient: HttpClient
@@ -29,7 +31,7 @@ export class DataService {
         if(attrs.limit) params = params.set('limit', attrs.limit);
         if(attrs.offset) params = params.set('offset', attrs.offset);
     }
-    return this.httpClient.get(`${this.REST_API_SERVER}/block/`, {params});
+    return this.httpClient.get(this.REST_API_SERVER + '/block/', { params });
   }
 
   getLauncher(id: string) {
@@ -50,7 +52,42 @@ export class DataService {
         if(attrs.search) params = params.set('search', attrs.search);
         if(attrs.points_pplns__gt) params = params.set('points_pplns__gt', attrs.points_pplns__gt);
     }
-    return this.httpClient.get(`${this.REST_API_SERVER}/launcher/`, {params});
+    return this.httpClient.get(this.REST_API_SERVER + '/launcher/', { params });
+  }
+
+  getReward(id: number) {
+    return this.httpClient.get(this.REST_API_SERVER + '/payout/' + id + '/');
+  }
+
+  getRewards(attrs: any) {
+    var params = new HttpParams();
+    if(attrs) {
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+      if(attrs.limit) params = params.set('limit', attrs.limit);
+      if(attrs.offset) params = params.set('offset', attrs.offset);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/payout/', { params });
+  }
+
+  getRewardAddrs(attrs: any) {
+    var params = new HttpParams();
+    if(attrs) {
+      if(attrs.id) params = params.set('payout', attrs.id);
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+      if(attrs.limit) params = params.set('limit', attrs.limit);
+      if(attrs.offset) params = params.set('offset', attrs.offset);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/payoutaddress/', { params });
+  }
+
+  getRewardTxs(attrs: any) {
+    var params = new HttpParams();
+    if(attrs) {
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+      if(attrs.limit) params = params.set('limit', attrs.limit);
+      if(attrs.offset) params = params.set('offset', attrs.offset);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/payouttransaction/', { params });
   }
 
 }
