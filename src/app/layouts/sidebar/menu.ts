@@ -58,7 +58,7 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 8,
-    label: 'MENUITEMS.APPS.TEXT',
+    label: 'MENUITEMS.BLOCKS.TEXT',
     icon: 'mdi mdi-view-grid-plus-outline',
     isCollapsed: true,
     subItems: [
