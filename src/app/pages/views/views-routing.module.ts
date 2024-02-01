@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BlocksComponent } from './blocks/blocks.component';
 import { FarmersComponent } from './farmers/farmers.component';
+import { FarmerComponent } from './farmer/farmer.component';
+import { RewardsComponent } from './rewards/rewards.component';
+import { RewardComponent } from './reward/reward.component';
 import { ChiaComponent } from './chia/chia.component';
 import { PoolStatusComponent } from './pool-status/pool-status.component';
 import { PoolStatsComponent } from './pool-stats/pool-stats.component';
@@ -14,6 +17,9 @@ import { InfoTeamComponent } from './info-team/info-team.component';
 const routes: Routes = [
   { path: "blocks", component: BlocksComponent },
   { path: "farmers", component: FarmersComponent },
+  { path: "farmer/:id", component: FarmerComponent},
+  { path: "rewards", component: RewardsComponent },
+  { path: "reward/:id", component: RewardComponent },
   { path: "chia", component: ChiaComponent },
   { path: "pool-status", component: PoolStatusComponent },
   { path: "pool-stats", component: PoolStatsComponent },

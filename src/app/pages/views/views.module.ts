@@ -14,6 +14,9 @@ import { ViewsRoutingModule } from './views-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { BlocksComponent } from './blocks/blocks.component';
 import { FarmersComponent } from './farmers/farmers.component';
+import { FarmerComponent } from './farmer/farmer.component';
+import { RewardsComponent } from './rewards/rewards.component';
+import { RewardComponent } from './reward/reward.component';
 import { ChiaComponent } from './chia/chia.component';
 import { PoolStatusComponent } from './pool-status/pool-status.component';
 import { PoolStatsComponent } from './pool-stats/pool-stats.component';
@@ -26,6 +29,9 @@ import { InfoTeamComponent } from './info-team/info-team.component';
   declarations: [
     BlocksComponent,
     FarmersComponent,
+    FarmerComponent,
+    RewardsComponent,
+    RewardComponent,
     ChiaComponent,
     PoolStatusComponent,
     PoolStatsComponent,

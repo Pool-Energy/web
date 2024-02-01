@@ -1,1 +1,47 @@
 <app-breadcrumbs title="Farmers" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <div class="table-responsive table-card">
+                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Launcher ID</th>
+                                    <th scope="col">Points (24 hours)</th>
+                                    <th scope="col">Difficulty</th>
+                                    <th scope="col" style="width: 150px;">Utilization Space</th>
+                                    <th scope="col" style="width: 150px;">Estimated Space</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let launcher of launchers$ | async; let i = index">
+                                    <th scope="row">{{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}</th>
+                                    <td><a [routerLink]="['/farmer', launcher.launcher_id]">{{ launcher.name || launcher.launcher_id }}</a></td>
+                                    <td>{{ launcher.points_pplns }}</td>
+                                    <td>{{ launcher.difficulty }}</td>
+                                    <td>{{ launcher.share_pplns * 100 | number:'2.2' }}%</td>
+                                    <td>{{ launcher.estimated_size | filesize:{"base": 2, "standard": "iec"} }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="text-md-right float-md-end launchers-pagination">
+                            <ngb-pagination [collectionSize]="launchersCollectionSize" [(page)]="launchersPage"
+                                [pageSize]="launchersPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                (pageChange)="refreshLaunchers()">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

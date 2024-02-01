@@ -1,0 +1,50 @@
+<app-breadcrumbs title="Rewards" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Rewards</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <div class="table-responsive table-card">
+                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Height</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Fee</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="(rewards$ | async) as rewards;">
+                                <tr *ngFor="let reward of rewards; let i = index">
+                                    <td><a [routerLink]="['/reward', reward.id]">{{ reward.id }}</a></td>
+                                    <td>{{ reward.datetime | date:"medium" }}</td>
+                                    <td>
+                                        <span *ngFor="let block of reward.blocks; let last = last">
+                                            <a href="https://www.spacescan.io/block/{{ block.farmed_height }}" target="_blank">{{ block.farmed_height }}</a>
+                                            <span *ngIf="!last">,&nbsp;</span>
+                                        </span>
+                                    </td>
+                                    <td>{{ reward.amount / 1000000000000 | number }} XCH</td>
+                                    <td>{{ reward.fee / 1000000000000 | number }} XCH</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="text-md-right float-md-end blocks-pagination">
+                            <ngb-pagination [collectionSize]="rewardsCollectionSize" [(page)]="rewardsPage"
+                                [pageSize]="rewardsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                (pageChange)="refreshRewards()">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
