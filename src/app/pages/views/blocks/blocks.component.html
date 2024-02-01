@@ -21,15 +21,15 @@
                             </thead>
                             <tbody *ngIf="(blocks$ | async) as blocks;">
                                 <tr *ngFor="let block of blocks; let i = index">
-                                    <td>{{block.farmed_height}}</td>
-                                    <td>{{block.timestamp * 1000 | date:"medium"}}</td>
-                                    <td>{{block.farmed_by.name || block.farmed_by.launcher_id }}</td>
-                                    <td>{{block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
+                                    <td>{{ block.farmed_height }}</td>
+                                    <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
+                                    <td><a [routerLink]="['/farmer', block.farmed_by.launcher_id]">{{ block.farmed_by.name || block.farmed_by.launcher_id }}</a></td>
+                                    <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                                     <td>
                                         <span *ngIf="block.luck == -1" class="badge bg-warning-subtle text-warning">Unknown</span>
-                                        <span *ngIf="block.luck < 100" class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{block.luck}}%</span>
-                                        <span *ngIf="block.luck >= 100 && block.luck <= 200" class="badge bg-warning-subtle text-warning" nbgToolTip="Average">{{block.luck}}%</span>
-                                        <span *ngIf="block.luck > 200" class="badge bg-danger-subtle text-danger" nbgToolTip="Unlucky">{{block.luck}}%</span>
+                                        <span *ngIf="block.luck < 100" class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
+                                        <span *ngIf="block.luck >= 100 && block.luck <= 200" class="badge bg-warning-subtle text-warning" nbgToolTip="Average">{{ block.luck }}%</span>
+                                        <span *ngIf="block.luck > 200" class="badge bg-danger-subtle text-danger" nbgToolTip="Unlucky">{{ block.luck }}%</span>
                                     </td>
                                 </tr>
                             </tbody>

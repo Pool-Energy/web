@@ -31,7 +31,7 @@ export class BlocksComponent {
     ];
 
     this.dataService.getBlocks({
-      limit: 10
+      limit: this.blocksPageSize
     }).subscribe(this.handleBlocks.bind(this));
   }
 
@@ -48,16 +48,4 @@ export class BlocksComponent {
     }).subscribe(this.handleBlocks.bind(this));
   }
 
-  ShowCode(event: any) {
-    let card = event.target.closest('.card');
-    const preview = card.children[1].children[1];
-    const codeView = card.children[1].children[2];
-    if(codeView != null){
-      codeView.classList.toggle('d-none');
-    }
-    if(preview != null){
-      preview.classList.toggle('d-none');
-      
-    }
-  }
 }
