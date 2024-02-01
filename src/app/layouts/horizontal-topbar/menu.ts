@@ -9,22 +9,26 @@ export const MENU: MenuItem[] = [
   {
     id: 2,
     label: 'MENUITEMS.DASHBOARD.TEXT',
-    icon: 'ri-dashboard-line'
+    icon: 'ri-dashboard-line',
+    link: '/'
   },
   {
     id: 3,
     label: 'MENUITEMS.BLOCKS.TEXT',
-    icon: 'ri-stack-line'
+    icon: 'ri-stack-line',
+    link: '/blocks'
   },
   {
     id: 4,
     label: 'MENUITEMS.FARMERS.TEXT',
-    icon: 'ri-group-line'
+    icon: 'ri-group-line',
+    link: '/farmers'
   },
   {
     id: 5,
     label: 'MENUITEMS.CHIA.TEXT',
-    icon: 'ri-plant-line'
+    icon: 'ri-plant-line',
+    link: '/chia'
   },
   {
     id: 6,

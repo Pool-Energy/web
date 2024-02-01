@@ -80,7 +80,8 @@ import { LandingScrollspyDirective } from './landingscrollspy.directive';
     SlickCarouselModule ,
     CountUpModule
   ],
-  exports: [BreadcrumbsComponent,
+  exports: [
+    BreadcrumbsComponent,
     ClientLogoComponent,
     ServicesComponent,
     CollectionComponent,
