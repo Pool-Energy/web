@@ -17,15 +17,13 @@ export class DataService {
     private httpClient: HttpClient
   ) { }
 
-  getBlocks(attrs: any): Subscription {
+  getBlocks(attrs: any) {
     var params = new HttpParams();
     if(attrs) {
         if(attrs.launcher) params = params.set('farmed_by', attrs.launcher);
         if(attrs.limit) params = params.set('limit', attrs.limit);
         if(attrs.offset) params = params.set('offset', attrs.offset);
     }
-    return this.httpClient.get(`${this.REST_API_SERVER}/blocks`, { params }).subscribe(data => {
-      this._blocks$.next(data['results']);
-    });
+    return this.httpClient.get(`${this.REST_API_SERVER}/block/`, {params});
   }
 }

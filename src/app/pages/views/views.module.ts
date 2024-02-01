@@ -3,21 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
-
-// FlatPicker
 import { FlatpickrModule } from 'angularx-flatpickr';
-
-// Simplebar
 import { SimplebarAngularModule } from 'simplebar-angular';
-
-// Ng Search 
 import { NgPipesModule } from 'ngx-pipes';
-
-// Load Icon
+import { NgxFilesizeModule } from 'ngx-filesize';
 import { defineElement } from "@lordicon/element";
 import lottie from 'lottie-web';
 
-// Component pages
 import { ViewsRoutingModule } from './views-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { BlocksComponent } from './blocks/blocks.component';
@@ -38,7 +30,8 @@ import { BlocksComponent } from './blocks/blocks.component';
     ViewsRoutingModule,
     SharedModule,
     SimplebarAngularModule,
-    NgPipesModule
+    NgPipesModule,
+    NgxFilesizeModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

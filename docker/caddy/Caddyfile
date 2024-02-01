@@ -1,0 +1,14 @@
+const { stdout } = require("process")
+
+http://%%DOMAIN%% {
+
+    root * /var/www/poolenergy
+
+    file_server
+
+    log {
+        output stdout
+        format %%LOGFORMAT%%
+        level %%LOGLEVEL%%
+    }
+}

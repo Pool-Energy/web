@@ -48,7 +48,7 @@ import { EcommerceModule } from "./ecommerce/ecommerce.module";
     LightboxModule,
     DashboardsModule,
     AppsModule,
-    EcommerceModule
+    EcommerceModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
