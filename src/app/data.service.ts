@@ -12,10 +12,15 @@ export class DataService {
   private REST_API_SERVER = "/api/v1.0";
 
   private _blocks$ = new BehaviorSubject<any[]>([]);
+  private _launchers$ = new Subject<any[]>();
 
   constructor(
     private httpClient: HttpClient
   ) { }
+
+  getStats() {
+    return this.httpClient.get(this.REST_API_SERVER + '/stats');
+  }
 
   getBlocks(attrs: any) {
     var params = new HttpParams();
@@ -26,4 +31,26 @@ export class DataService {
     }
     return this.httpClient.get(`${this.REST_API_SERVER}/block/`, {params});
   }
+
+  getLauncher(id: string) {
+    return this.httpClient.get(this.REST_API_SERVER + '/launcher/' + id + '/');
+  }
+
+  updateLauncher(id: string, params: any) {
+    return this.httpClient.put(this.REST_API_SERVER + '/launcher/' + id + '/', params)
+  }
+
+  getLaunchers(attrs: any) {
+    var params = new HttpParams();
+    params = params.set('is_pool_member', 'true');
+    params = params.set('ordering', '-points_pplns');
+    if(attrs) {
+        if(attrs.offset) params = params.set('offset', attrs.offset);
+        if(attrs.limit) params = params.set('limit', attrs.limit);
+        if(attrs.search) params = params.set('search', attrs.search);
+        if(attrs.points_pplns__gt) params = params.set('points_pplns__gt', attrs.points_pplns__gt);
+    }
+    return this.httpClient.get(`${this.REST_API_SERVER}/launcher/`, {params});
+  }
+
 }

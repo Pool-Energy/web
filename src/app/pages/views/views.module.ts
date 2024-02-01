@@ -13,10 +13,26 @@ import lottie from 'lottie-web';
 import { ViewsRoutingModule } from './views-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { BlocksComponent } from './blocks/blocks.component';
+import { FarmersComponent } from './farmers/farmers.component';
+import { ChiaComponent } from './chia/chia.component';
+import { PoolStatusComponent } from './pool-status/pool-status.component';
+import { PoolStatsComponent } from './pool-stats/pool-stats.component';
+import { InfoFaqComponent } from './info-faq/info-faq.component';
+import { InfoApiComponent } from './info-api/info-api.component';
+import { InfoFeeComponent } from './info-fee/info-fee.component';
+import { InfoTeamComponent } from './info-team/info-team.component';
 
 @NgModule({
   declarations: [
-    BlocksComponent
+    BlocksComponent,
+    FarmersComponent,
+    ChiaComponent,
+    PoolStatusComponent,
+    PoolStatsComponent,
+    InfoFaqComponent,
+    InfoApiComponent,
+    InfoFeeComponent,
+    InfoTeamComponent
   ],
   imports: [
     CommonModule,

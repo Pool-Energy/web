@@ -38,13 +38,13 @@ export const MENU: MenuItem[] = [
       {
         id: 61,
         label: 'MENUITEMS.POOL.LIST.STATUS',
-        link: '/pool/status',
+        link: '/pool-status',
         parentId: 6
       },
       {
         id: 62,
         label: 'MENUITEMS.POOL.LIST.STATS',
-        link: '/pool/stats',
+        link: '/pool-stats',
         parentId: 6
       }
     ]
@@ -57,25 +57,25 @@ export const MENU: MenuItem[] = [
       {
         id: 71,
         label: 'MENUITEMS.INFO.LIST.FAQ',
-        link: '/info/faq',
+        link: '/info-faq',
         parentId: 7
       },
       {
         id: 72,
         label: 'MENUITEMS.INFO.LIST.API',
-        link: '/info/api',
+        link: '/info-api',
         parentId: 7
       },
       {
         id: 73,
         label: 'MENUITEMS.INFO.LIST.FEE',
-        link: '/info/fee',
+        link: '/info-fee',
         parentId: 7
       },
       {
         id: 74,
         label: 'MENUITEMS.INFO.LIST.TEAM',
-        link: '/info/team',
+        link: '/info-team',
         parentId: 7
       }
     ]
