@@ -1,1 +1,75 @@
 <app-breadcrumbs title="Status" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row" *ngFor="let wallet of pool_wallets; let i = index">
+    <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Pool wallet</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-wallet-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0">
+                                        <span class="counter-value">
+                                            <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
+                                                {{ wallet.address }}
+                                            </a>
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Wallet amount</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-coin-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0">
+                                        <span class="counter-value">
+                                            {{ wallet.balance.confirmed_wallet_balance / 1000000000000 | number:".8-8" }} XCH
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Wallet status</h5>
+                            <div class="d-flex align-items-center" *ngIf="wallet.synced">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">Synced</span></h2>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center" *ngIf="!wallet.synced">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-error-warning-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">Not synced</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

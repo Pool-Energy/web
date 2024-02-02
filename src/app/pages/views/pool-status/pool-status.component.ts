@@ -11,6 +11,8 @@ import { DataService } from 'src/app/data.service';
 export class PoolStatusComponent {
   breadCrumbItems!: Array<{}>;
 
+  pool_wallets: Array<any> = new Array();
+
   constructor(
     private dataService: DataService
   ) { }
@@ -20,6 +22,10 @@ export class PoolStatusComponent {
       { label: 'Pool' },
       { label: 'Status', active: true }
     ];
+
+    this.dataService.getStats().subscribe((data: any) => {
+      this.pool_wallets = data['pool_wallets'];
+    })
   }
 
 }
