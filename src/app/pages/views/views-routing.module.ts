@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { DashboardComponent } from '../dashboards/dashboard/dashboard.component';
 import { BlocksComponent } from './blocks/blocks.component';
 import { FarmersComponent } from './farmers/farmers.component';
 import { FarmerComponent } from './farmer/farmer.component';
@@ -15,18 +16,19 @@ import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
 
 const routes: Routes = [
-  { path: "blocks", component: BlocksComponent },
-  { path: "farmers", component: FarmersComponent },
-  { path: "farmer/:id", component: FarmerComponent},
-  { path: "rewards", component: RewardsComponent },
-  { path: "reward/:id", component: RewardComponent },
-  { path: "chia", component: ChiaComponent },
-  { path: "pool-status", component: PoolStatusComponent },
-  { path: "pool-stats", component: PoolStatsComponent },
-  { path: "info-faq", component: InfoFaqComponent },
-  { path: "info-api", component: InfoApiComponent },
-  { path: "info-fee", component: InfoFeeComponent },
-  { path: "info-team", component: InfoTeamComponent }
+  { path: '', component: DashboardComponent },
+  { path: 'blocks', component: BlocksComponent },
+  { path: 'farmers', component: FarmersComponent },
+  { path: 'farmer/:id', component: FarmerComponent},
+  { path: 'rewards', component: RewardsComponent },
+  { path: 'reward/:id', component: RewardComponent },
+  { path: 'chia', component: ChiaComponent },
+  { path: 'pool-status', component: PoolStatusComponent },
+  { path: 'pool-stats', component: PoolStatsComponent },
+  { path: 'info-faq', component: InfoFaqComponent },
+  { path: 'info-api', component: InfoApiComponent },
+  { path: 'info-fee', component: InfoFeeComponent },
+  { path: 'info-team', component: InfoTeamComponent }
 ];
 
 @NgModule({
