@@ -7,6 +7,9 @@ http://%%DOMAIN%% {
         not path *.js
         not path *.css
         not path *.svg
+        not path *.woff
+        not path *.woff2
+        not path *.ttf
         not path /api/*
         not path /ws/*
         not path /robots.txt
