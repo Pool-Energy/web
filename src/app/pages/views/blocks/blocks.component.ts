@@ -8,8 +8,12 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './blocks.component.html',
   styleUrl: './blocks.component.scss'
 })
+
 export class BlocksComponent {
   breadCrumbItems!: Array<{}>;
+
+  estimate_win: any = 0;
+  current_effort: any = 0;
 
   _blocks$: Subject<any[]> = new Subject<any[]>();
   blocks$: Observable<any[]>;
@@ -30,6 +34,11 @@ export class BlocksComponent {
       { label: 'Blocks', active: true }
     ];
 
+    this.dataService.getStats().subscribe((data: any) => {
+      this.estimate_win = this.secondsToHuman(data['estimate_win'] * 60);
+      this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
+    })
+
     this.dataService.getBlocks({
       limit: this.blocksPageSize
     }).subscribe(this.handleBlocks.bind(this));
@@ -46,6 +55,15 @@ export class BlocksComponent {
       offset: (this.blocksPage - 1) * this.blocksPageSize,
       limit: this.blocksPageSize,
     }).subscribe(this.handleBlocks.bind(this));
+  }
+
+  private secondsToHuman(d: number) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var hDisplay = h > 0 ? h + "h" : "";
+    var mDisplay = m > 0 ? m + "m" : "";
+    return hDisplay + " " + mDisplay
   }
 
 }
