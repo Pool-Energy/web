@@ -23,9 +23,9 @@ export class RewardComponent {
   rewardaddrsPage: number = 1;
   rewardaddrsPageSize: number = 25;
 
-  rewardaddrsChart: any;
+  rewardaddrsChart: any = {};
   rewardaddrsChartLegend: boolean = false;
-  rewardaddrsData: any[] = [];
+  rewardaddrsChartData: any[] = [];
 
   constructor(
     private dataService: DataService,
@@ -82,7 +82,7 @@ export class RewardComponent {
   }
 
   private chartRewardAddrs(data: any) {
-    this.rewardaddrsData = (<any[]>data['results']).map((item) => {
+    const series = (<any[]>data['results']).map((item) => {
       return ({
         "x": (item['launcher'] == null && "?") || (item['launcher']['name'] || item['launcher']['launcher_id']),
         "y": item['amount'] / (10 ** 12),
@@ -90,7 +90,7 @@ export class RewardComponent {
     });
     this.rewardaddrsChart = {
       series: [{
-        data: this.rewardaddrsData
+        data: series
       }],
       legend: {
         show: this.rewardaddrsChartLegend
@@ -109,12 +109,6 @@ export class RewardComponent {
   private handleRewardAddrs(data: any) {
     this.rewardaddrsCollectionSize = data['count'];
     this._rewardaddrs$.next(data['results']);
-    this.rewardaddrsData = (<any[]>data['results']).map((item) => {
-      return ({
-        "x": (item['launcher'] == null && "?") || (item['launcher']['name'] || item['launcher']['launcher_id']),
-        "y": item['amount'] / (10 ** 12),
-      })
-    });
   }
 
   refreshRewardAddrs() {
