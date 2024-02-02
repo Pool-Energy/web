@@ -1,1 +1,143 @@
 <app-breadcrumbs title="Reward" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Datetime</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-time-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ reward.datetime | date:"medium" }}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Block height</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-stack-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value" *ngFor="let block of reward.blocks">{{ block?.farmed_height }}&nbsp;</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Amount</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-coin-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ reward.amount / 1000000000000 }} XCH</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Fee</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-exchange-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ reward.fee / 1000000000000 }} XCH</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <apx-chart
+                    [series]="rewardaddrsChart.series"
+                    [chart]="rewardaddrsChart.chart"
+                    [labels]="rewardaddrsChart.labels"
+                    [legend]="rewardaddrsChart.legend"
+                    [dataLabels]="rewardaddrsChart.dataLabels"
+                    [colors]="rewardaddrsChart.colors"
+                    dir="ltr">
+                </apx-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <div class="table-responsive table-card">
+                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Reward ID</th>
+                                    <th scope="col">Launcher ID</th>
+                                    <th scope="col">Transaction</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col" style="width: 150px;">Price</th>
+                                    <th scope="col" style="width: 150px;">State</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="(rewardaddrs$ | async) as rewardaddrs;">
+                                <tr *ngFor="let rewardaddr of rewardaddrs; let i = index">
+                                    <td>{{ rewardaddr.id }}</td>
+                                    <td>
+                                        <a [routerLink]="['/farmer', rewardaddr.launcher?.launcher_id]">
+                                            {{ (rewardaddr.launcher?.name || rewardaddr.launcher?.launcher_id || '-') }}
+                                        </a>
+                                    </td>
+                                    <td>{{ rewardaddr.transaction?.transaction }}</td>
+                                    <td>{{ rewardaddr.amount / 1000000000000 }} XCH</td>
+                                    <td>
+                                        <span *ngIf="rewardaddr.transaction && rewardaddr.transaction.xch_price">
+                                            ${{ rewardaddr.transaction.xch_price.usd * (rewardaddr.amount / 1000000000000) | number }} USD</span>
+                                        <span *ngIf="!rewardaddr.transaction || !rewardaddr.transaction.xch_price">Unknown</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="rewardaddr.transaction?.transaction">
+                                            <span class="badge bg-success-subtle text-success">Confirmed</span>
+                                        </span>
+                                        <span *ngIf="!rewardaddr.transaction?.transaction">
+                                            <span class="badge bg-warning-subtle text-warning">Pending</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="text-md-right float-md-end reward-pagination">
+                            <ngb-pagination [collectionSize]="rewardaddrsCollectionSize" [(page)]="rewardaddrsPage"
+                                [pageSize]="rewardaddrsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                (pageChange)="refreshRewardAddrs()">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

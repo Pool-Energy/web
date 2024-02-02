@@ -8,6 +8,7 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { defineElement } from "@lordicon/element";
+import { NgApexchartsModule } from 'ng-apexcharts';
 import lottie from 'lottie-web';
 
 import { ViewsRoutingModule } from './views-routing.module';
@@ -54,6 +55,7 @@ import { InfoTeamComponent } from './info-team/info-team.component';
     SimplebarAngularModule,
     NgPipesModule,
     NgxFilesizeModule,
+    NgApexchartsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
