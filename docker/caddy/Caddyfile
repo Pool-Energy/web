@@ -2,6 +2,20 @@ http://%%DOMAIN%% {
 
     root * /var/www/poolenergy
 
+    @spa {
+        not path */assets/*
+        not path *.js
+        not path *.css
+        not path *.svg
+        not path /api/*
+        not path /ws/*
+        not path /robots.txt
+        not path /security.txt
+        not path /sitemap.xml
+    }
+
+    rewrite @spa index.html
+
     file_server
 
     log {
