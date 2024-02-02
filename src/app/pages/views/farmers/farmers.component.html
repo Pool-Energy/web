@@ -2,6 +2,56 @@
 
 <div class="row">
     <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Total active farmers</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-group-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ total_active_farmers }}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current effort</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-scales-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ current_effort | number:".2-2" }}%</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current fee</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-coin-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ current_fee | number:".2-2" }}%</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>

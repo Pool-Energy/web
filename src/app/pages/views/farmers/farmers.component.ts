@@ -11,6 +11,10 @@ import { DataService } from 'src/app/data.service';
 export class FarmersComponent {
   breadCrumbItems!: Array<{}>;
 
+  current_effort: any = 0;
+  total_active_farmers: any = 0;
+  current_fee: any = 0;
+
   _launchers$: Subject<any[]> = new Subject<any[]>();
   launchers$: Observable<any[]>;
   launchersCollectionSize: number = 0;
@@ -28,6 +32,12 @@ export class FarmersComponent {
       { label: 'Home' },
       { label: 'Farmers', active: true }
     ];
+
+    this.dataService.getStats().subscribe((data: any) => {
+      this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
+      this.total_active_farmers = data['farmers_active'];
+      this.current_fee = data['fee'] * 100;
+    })
 
     this.dataService.getLaunchers({
       limit: this.launchersPageSize,
