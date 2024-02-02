@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/velzon",
+            "outputPath": "dist/poolenergy",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -141,10 +141,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "poolenergy:build:production"
+              "buildTarget": "poolenergy:build:production"
             },
             "development": {
-              "browserTarget": "poolenergy:build:development"
+              "buildTarget": "poolenergy:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -152,7 +152,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "poolenergy:build"
+            "buildTarget": "poolenergy:build"
           }
         },
         "test": {
