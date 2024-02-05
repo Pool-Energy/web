@@ -104,11 +104,8 @@
                             <tbody *ngIf="(rewardaddrs$ | async) as rewardaddrs;">
                                 <tr *ngFor="let rewardaddr of rewardaddrs; let i = index">
                                     <td>{{ rewardaddr.id }}</td>
-                                    <td>
-                                        <a [routerLink]="['/farmer', rewardaddr.launcher?.launcher_id]">
-                                            {{ (rewardaddr.launcher?.name || rewardaddr.launcher?.launcher_id || '-') }}
-                                        </a>
-                                    </td>
+                                    <td *ngIf="rewardaddr.launcher?.launcher_id !== null"><a [routerLink]="['/farmer', rewardaddr.launcher?.launcher_id ]">{{ (rewardaddr.launcher?.name || rewardaddr.launcher?.launcher_id || '-') }}</a></td>
+                                    <td *ngIf="rewardaddr.launcher?.launcher_id === null"><i class="ri-information-line"></i> Pool fee</td>
                                     <td>{{ rewardaddr.transaction?.transaction }}</td>
                                     <td>{{ rewardaddr.amount / 1000000000000 }} XCH</td>
                                     <td>
