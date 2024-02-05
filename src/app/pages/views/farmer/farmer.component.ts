@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DataService } from 'src/app/data.service';
 
+
 @Component({
   selector: 'app-farmer',
   templateUrl: './farmer.component.html',
@@ -13,6 +14,7 @@ export class FarmerComponent {
   breadCrumbItems!: Array<{}>;
 
   launcher_id: any = null;
+  farmer: any = {};
 
   constructor(
     private dataService: DataService,
@@ -26,6 +28,9 @@ export class FarmerComponent {
         { label: 'Farmers' },
         { label: this.launcher_id, active: true }
       ];
+      this.dataService.getLauncher(this.launcher_id).subscribe(launcher => {
+        this.farmer = launcher;
+      })
     });
   }
 
