@@ -1,1 +1,26 @@
 <app-breadcrumbs title="Stats" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Mempool</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="mempoolChart.series"
+                        [chart]="mempoolChart.chart"
+                        [labels]="mempoolChart.labels"
+                        [legend]="mempoolChart.legend"
+                        [dataLabels]="mempoolChart.dataLabels"
+                        [colors]="mempoolChart.colors"
+                        [xaxis]="mempoolChart.xaxis"
+                        [yaxis]="mempoolChart.yaxis"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

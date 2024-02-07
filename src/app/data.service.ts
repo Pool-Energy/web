@@ -53,6 +53,18 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/launcher/', { params });
   }
 
+  getPartials(launcher: any, offset: any) {
+    var params = new HttpParams();
+    var timestamp = new Date().getTime();
+    timestamp = Math.floor(timestamp / 1000) - 60 * 60 * 24;
+    params = params.set('ordering', '-timestamp');
+    params = params.set('min_timestamp', timestamp.toString());
+    params = params.set('launcher', launcher);
+    params = params.set('offset', (offset || ''));
+    params = params.set('limit', 1300);
+    return this.httpClient.get(this.REST_API_SERVER + '/partial/', { params });
+  }
+
   getReward(id: number) {
     return this.httpClient.get(this.REST_API_SERVER + '/payout/' + id + '/');
   }
@@ -86,6 +98,14 @@ export class DataService {
       if(attrs.offset) params = params.set('offset', attrs.offset);
     }
     return this.httpClient.get(this.REST_API_SERVER + '/payouttransaction/', { params });
+  }
+
+  getMempool(days: number) {
+    var params = new HttpParams();
+    if(days) {
+      params = params.set('days', days);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/stats/mempool/', { params });
   }
 
 }
