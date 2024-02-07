@@ -37,7 +37,7 @@ export class RewardsComponent {
     this.dataService.getStats().subscribe((data: any) => {
       this.rewardsTotalClaimed = data['rewards_amount'] / (10 ** 12);
       this.rewardsTotalDistributed = (data['rewards_amount'] / (10 ** 12)) - data['fee'];
-      this.rewardsTotalFee = (data['rewards_amount'] * data['fee'] / 100) / (10 ** 12);
+      this.rewardsTotalFee = (data['rewards_amount'] * data['fee']) / (10 ** 12);
     })
 
     this.dataService.getRewards({
