@@ -22,12 +22,13 @@ export class FarmerComponent {
   ) { }
 
   ngOnInit(): void {
+    this.breadCrumbItems = [
+      { label: 'Farmers' },
+      { label: 'Details', active: true }
+    ];
+
     this.route.paramMap.subscribe(data => {
       this.launcher_id = data.get('id');
-      this.breadCrumbItems = [
-        { label: 'Farmers' },
-        { label: this.launcher_id, active: true }
-      ];
       this.dataService.getLauncher(this.launcher_id).subscribe(launcher => {
         this.farmer = launcher;
       })
