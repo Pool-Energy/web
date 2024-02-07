@@ -15,6 +15,8 @@ export class FarmersComponent {
   total_active_farmers: any = 0;
   current_fee: any = 0;
 
+  leaderboard: Array<any> = new Array();
+
   _launchers$: Subject<any[]> = new Subject<any[]>();
   launchers$: Observable<any[]>;
   launchersCollectionSize: number = 0;
@@ -46,6 +48,9 @@ export class FarmersComponent {
   }
 
   private handleLaunchers(data: any) {
+    if(this.leaderboard.length == 0) {
+      this.leaderboard = data['results'].slice(0, 3);
+    }
     this.launchersCollectionSize = data['count'];
     this._launchers$.next(data['results']);
   }

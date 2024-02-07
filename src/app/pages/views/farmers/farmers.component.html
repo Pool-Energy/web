@@ -1,5 +1,6 @@
 <app-breadcrumbs title="Farmers" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- stats -->
 <div class="row">
     <div class="col-xl-12">
         <div class="card crm-widget">
@@ -50,6 +51,36 @@
     </div>
 </div>
 
+<!-- leaderboard -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Leaderboard</h4>
+            </div>
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <div *ngFor="let launcher of leaderboard; let i = index" class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">{{ launcher.name || launcher.launcher_id }}</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-trophy-line display-6 text-muted leaderboard-{{ i + 1 }}"></i>
+
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ launcher.estimated_size | filesize:{"base": 2, "standard": "iec"} }}, {{ launcher.points_pplns }} pts</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- list -->
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
