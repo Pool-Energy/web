@@ -19,8 +19,16 @@ export class BlocksComponent {
   blocks$: Observable<any[]>;
   blocksCollectionSize: number = 0;
   blocksPage: number = 1;
-  blocksPageSize: number = 10;
+  blocksPageSize: number = 15;
   lastBlock: any;
+
+  blocksPerDayChart: any = {};
+  blocksPerDayChartLegend: boolean = false;
+  blocksPerDayChartData: any[] = [];
+
+  blocksPerEffortChart: any = {};
+  blocksPerEffortChartLegend: boolean = false;
+  blocksPerEffortChartData: any[] = [];
 
   constructor(
     private dataService: DataService
@@ -44,10 +52,101 @@ export class BlocksComponent {
     }).subscribe(this.handleBlocks.bind(this));
   }
 
+  private getChartColorsArray(colors:any) {
+    colors = JSON.parse(colors);
+    return colors.map(function (value:any) {
+      var newValue = value.replace(" ", "");
+      if (newValue.indexOf(",") === -1) {
+        var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+            if (color) {
+            color = color.replace(" ", "");
+            return color;
+            }
+            else return newValue;;
+        } else {
+            var val = value.split(',');
+            if (val.length == 2) {
+                var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+                return rgbaColor;
+            } else {
+                return newValue;
+            }
+        }
+    });
+  }
+
+  private chartBlocks(data: any) {
+    var blocksPerDay: Map<String, number> = new Map();
+    var blocksPerEffort: Map<String, number> = new Map();
+    (<any[]>data['results']).map((item) => {
+      var date = new Date(Math.floor(item['timestamp']) * 1000).toLocaleDateString();
+      blocksPerDay.set(date, (blocksPerDay.get(date) || 0) + 1);
+      blocksPerEffort.set(date, (blocksPerEffort.get(date) || 0) + item['luck']);
+    });
+    var seriesBlocks: any = [];
+    blocksPerDay.forEach((v, k) => {
+      seriesBlocks.push({"x": k, "y": v})
+    });
+    var seriesEffort: any = [];
+    blocksPerEffort.forEach((v, k) => {
+      seriesEffort.push({"x": k, "y": v})
+    });
+
+    this.blocksPerDayChart = {
+      series: [{
+        name: "Block(s)",
+        data: seriesBlocks.reverse(),
+      }],
+      legend: {
+        show: this.blocksPerDayChartLegend
+      },
+      chart: {
+        height: 250,
+        type: "bar",
+        toolbar: {
+          show: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function(val: any) {
+          return val;
+        }
+      },
+      colors: this.getChartColorsArray('["--vz-primary"]')
+    };
+
+    this.blocksPerEffortChart = {
+      series: [{
+        name: "Effort",
+        data: seriesEffort.reverse(),
+      }],
+      legend: {
+        show: this.blocksPerEffortChartLegend
+      },
+      chart: {
+        height: 250,
+        type: "area",
+        toolbar: {
+          show: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function(val: any) {
+          return val + "%";
+        }
+      },
+      colors: this.getChartColorsArray('["--vz-primary"]')
+    };
+  }
+
   private handleBlocks(data: any) {
     this.blocksCollectionSize = data['count'];
     this._blocks$.next(data['results']);
     this.lastBlock = data['results'][0];
+    this.chartBlocks(data);
   }
 
   refreshBlocks() {

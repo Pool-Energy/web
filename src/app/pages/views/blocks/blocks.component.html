@@ -51,6 +51,62 @@
 </div>
 
 <div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Blocks Charts</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <div ngbAccordion activeIds="per-day">
+                        <div ngbAccordionItem id="per-day">
+                            <h2 ngbAccordionHeader class="accordion-header border-0 bg-transparent">
+                                <button ngbAccordionButton> Blocks per day</button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                    <ng-template>
+                                        <apx-chart
+                                            [series]="blocksPerDayChart.series"
+                                            [chart]="blocksPerDayChart.chart"
+                                            [labels]="blocksPerDayChart.labels"
+                                            [legend]="blocksPerDayChart.legend"
+                                            [dataLabels]="blocksPerDayChart.dataLabels"
+                                            [colors]="blocksPerDayChart.colors"
+                                            dir="ltr">
+                                        </apx-chart>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                        <div ngbAccordionItem id="per-effort">
+                            <h2 ngbAccordionHeader class="accordion-header border-0 bg-transparent">
+                                <button ngbAccordionButton> Blocks per effort</button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                    <ng-template>
+                                        <apx-chart
+                                            [series]="blocksPerEffortChart.series"
+                                            [chart]="blocksPerEffortChart.chart"
+                                            [labels]="blocksPerEffortChart.labels"
+                                            [legend]="blocksPerEffortChart.legend"
+                                            [dataLabels]="blocksPerEffortChart.dataLabels"
+                                            [colors]="blocksPerEffortChart.colors"
+                                            dir="ltr">
+                                        </apx-chart>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
