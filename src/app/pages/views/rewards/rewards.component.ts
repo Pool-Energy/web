@@ -22,6 +22,10 @@ export class RewardsComponent {
   rewardsPage: number = 1;
   rewardsPageSize: number = 10;
 
+  rewardsChart: any = {};
+  rewardsChartLegend: boolean = false;
+  rewardsChartData: any[] = [];
+
   constructor(
     private dataService: DataService
   ) {
@@ -43,6 +47,10 @@ export class RewardsComponent {
     this.dataService.getRewards({
       limit: this.rewardsPageSize
     }).subscribe(this.handleRewards.bind(this));
+
+    this.dataService.getRewards({
+      limit: this.rewardsPageSize
+    }).subscribe(this.chartRewards.bind(this));
   }
 
   private handleRewards(data: any) {
@@ -55,6 +63,67 @@ export class RewardsComponent {
       offset: (this.rewardsPage - 1) * this.rewardsPageSize,
       limit: this.rewardsPageSize,
     }).subscribe(this.handleRewards.bind(this));
+  }
+
+  private getChartColorsArray(colors:any) {
+    colors = JSON.parse(colors);
+    return colors.map(function (value:any) {
+      var newValue = value.replace(" ", "");
+      if (newValue.indexOf(",") === -1) {
+        var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+            if (color) {
+            color = color.replace(" ", "");
+            return color;
+            }
+            else return newValue;;
+        } else {
+            var val = value.split(',');
+            if (val.length == 2) {
+                var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+                return rgbaColor;
+            } else {
+                return newValue;
+            }
+        }
+    });
+  }
+
+  private chartRewards(data: any) {
+    var rewardsData: Map<String, number> = new Map();
+    (<any[]>data['results']).map((item) => {
+      var date = new Date(item['datetime']).toLocaleDateString();
+      rewardsData.set(date, (rewardsData.get(date) || 0) + (item['amount'] / (10**12)));
+    });
+    var seriesRewards: any = [];
+    rewardsData.forEach((v, k) => {
+      seriesRewards.push({"x": k, "y": v})
+    });
+    this.rewardsChart = {
+      series: [{
+        data: seriesRewards.reverse()
+      }],
+      legend: {
+        show: this.rewardsChartLegend
+      },
+      chart: {
+        height: 250,
+        type: "bar",
+        toolbar: {
+          show: false
+        }
+      },
+      noData: {
+        text: "Loading..."
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function(val: any) {
+          return val + " XCH";
+        }
+      },
+      colors: this.getChartColorsArray('["--vz-primary"]')
+    };
   }
 
 }
