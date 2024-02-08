@@ -55,6 +55,15 @@ export class FarmerComponent {
   }
 
   private handleBlocks(data: any) {
+    var [blocksEffortFromList, blocksCountFromList]: number[] = [0, 0];
+    data['results'].forEach((v: any) => {
+      if(v['launcher_effort'] != -1) {
+        blocksEffortFromList = blocksEffortFromList + v['launcher_effort'];
+        blocksCountFromList = blocksCountFromList + 1;
+      }
+    });
+    this.blocksEffortAverage = blocksEffortFromList / blocksCountFromList;
+    this.blocksEffortCount = blocksCountFromList;
     this.blocksCollectionSize = data['count'];
     this._blocks$.next(data['results']);
   }
