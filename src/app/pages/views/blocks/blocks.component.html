@@ -125,12 +125,16 @@
                                     <th scope="col">Date</th>
                                     <th scope="col">Farmer</th>
                                     <th scope="col" style="width: 150px;">Pool Space</th>
-                                    <th scope="col" style="width: 150px;">Pool Effort</th>
+                                    <th scope="col" style="width: 75px;">Pool Effort</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="(blocks$ | async) as blocks;">
                                 <tr *ngFor="let block of blocks; let i = index">
-                                    <td>{{ block.farmed_height }}</td>
+                                    <td>
+                                        <a href="https://xchscan.com/blocks/{{ block.farmed_height }}" target="_blank">
+                                            {{ block.farmed_height }}
+                                        </a>
+                                    </td>
                                     <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
                                     <td><a [routerLink]="['/farmer', block.farmed_by.launcher_id]">{{ block.farmed_by.name || block.farmed_by.launcher_id }}</a></td>
                                     <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>

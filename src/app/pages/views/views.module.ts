@@ -9,7 +9,7 @@ import { NgPipesModule } from 'ngx-pipes';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { defineElement } from "@lordicon/element";
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import lottie from 'lottie-web';
 
 import { MaxLengthPipe } from './pipes/maxlength.pipe';
@@ -60,6 +60,7 @@ import { InfoTeamComponent } from './info-team/info-team.component';
     NgxFilesizeModule,
     NgApexchartsModule,
     NgbAccordionModule,
+    NgbNavModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

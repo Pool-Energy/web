@@ -3271,6 +3271,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/humanize-duration@^3.27.4":
+  version "3.27.4"
+  resolved "https://registry.npmjs.org/@types/humanize-duration/-/humanize-duration-3.27.4.tgz"
+  integrity sha512-yaf7kan2Sq0goxpbcwTQ+8E9RP6HutFBPv74T/IA/ojcHKhuKVlk2YFYyHhWZeLvZPzzLE3aatuQB4h0iqyyUA==
+
 "@types/jasmine@^5.1.4":
   version "5.1.4"
   resolved "https://registry.npmjs.org/@types/jasmine/-/jasmine-5.1.4.tgz"
@@ -5536,6 +5541,11 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+humanize-duration@^3.31.0:
+  version "3.31.0"
+  resolved "https://registry.npmjs.org/humanize-duration/-/humanize-duration-3.31.0.tgz"
+  integrity sha512-fRrehgBG26NNZysRlTq1S+HPtDpp3u+Jzdc/d5A4cEzOD86YLAkDaJyJg8krSdCi7CJ+s7ht3fwRj8Dl+Btd0w==
 
 iconv-lite@^0.4.24, iconv-lite@0.4.24:
   version "0.4.24"
