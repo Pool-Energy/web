@@ -12,6 +12,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import lottie from 'lottie-web';
 
+import { MaxLengthPipe } from './pipes/maxlength.pipe';
 import { ViewsRoutingModule } from './views-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { BlocksComponent } from './blocks/blocks.component';
@@ -29,6 +30,7 @@ import { InfoTeamComponent } from './info-team/info-team.component';
 
 @NgModule({
   declarations: [
+    MaxLengthPipe,
     BlocksComponent,
     FarmersComponent,
     FarmerComponent,

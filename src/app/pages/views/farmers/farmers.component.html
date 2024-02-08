@@ -62,7 +62,7 @@
                 <div class="row row-cols-md-3 row-cols-1">
                     <div *ngFor="let launcher of leaderboard; let i = index" class="col col-lg border-end">
                         <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">{{ launcher.name || launcher.launcher_id }}</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ launcher.name || launcher.launcher_id | maxLength:32 }}</h5>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                     <i class="ri-trophy-line display-6 text-muted leaderboard-{{ i + 1 }}"></i>
