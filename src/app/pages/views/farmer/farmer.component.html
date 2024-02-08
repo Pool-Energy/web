@@ -187,6 +187,7 @@
                                             <th scope="col">Price</th>
                                             <th scope="col">Pool reward</th>
                                             <th scope="col">Pool size</th>
+                                            <th scope="col" style="width: 50px;">Confirmed</th>
                                             <th scope="col" style="width: 75px;">Pool effort</th>
                                         </tr>
                                     </thead>
@@ -201,6 +202,11 @@
                                             <td>${{ block.xch_price.usd }}</td>
                                             <td>{{ block.amount / 1000000000000 }} XCH</td>
                                             <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
+                                            <td>
+                                                <a href="https://xchscan.com/blocks/{{ block.confirmed_block_index }}" target="_blank">
+                                                    {{ block.confirmed_block_index }}
+                                                </a>
+                                            </td>
                                             <td>
                                                 <span *ngIf="block.luck == -1" class="badge bg-warning-subtle text-warning">Unknown</span>
                                                 <span *ngIf="block.luck < 100" class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
