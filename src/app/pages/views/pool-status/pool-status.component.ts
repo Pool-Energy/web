@@ -11,6 +11,8 @@ import { DataService } from 'src/app/data.service';
 export class PoolStatusComponent {
   breadCrumbItems!: Array<{}>;
 
+  walletAddressTruncate: boolean = false;
+
   pool_wallets: Array<any> = new Array();
 
   constructor(
@@ -22,6 +24,8 @@ export class PoolStatusComponent {
       { label: 'Pool' },
       { label: 'Status', active: true }
     ];
+
+    window.onresize = () => this.walletAddressTruncate = window.innerWidth <= 1200;
 
     this.dataService.getStats().subscribe((data: any) => {
       this.pool_wallets = data['pool_wallets'];
