@@ -17,7 +17,7 @@
         </div>
         <div class="col">
             <div class="p-2">
-                <h3 class="text-white mb-1">Undefined</h3>
+                <h3 class="text-white mb-1">{{ launcher.name || 'Undefined' }}</h3>
                 <p class="text-white text-opacity-75">{{ launcher_id }}</p>
                 <div class="hstack text-white-50 gap-1">
                     <div *ngIf="launcher.is_pool_member"><i class="ri-checkbox-circle-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
@@ -92,7 +92,7 @@
                                                                 <i class="ri-scales-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ blocksEffortAverage }}%</span></h2>
+                                                                <h2 class="mb-0"><span class="counter-value">{{ blocksEffortAverage | number:".2-2" }}%</span></h2>
                                                             </div>
                                                         </div>
                                                     </div>
