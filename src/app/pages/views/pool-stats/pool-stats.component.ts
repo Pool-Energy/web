@@ -98,7 +98,7 @@ export class PoolStatsComponent {
       yaxis: {
         decimalsInFloat: 0
       },
-      colors: this.getChartColorsArray('["--vz-primary"]')
+      colors: this.getChartColorsArray('["--vz-success"]')
     }
   }
 
