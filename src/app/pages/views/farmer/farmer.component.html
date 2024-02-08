@@ -53,8 +53,35 @@
                     <li [ngbNavItem]="1">
                         <a ngbNavLink>Overview</a>
                     </li>
-                    <li [ngbNavItem]="2">
+                    <li [ngbNavItem]="2" (click)="refreshLauncherSize(launcher.launcher_id)">
                         <a ngbNavLink>Stats</a>
+                        <ng-template ngbNavContent>
+                            <!-- launcher size chart -->
+                            <div class="row">
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-header align-items-center d-flex">
+                                            <h4 class="card-title mb-0 flex-grow-1">Estimated Size</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="launcherSizeChart.series"
+                                                    [chart]="launcherSizeChart.chart"
+                                                    [labels]="launcherSizeChart.labels"
+                                                    [legend]="launcherSizeChart.legend"
+                                                    [dataLabels]="launcherSizeChart.dataLabels"
+                                                    [colors]="launcherSizeChart.colors"
+                                                    [xaxis]="launcherSizeChart.xaxis"
+                                                    [yaxis]="launcherSizeChart.yaxis"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
                     </li>
                     <li [ngbNavItem]="3">
                         <a ngbNavLink>Partials</a>

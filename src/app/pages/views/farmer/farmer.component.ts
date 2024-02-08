@@ -14,6 +14,11 @@ import { DataService } from 'src/app/data.service';
 export class FarmerComponent {
   breadCrumbItems!: Array<{}>;
 
+  // launcher
+  launcher_id: any = null;
+  launcher: any = {};
+
+  // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();
   blocks$: Observable<any[]>;
   blocksCollectionSize: number = 0;
@@ -25,8 +30,10 @@ export class FarmerComponent {
   blocksPerDayChartLegend: boolean = false;
   blocksPerDayChartData: any[] = [];
 
-  launcher_id: any = null;
-  launcher: any = {};
+  // stats
+  launcherSizeChart: any = {};
+  launcherSizeChartLegend: boolean = false;
+  launcherSizeChartData: any[] = [];
 
   constructor(
     private dataService: DataService,
@@ -49,6 +56,42 @@ export class FarmerComponent {
     });
   }
 
+  // common
+  humanize(seconds: number) {
+    var h = humanizer();
+    return h(seconds, {
+      language: "en",
+      units: ["y", "mo", "w", "h", "m", "s"],
+      largest: 2
+    });
+  }
+
+  private getChartColorsArray(colors: any) {
+    colors = JSON.parse(colors);
+    return colors.map(function (value:any) {
+      var newValue = value.replace(" ", "");
+      if(newValue.indexOf(",") === -1) {
+        var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+            if (color) {
+              color = color.replace(" ", "");
+              return color;
+            } else {
+              return newValue;
+            }
+        } else {
+            var val = value.split(',');
+            if(val.length == 2) {
+                var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+                return rgbaColor;
+            } else {
+                return newValue;
+            }
+        }
+    });
+  }
+
+  // blocks
   refreshBlocks() {
     this.dataService.getBlocks({
       launcher: this.launcher_id,
@@ -70,30 +113,6 @@ export class FarmerComponent {
     this.blocksCollectionSize = data['count'];
     this._blocks$.next(data['results']);
     this.chartBlocks(data);
-  }
-
-  private getChartColorsArray(colors:any) {
-    colors = JSON.parse(colors);
-    return colors.map(function (value:any) {
-      var newValue = value.replace(" ", "");
-      if (newValue.indexOf(",") === -1) {
-        var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
-            if (color) {
-            color = color.replace(" ", "");
-            return color;
-            }
-            else return newValue;;
-        } else {
-            var val = value.split(',');
-            if (val.length == 2) {
-                var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
-                rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
-                return rgbaColor;
-            } else {
-                return newValue;
-            }
-        }
-    });
   }
 
   private chartBlocks(data: any) {
@@ -128,16 +147,68 @@ export class FarmerComponent {
           return val;
         }
       },
-      colors: this.getChartColorsArray('["--vz-primary"]')
+      colors: this.getChartColorsArray('["--vz-primary","--vz-success"]')
     };
   }
 
-  humanize(seconds: number) {
-    var h = humanizer();
-    return h(seconds, {
-      language: "en",
-      units: ["y", "mo", "w", "h", "m", "s"],
-      largest: 2
+  // stats
+  refreshLauncherSize(launcher_id: any) {
+    this.dataService.getLauncherSize(launcher_id).subscribe((r) => {
+      var launcherSize8h: Map<String, number> = new Map();
+      var launcherSize24h: Map<String, number> = new Map();
+      (<any[]>r).map((item) => {
+        if(item['field'] == 'size_8h') {
+          launcherSize8h.set(item['datetime'], item['value']);
+        } else if(item['field'] == 'size') {
+          launcherSize24h.set(item['datetime'], item['value']);
+        }
+      });
+      var launcherSizeSeries8h: any = [];
+      var launcherSizeSeries24h: any = [];
+      launcherSize8h.forEach((v, k) => {
+        launcherSizeSeries8h.push({"x": k, "y": Math.floor(v / (1024 ** 4))});
+      })
+      launcherSize24h.forEach((v, k) => {
+        launcherSizeSeries24h.push({"x": k, "y": Math.floor(v / (1024 ** 4))});
+      })
+
+      this.launcherSizeChart = {
+        series: [
+          {
+            name: "Size (8h average)",
+            data: launcherSizeSeries8h
+          },
+          {
+            name: "Size (24h average)",
+            data: launcherSizeSeries24h
+          }
+        ],
+        legend: {
+          show: this.launcherSizeChartLegend
+        },
+        chart: {
+          height: 500,
+          type: "area",
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false,
+          formatter: function(val: any) {
+            return val + "TiB";
+          }
+        },
+        yaxis: {
+          min: 0
+        },
+        xaxis: {
+          labels: {
+            show: false
+          }
+        },
+        colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
+      };
     });
   }
 
