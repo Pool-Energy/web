@@ -128,6 +128,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- blocks chart -->
+                            <div class="row">
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="blocksPerDayChart.series"
+                                                    [chart]="blocksPerDayChart.chart"
+                                                    [labels]="blocksPerDayChart.labels"
+                                                    [legend]="blocksPerDayChart.legend"
+                                                    [dataLabels]="blocksPerDayChart.dataLabels"
+                                                    [colors]="blocksPerDayChart.colors"
+                                                    [xaxis]="blocksPerDayChart.xaxis"
+                                                    [yaxis]="blocksPerDayChart.yaxis"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- blocks list -->
                             <div class="d-flex mb-1">
                                 <table class="table align-middle table-nowrap table-striped-columns mb-0">
