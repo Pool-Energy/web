@@ -51,6 +51,13 @@
     </div>
 </div>
 
+<!-- halving -->
+<div class="alert alert-{{ blockchain_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
+    <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
+    Current block: {{ blockchain_current_block }}. Next halving block: {{ blockchain_halving_block }}.
+    Progression: <strong>{{ blockchain_halving_percent | number:".2-2" }}%</strong>.
+</div>
+
 <!-- leaderboard -->
 <div class="row">
     <div class="col-xl-12">

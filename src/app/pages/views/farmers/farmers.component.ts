@@ -15,6 +15,12 @@ export class FarmersComponent {
   total_active_farmers: any = 0;
   current_fee: any = 0;
 
+  blockchain_current_block: number = 0;
+  blockchain_halving_block: number = 5045760;
+  blockchain_halving_diff: number = 0;
+  blockchain_halving_percent: number = 0;
+  blockchain_halving_class: string = "info";
+
   leaderboard: Array<any> = new Array();
 
   _launchers$: Subject<any[]> = new Subject<any[]>();
@@ -39,12 +45,26 @@ export class FarmersComponent {
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.total_active_farmers = data['farmers_active'];
       this.current_fee = data['fee'] * 100;
+      this.handleHalving(data['blockchain_height']);
     })
 
     this.dataService.getLaunchers({
       limit: this.launchersPageSize,
       points_pplns__gt: 1
     }).subscribe(this.handleLaunchers.bind(this));
+  }
+
+  private handleHalving(block: number) {
+    this.blockchain_current_block = block;
+    this.blockchain_halving_diff = this.blockchain_current_block - this.blockchain_halving_block;
+    this.blockchain_halving_percent = this.blockchain_current_block * 100 / this.blockchain_halving_block;
+    if(this.blockchain_halving_percent >= 100) {
+      this.blockchain_halving_class = "danger";
+    } else if(this.blockchain_halving_percent >= 99) {
+      this.blockchain_halving_class = "warning";
+    } else {
+      this.blockchain_halving_class = "info";
+    }
   }
 
   private handleLaunchers(data: any) {
