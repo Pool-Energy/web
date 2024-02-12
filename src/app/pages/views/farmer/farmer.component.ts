@@ -30,6 +30,24 @@ export class FarmerComponent {
   blocksPerDayChartLegend: boolean = false;
   blocksPerDayChartData: any[] = [];
 
+  // partials
+  partialsData: any[] = [];
+  partialsTable: any[] = [];
+  partialsFiltered: any[] = [];
+  partialsCollectionSize: number = 0;
+  partialsPage: number = 1;
+  partialsPageSize: number = 100;
+  partialsSuccessful: number = 0;
+  partialsFailed: number = 0;
+  partialsPoints: number = 0;
+  partialsShowFailed: boolean = false;
+  partialsChart: any = {};
+  partialsChartLegend: boolean = false;
+  partialsChartData: any[] = [];
+
+  // harvesters
+  harvesters: Set<string> = new Set();
+
   // stats
   launcherSizeChart: any = {};
   launcherSizeChartLegend: boolean = false;
@@ -54,6 +72,8 @@ export class FarmerComponent {
         this.launcher = launcher;
       })
     });
+
+    this.partialsShowFailed = (localStorage.getItem('farmer_show_failed_partials') == 'true') ? true : false;
   }
 
   // common
@@ -88,6 +108,67 @@ export class FarmerComponent {
                 return newValue;
             }
         }
+    });
+  }
+
+  // partials
+  private handlePartials(subscriber: any, data: any, successes: any, errors: any, hours: any) {
+    this.partialsTable = this.partialsTable.concat(data['results']);
+    data['results'].forEach((v: any) => {
+      this.harvesters.add(v['harvester_id']);
+      var hour = Math.floor(v['timestamp'] / 3600) * 3600;
+      hours.add(hour);
+
+      if(v.error === null) {
+        this.partialsSuccessful++;
+        this.partialsPoints += v['difficulty'];
+        errors.set(hour, (errors.get(hour) || 0));
+        successes.set(hour, (successes.get(hour) || 0) + 1);
+      } else {
+        this.partialsFailed++;
+        errors.set(hour, (errors.get(hour) || 0) + 1);
+        successes.set(hour, (successes.get(hour) || 0));
+      }
+    });
+
+    if(data['next']) {
+      this.dataService.getNext(data['next']).subscribe((data) => {
+        this.handlePartials(subscriber, data, successes, errors, hours);
+      });
+    } else {
+      subscriber.complete();
+      this.filterPartials();
+    }
+  }
+
+  togglePartialsFailed(event: any): void {
+    this.partialsShowFailed = event.target.checked;
+    this.filterPartials();
+    localStorage.setItem('farmer_show_failed_partials', event.target.checked);
+  }
+
+  private filterPartials() {
+    if(this.partialsShowFailed) {
+      this.partialsFiltered = this.partialsTable.filter(entry => entry.error !== null);
+    } else {
+      this.partialsFiltered = [...this.partialsTable];
+    }
+  }
+
+  private chartPartials(launcher_id: any) {
+    var successes = new Map();
+    var errors = new Map();
+    var hours = new Set();
+
+    this.partialsTable = [];
+    this.partialsFiltered = [];
+    this.harvesters.clear();
+
+    var obs = new Observable(subscriber => {
+      this.dataService.getPartials(launcher_id).subscribe((data: any) => {
+        this.partialsCollectionSize = data['count'];
+        this.handlePartials(subscriber, data, successes, errors, hours);
+      });
     });
   }
 

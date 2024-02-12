@@ -53,7 +53,7 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/launcher/', { params });
   }
 
-  getPartials(launcher: any, offset: any) {
+  getPartials(launcher: any, offset?: any) {
     var params = new HttpParams();
     var timestamp = new Date().getTime();
     timestamp = Math.floor(timestamp / 1000) - 60 * 60 * 24;
@@ -115,6 +115,10 @@ export class DataService {
       params = params.set('days', days);
     }
     return this.httpClient.get(this.REST_API_SERVER + '/launcher_size/', { params });
+  }
+
+  getNext(url: any) {
+    return this.httpClient.get(url);
   }
 
 }
