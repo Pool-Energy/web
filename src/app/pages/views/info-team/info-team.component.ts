@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-info-team',
@@ -11,9 +10,7 @@ import { DataService } from 'src/app/data.service';
 export class InfoTeamComponent {
   breadCrumbItems!: Array<{}>;
 
-  constructor(
-    private dataService: DataService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
