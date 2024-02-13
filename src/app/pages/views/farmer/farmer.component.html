@@ -20,8 +20,8 @@
                 <h3 class="text-white mb-1">{{ launcher.name || 'Undefined' }}</h3>
                 <p class="text-white text-opacity-75">{{ launcher_id }}</p>
                 <div class="hstack text-white-50 gap-1">
-                    <div *ngIf="launcher.is_pool_member"><i class="ri-checkbox-circle-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
-                    <div *ngIf="!launcher.is_pool_member"><i class="ri-error-warning-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline</div>
+                    <div *ngIf="launcher.is_pool_member"><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+                    <div *ngIf="!launcher.is_pool_member"><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline</div>
                 </div>
             </div>
         </div>
@@ -50,9 +50,13 @@
         <div class="card">
             <div class="card-body">
                 <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
+
+                    <!-- overview -->
                     <li [ngbNavItem]="1">
                         <a ngbNavLink>Overview</a>
                     </li>
+
+                    <!-- stats -->
                     <li [ngbNavItem]="2" (click)="refreshLauncherSize(launcher.launcher_id)">
                         <a ngbNavLink>Stats</a>
                         <ng-template ngbNavContent>
@@ -83,12 +87,175 @@
                             </div>
                         </ng-template>
                     </li>
-                    <li [ngbNavItem]="3">
+
+                    <!-- partials -->
+                    <li [ngbNavItem]="3" (click)="refreshPartials(launcher.launcher_id)">
                         <a ngbNavLink>Partials</a>
+                        <ng-template ngbNavContent>
+                            <!-- stats -->
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Partials (24h)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-stack-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsCollectionSize }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Points (24h)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-pencil-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsPoints }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Harvester(s)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-computer-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ harvesters.size }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Successful Partials</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsSuccessful }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Failed Partials</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-error-warning-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsFailed }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Performance</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-line-chart-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- partials chart -->
+                            <div class="row">
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="partialsChart.series"
+                                                    [chart]="partialsChart.chart"
+                                                    [labels]="partialsChart.labels"
+                                                    [legend]="partialsChart.legend"
+                                                    [dataLabels]="partialsChart.dataLabels"
+                                                    [colors]="partialsChart.colors"
+                                                    [xaxis]="partialsChart.xaxis"
+                                                    [yaxis]="partialsChart.yaxis"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- partials list -->
+                            <div class="card-header align-items-center d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="form-check form-switch form-switch-right form-switch-md">
+                                        <label for="partials-failed-only" class="form-label text-muted">Show partials failed only</label>
+                                        <input class="form-check-input code-switcher" type="checkbox" id="partials-failed-only"
+                                            (click)="togglePartialsFailed($event)"
+                                            [checked]="partialsShowFailed">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-1">
+                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Difficulty</th>
+                                            <th scope="col">Harvester ID</th>
+                                            <th scope="col">Plot ID</th>
+                                            <th scope="col" style="width: 200px;">State</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="partialsTable">
+                                        <tr *ngFor="let partial of partialsFiltered | slice: (partialsPage - 1) * partialsPageSize : partialsPage * partialsPageSize">
+                                            <td>{{ partial.timestamp * 1000 | date:"medium" }}</td>
+                                            <td>{{ partial.difficulty }}</td>
+                                            <td>{{ partial.harvester_id | maxLength:32 }}</td>
+                                            <td>{{ partial.plot_id | maxLength:32 }}</td>
+                                            <td>
+                                                <span *ngIf="partial.error" class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
+                                                <span *ngIf="!partial.error" class="badge bg-success-subtle text-success">SUCCESS</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <div class="text-md-right float-md-end partials-pagination">
+                                    <ngb-pagination [collectionSize]="partialsCollectionSize" [(page)]="partialsPage"
+                                        [pageSize]="partialsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        (pageChange)="refreshPartials(launcher.launcher_id)">
+                                    </ngb-pagination>
+                                </div>
+                            </div>
+                        </ng-template>
                     </li>
+
+                    <!-- harvesters -->
                     <li [ngbNavItem]="4">
                         <a ngbNavLink>Harvesters</a>
                     </li>
+
+                    <!-- blocks -->
                     <li [ngbNavItem]="5" (click)="refreshBlocks()">
                         <a ngbNavLink>Blocks</a>
                         <ng-template ngbNavContent>
@@ -217,14 +384,27 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div>
+                                <div class="text-md-right float-md-end blocks-pagination">
+                                    <ngb-pagination [collectionSize]="blocksCollectionSize" [(page)]="blocksPage"
+                                        [pageSize]="blocksPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        (pageChange)="refreshBlocks()">
+                                    </ngb-pagination>
+                                </div>
+                            </div>
                         </ng-template>
                     </li>
+
+                    <!-- rewards -->
                     <li [ngbNavItem]="6">
                         <a ngbNavLink>Rewards</a>
                     </li>
+
+                    <!-- payouts -->
                     <li [ngbNavItem]="7">
                         <a ngbNavLink>Payouts</a>
                     </li>
+
                 </ul>
                 <div class="tab-content text-muted">
                     <div [ngbNavOutlet]="Light"></div>

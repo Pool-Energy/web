@@ -155,7 +155,7 @@ export class FarmerComponent {
     }
   }
 
-  private chartPartials(launcher_id: any) {
+  refreshPartials(launcher_id: any) {
     var successes = new Map();
     var errors = new Map();
     var hours = new Set();
@@ -170,6 +170,46 @@ export class FarmerComponent {
         this.handlePartials(subscriber, data, successes, errors, hours);
       });
     });
+
+    obs.subscribe(
+      (x) => { },
+      (err) => { console.error("Something wrong occurred: " + err); },
+      () => this.partialsChart = {
+        series: [
+          {
+            name: "Successful Partials",
+            data: Array.from(successes, (i, idx) => {
+              return { "x": i[0], "y": i[1] };
+            })
+          },
+          {
+            name: "Failed Partials",
+            data: Array.from(errors, (i, idx) => {
+              return { "x": i[0], "y": i[1] };
+            })
+          }
+        ],
+        legend: {
+          show: this.partialsChartLegend
+        },
+        chart: {
+          height: 250,
+          type: "area",
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          labels: {
+            show: false
+          }
+        },
+        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+      }
+    );
   }
 
   // blocks

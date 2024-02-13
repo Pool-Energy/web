@@ -1,17 +1,21 @@
+.partials-pagination {
+    padding-top: 20px;
+}
+
 .blocks-pagination {
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .badge {
-    width: 75px;
+    width: 100%;
     --vz-badge-font-size: 1em;
     --vz-badge-font-weight: 0;
 }
 
-.ri-checkbox-circle-line::before {
+.ri-checkbox-circle-colored::before {
     color: green;
 }
 
-.ri-error-warning-line::before {
+.ri-error-warning-colored::before {
     color: red;
 }
