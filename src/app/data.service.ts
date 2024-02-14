@@ -65,6 +65,36 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/partial/', { params });
   }
 
+  getPartialTs(attrs?: any) {
+    var params = new HttpParams();
+    params = params.set('days', '1');
+    if(attrs) {
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/stats/partial/', { params });
+  }
+
+  getPayoutAddrs(attrs: any) {
+    var params = new HttpParams();
+    if(attrs) {
+      if(attrs.id) params = params.set('payout', attrs.id);
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+      if(attrs.limit) params = params.set('limit', attrs.limit);
+      if(attrs.offset) params = params.set('offset', attrs.offset);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/payoutaddress/', { params });
+  }
+
+  getPayoutTxs(attrs: any) {
+    var params = new HttpParams();
+    if(attrs) {
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+      if(attrs.limit) params = params.set('limit', attrs.limit);
+      if(attrs.offset) params = params.set('offset', attrs.offset);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/payouttransaction/', { params });
+  }
+
   getReward(id: number) {
     return this.httpClient.get(this.REST_API_SERVER + '/payout/' + id + '/');
   }
