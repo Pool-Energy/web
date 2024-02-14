@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
 
 import { DataService } from 'src/app/data.service';
+import { AnyObject } from 'chart.js/dist/types/basic';
 
 
 @Component({
@@ -47,6 +48,12 @@ export class FarmerComponent {
 
   // harvesters
   harvesters: Set<string> = new Set();
+  harvestersTemp: Map<string, object> = new Map();
+  harvestersData: any[] = [];
+  harvestersTicks: any[] = [];
+  harvestersChart: any = {};
+  harvestersChartData: any[] = [];
+  harvestersChartLegend: boolean = false;
 
   // stats
   launcherSizeChart: any = {};
@@ -74,6 +81,10 @@ export class FarmerComponent {
     });
 
     this.partialsShowFailed = (localStorage.getItem('farmer_show_failed_partials') == 'true') ? true : false;
+
+    // default overview tab
+    this.refreshLauncherSize(this.launcher_id);
+    this.refreshPartials(this.launcher_id);
   }
 
   // common
@@ -178,15 +189,11 @@ export class FarmerComponent {
         series: [
           {
             name: "Successful Partials",
-            data: Array.from(successes, (i, idx) => {
-              return { "x": i[0], "y": i[1] };
-            })
+            data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; })
           },
           {
             name: "Failed Partials",
-            data: Array.from(errors, (i, idx) => {
-              return { "x": i[0], "y": i[1] };
-            })
+            data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; })
           }
         ],
         legend: {
@@ -210,6 +217,68 @@ export class FarmerComponent {
         colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
       }
     );
+  }
+
+  // harvesters
+  refreshHarvesters(launcher_id: any) {
+    var ticks: Set<number> = new Set();
+    this.harvestersTemp.clear();
+    this.dataService.getPartialTs({launcher: launcher_id}).subscribe((d: any) => {
+      (<any[]>d).forEach(i => {
+        var harvester: any = this.harvestersTemp.get(i['harvester']);
+        if(!harvester) {
+          harvester = {
+            "points_total": 0,
+            "partials_failed": 0,
+            "partials_success": 0,
+            "data": [
+              {"name": "Successful Partials", "data": []},
+              {"name": "Failed Partials", "data": []}
+            ]
+          }
+          this.harvestersTemp.set(i['harvester'], harvester);
+        }
+        if(i['result'] == "count") {
+          var date = new Date(i['datetime']);
+          var hour = Math.floor(date.getTime() / (3600 * 1000)) * 3600;
+          ticks.add(hour);
+          if(i['error']) {
+            harvester['data'][1]['data'].push({"x": date, "y": i['value']});
+            harvester['partials_failed'] += i['value'];
+          } else {
+            harvester['data'][0]['data'].push({"x": date, "y": i['value']});
+            harvester['partials_success'] += i['value'];
+          }
+        } else {
+          if(!i['error']) {
+            harvester['points_total'] += i['value'];
+          }
+        }
+      });
+      this.harvestersData = Array.from(this.harvestersTemp);
+      this.harvestersTicks = Array.from(ticks);
+      this.harvestersChart = {
+        legend: {
+          show: this.harvestersChartLegend
+        },
+        chart: {
+          height: 250,
+          type: "area",
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          labels: {
+            show: false
+          }
+        },
+        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+      }
+    });
   }
 
   // blocks

@@ -52,14 +52,134 @@
                 <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
 
                     <!-- overview -->
-                    <li [ngbNavItem]="1">
+                    <li [ngbNavItem]="1" (click)="refreshLauncherSize(launcher.launcher_id); refreshPartials(launcher.launcher_id)">
                         <a ngbNavLink>Overview</a>
-                    </li>
-
-                    <!-- stats -->
-                    <li [ngbNavItem]="2" (click)="refreshLauncherSize(launcher.launcher_id)">
-                        <a ngbNavLink>Stats</a>
                         <ng-template ngbNavContent>
+                            <!-- launcher overview -->
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Joined At</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-user-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.joined_at | date:"medium" }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Pool Connection</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-server-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsFiltered[0].pool_host || "Unknown" }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Chia Version</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsFiltered[0].chia_version || "Unknown" }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Estimated Size</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-information-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.estimated_size || 0 | filesize:{"base": 2, "standard": "iec"} }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Points (PPLNS)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-pencil-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.points_pplns || 0 }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Difficulty</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-shield-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.difficulty }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Estimated Time to Win (ETW)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.current_effort || 0 | number }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- launcher size chart -->
                             <div class="row">
                                 <div class="col-xxl-12">
@@ -89,7 +209,7 @@
                     </li>
 
                     <!-- partials -->
-                    <li [ngbNavItem]="3" (click)="refreshPartials(launcher.launcher_id)">
+                    <li [ngbNavItem]="2" (click)="refreshPartials(launcher.launcher_id)">
                         <a ngbNavLink>Partials</a>
                         <ng-template ngbNavContent>
                             <!-- stats -->
@@ -251,12 +371,99 @@
                     </li>
 
                     <!-- harvesters -->
-                    <li [ngbNavItem]="4">
+                    <li [ngbNavItem]="3" (click)="refreshHarvesters(launcher.launcher_id)">
                         <a ngbNavLink>Harvesters</a>
+                        <ng-template ngbNavContent>
+                            <!-- harvesters stats -->
+                            <div *ngFor="let harvester of harvestersData" class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Harvester</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-stack-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[0] | maxLength:32 }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Total Points</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-pencil-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1].points_total }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Partials Successful</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1].partials_success }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Partials Failed</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-error-warning-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1].partials_failed }}</span></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- harvesters chart -->
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="harvester[1].data"
+                                                    [chart]="harvestersChart.chart"
+                                                    [labels]="harvestersChart.labels"
+                                                    [legend]="harvestersChart.legend"
+                                                    [dataLabels]="harvestersChart.dataLabels"
+                                                    [colors]="harvestersChart.colors"
+                                                    [xaxis]="harvestersChart.xaxis"
+                                                    [yaxis]="harvestersChart.yaxis"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- harvesters separator -->
+                                <hr />
+                            </div>
+                        </ng-template>
                     </li>
 
                     <!-- blocks -->
-                    <li [ngbNavItem]="5" (click)="refreshBlocks()">
+                    <li [ngbNavItem]="4" (click)="refreshBlocks()">
                         <a ngbNavLink>Blocks</a>
                         <ng-template ngbNavContent>
                             <!-- blocks stats -->
@@ -396,12 +603,12 @@
                     </li>
 
                     <!-- rewards -->
-                    <li [ngbNavItem]="6">
+                    <li [ngbNavItem]="5">
                         <a ngbNavLink>Rewards</a>
                     </li>
 
                     <!-- payouts -->
-                    <li [ngbNavItem]="7">
+                    <li [ngbNavItem]="6">
                         <a ngbNavLink>Payouts</a>
                     </li>
 
