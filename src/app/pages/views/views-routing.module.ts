@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from '../dashboards/dashboard/dashboard.component';
 import { BlocksComponent } from './blocks/blocks.component';
 import { FarmersComponent } from './farmers/farmers.component';
 import { FarmerComponent } from './farmer/farmer.component';
@@ -16,7 +15,7 @@ import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', component: FarmersComponent },
   { path: 'blocks', component: BlocksComponent },
   { path: 'farmers', component: FarmersComponent },
   { path: 'farmer/:id', component: FarmerComponent},

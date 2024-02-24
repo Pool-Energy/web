@@ -58,7 +58,7 @@ export class FarmersComponent {
     this.blockchain_current_block = block;
     this.blockchain_halving_diff = this.blockchain_current_block - this.blockchain_halving_block;
     this.blockchain_halving_percent = this.blockchain_current_block * 100 / this.blockchain_halving_block;
-    if(this.blockchain_halving_percent >= 100) {
+    if(this.blockchain_halving_percent >= 99.5) {
       this.blockchain_halving_class = "danger";
     } else if(this.blockchain_halving_percent >= 99) {
       this.blockchain_halving_class = "warning";
