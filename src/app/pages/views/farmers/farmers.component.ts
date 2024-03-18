@@ -15,11 +15,12 @@ export class FarmersComponent {
   total_active_farmers: any = 0;
   current_fee: any = 0;
 
-  blockchain_current_block: number = 0;
-  blockchain_halving_block: number = 5045760;
+  blockchain_halving_popup: boolean = false;
+  blockchain_halving_block: number = 10091520;
   blockchain_halving_diff: number = 0;
   blockchain_halving_percent: number = 0;
   blockchain_halving_class: string = "info";
+  blockchain_current_block: number = 0;
 
   leaderboard: Array<any> = new Array();
 
@@ -45,7 +46,9 @@ export class FarmersComponent {
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.total_active_farmers = data['farmers_active'];
       this.current_fee = data['fee'] * 100;
-      this.handleHalving(data['blockchain_height']);
+      if (this.blockchain_halving_popup) {
+        this.handleHalving(data['blockchain_height']);
+      }
     })
 
     this.dataService.getLaunchers({
