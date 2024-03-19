@@ -8,6 +8,7 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './chia.component.html',
   styleUrl: './chia.component.scss'
 })
+
 export class ChiaComponent {
   breadCrumbItems!: Array<{}>;
 

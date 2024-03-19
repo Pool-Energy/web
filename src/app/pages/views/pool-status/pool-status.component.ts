@@ -8,6 +8,7 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './pool-status.component.html',
   styleUrl: './pool-status.component.scss'
 })
+
 export class PoolStatusComponent {
   breadCrumbItems!: Array<{}>;
 

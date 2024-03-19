@@ -8,6 +8,7 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './farmers.component.html',
   styleUrl: './farmers.component.scss'
 })
+
 export class FarmersComponent {
   breadCrumbItems!: Array<{}>;
 

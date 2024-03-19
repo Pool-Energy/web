@@ -8,6 +8,7 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './info-api.component.html',
   styleUrl: './info-api.component.scss'
 })
+
 export class InfoApiComponent {
   breadCrumbItems!: Array<{}>;
 

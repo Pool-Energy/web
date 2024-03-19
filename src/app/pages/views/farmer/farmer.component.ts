@@ -12,6 +12,7 @@ import { AnyObject } from 'chart.js/dist/types/basic';
   templateUrl: './farmer.component.html',
   styleUrl: './farmer.component.scss'
 })
+
 export class FarmerComponent {
   breadCrumbItems!: Array<{}>;
 

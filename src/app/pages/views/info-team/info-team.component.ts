@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
   templateUrl: './info-team.component.html',
   styleUrl: './info-team.component.scss'
 })
+
 export class InfoTeamComponent {
   breadCrumbItems!: Array<{}>;
 
