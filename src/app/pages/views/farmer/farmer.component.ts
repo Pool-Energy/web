@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
 
@@ -56,6 +56,28 @@ export class FarmerComponent {
   harvestersChartData: any[] = [];
   harvestersChartLegend: boolean = false;
 
+  // payouts
+  payoutaddrs$: Observable<any[]>;
+  _payoutaddrs$ = new BehaviorSubject<any[]>([]);
+  payoutsCollectionSize: number = 0;
+  payoutsPage: number = 1;
+  payoutsPageSize: number = 25;
+  payoutsCountTotal: number = 0;
+  payoutsAmountTotal: number = 0;
+  payoutsDownloadLimit: number = 50000;
+  payoutsPerDayChart: any = {};
+  payoutsPerDayChartLegend: boolean = false;
+  payoutsPerDayChartData: any[] = [];
+
+  // payoutstxs
+  payouttxs$: Observable<any[]>;
+  _payouttxs$ = new BehaviorSubject<any[]>([]);
+  payouttxsCollectionSize: number = 0;
+  payouttxsPage: number = 1;
+  payouttxsPageSize: number = 25;
+  payouttxsCountTotal: number = 0;
+  payouttxsAmountTotal: number = 0;
+
   // stats
   launcherSizeChart: any = {};
   launcherSizeChartLegend: boolean = false;
@@ -66,6 +88,8 @@ export class FarmerComponent {
     private route: ActivatedRoute
   ) {
     this.blocks$ = this._blocks$.asObservable();
+    this.payoutaddrs$ = this._payoutaddrs$.asObservable();
+    this.payouttxs$ = this._payouttxs$.asObservable();
   }
 
   ngOnInit(): void {
@@ -324,6 +348,71 @@ export class FarmerComponent {
       }],
       legend: {
         show: this.blocksPerDayChartLegend
+      },
+      chart: {
+        height: 250,
+        type: "bar",
+        toolbar: {
+          show: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function(val: any) {
+          return val;
+        }
+      },
+      colors: this.getChartColorsArray('["--vz-primary","--vz-success"]')
+    };
+  }
+
+  // payouts
+  private handlePayouts(data: any) {
+    this.payoutsCollectionSize = data['count'];
+    this._payoutaddrs$.next(data['results']);
+    console.log(data['results']);
+  }
+
+  refreshPayouts() {
+    this.dataService.getPayoutAddrs({
+      launcher: this.launcher_id,
+      offset: (this.payoutsPage - 1) * this.payoutsPageSize,
+      limit: this.payoutsPageSize
+    }).subscribe(data => this.handlePayouts(data));
+  }
+
+  private handlePayoutTxs(data: any) {
+    this.payouttxsCollectionSize = data['count'];
+    this._payouttxs$.next(data['results'].reverse());
+    this.chartPayouts(data);
+  }
+
+  refreshPayoutTxs() {
+    this.dataService.getPayoutTxs({
+      launcher: this.launcher_id,
+      offset: (this.payouttxsPage - 1) * this.payouttxsPageSize,
+      limit: this.payouttxsPageSize
+    }).subscribe(data => this.handlePayoutTxs(data));
+  }
+
+  private chartPayouts(data: any) {
+    var payoutsPerDay: Map<String, number> = new Map();
+    (<any[]>data['results']).map((item) => {
+      var date = new Date(item['created_at_time']).toLocaleDateString();
+      payoutsPerDay.set(date, (payoutsPerDay.get(date) || 0) + (item['amount'] / (10**12)));
+    });
+    var seriesPayouts: any = [];
+    payoutsPerDay.forEach((v, k) => {
+      seriesPayouts.push({"x": k, "y": v.toFixed(6)})
+    });
+
+    this.payoutsPerDayChart = {
+      series: [{
+        name: "Amount (XCH)",
+        data: seriesPayouts.reverse(),
+      }],
+      legend: {
+        show: this.payoutsPerDayChartLegend
       },
       chart: {
         height: 250,

@@ -608,8 +608,120 @@
                     </li>
 
                     <!-- payouts -->
-                    <li [ngbNavItem]="6">
+                    <li [ngbNavItem]="6" (click)="refreshPayoutTxs()">
                         <a ngbNavLink>Payouts</a>
+                        <ng-template ngbNavContent>
+                            <!-- payouts stats -->
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Total Transaction(s)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-swap-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ payouttxsCollectionSize }}</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Total Paid</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-3-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.payout.total_paid / 1000000000000 | number:".1-6" }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Total Unpaid</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.payout.total_unpaid / 1000000000000 | number:".1-6" }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- payouts chart (amount per day)-->
+                            <div *ngIf="payouttxsCollectionSize != 0" class="row">
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="payoutsPerDayChart.series"
+                                                    [chart]="payoutsPerDayChart.chart"
+                                                    [labels]="payoutsPerDayChart.labels"
+                                                    [legend]="payoutsPerDayChart.legend"
+                                                    [dataLabels]="payoutsPerDayChart.dataLabels"
+                                                    [colors]="payoutsPerDayChart.colors"
+                                                    [xaxis]="payoutsPerDayChart.xaxis"
+                                                    [yaxis]="payoutsPerDayChart.yaxis"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- payouttxs list -->
+                            <div class="d-flex mb-1">
+                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Transaction</th>
+                                            <th scope="col">Confirmed Block</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="(payouttxs$ | async) as payouttxs;">
+                                        <tr *ngFor="let payouttx of payouttxs; let i = index">
+                                            <td>{{ payouttx.created_at_time | date:"medium" }}</td>
+                                            <td>{{ payouttx.transaction_name }}</td>
+                                            <td>{{ payouttx.confirmed_block_index }}</td>
+                                            <td>{{ payouttx.amount / 1000000000000 }} XCH</td>
+                                            <td *ngIf="payouttx.xch_price">{{ payouttx.xch_price?.usd * (payouttx.amount / 1000000000000) | number }} USD</td>
+                                            <td *ngIf="!payouttx.xch_price">Unknown</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <div class="text-md-right float-md-end payouts-pagination">
+                                    <ngb-pagination [collectionSize]="payouttxsCollectionSize" [(page)]="payouttxsPage"
+                                        [pageSize]="payouttxsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        (pageChange)="refreshPayoutTxs()">
+                                    </ngb-pagination>
+                                </div>
+                            </div>
+                        </ng-template>
                     </li>
 
                 </ul>
