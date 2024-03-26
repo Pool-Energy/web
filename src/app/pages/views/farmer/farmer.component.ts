@@ -370,7 +370,6 @@ export class FarmerComponent {
   private handlePayouts(data: any) {
     this.payoutsCollectionSize = data['count'];
     this._payoutaddrs$.next(data['results']);
-    console.log(data['results']);
   }
 
   refreshPayouts() {
