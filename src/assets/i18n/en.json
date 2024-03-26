@@ -6,11 +6,11 @@
     "DASHBOARD": {
       "TEXT": "Dashboards"
     },
-    "BLOCKS": {
-      "TEXT": "Blocks"
-    },
     "FARMERS": {
       "TEXT": "Farmers"
+    },
+    "BLOCKS": {
+      "TEXT": "Blocks"
     },
     "REWARDS": {
       "TEXT": "Rewards"

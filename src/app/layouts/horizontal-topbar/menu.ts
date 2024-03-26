@@ -8,15 +8,15 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 2,
-    label: 'MENUITEMS.BLOCKS.TEXT',
-    icon: 'ri-stack-line',
-    link: '/blocks'
-  },
-  {
-    id: 3,
     label: 'MENUITEMS.FARMERS.TEXT',
     icon: 'ri-group-line',
     link: '/farmers'
+  },
+  {
+    id: 3,
+    label: 'MENUITEMS.BLOCKS.TEXT',
+    icon: 'ri-stack-line',
+    link: '/blocks'
   },
   {
     id: 4,
