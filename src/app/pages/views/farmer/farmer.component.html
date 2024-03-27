@@ -603,8 +603,156 @@
                     </li>
 
                     <!-- rewards -->
-                    <li [ngbNavItem]="5">
+                    <li [ngbNavItem]="5" (click)="getRewards(); refreshPayouts()">
                         <a ngbNavLink>Rewards</a>
+                        <ng-template ngbNavContent>
+                            <!-- rewards stats -->
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Last 24 hours</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.rewards.last_24h / 1000000000000 }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Today</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.rewards.today / 1000000000000 }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Yesterday</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.rewards.yesterday / 1000000000000 }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Last 7 days</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.rewards.last_7d / 1000000000000 }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Last 30 days</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <h2 class="mb-0">
+                                                                    <span class="counter-value">{{ launcher.rewards.last_30d / 1000000000000 }} XCH</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- payouts chart (amount per day)-->
+                            <div *ngIf="payouttxsCollectionSize != 0" class="row">
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="payoutsPerDayChart.series"
+                                                    [chart]="payoutsPerDayChart.chart"
+                                                    [labels]="payoutsPerDayChart.labels"
+                                                    [legend]="payoutsPerDayChart.legend"
+                                                    [dataLabels]="payoutsPerDayChart.dataLabels"
+                                                    [colors]="payoutsPerDayChart.colors"
+                                                    [xaxis]="payoutsPerDayChart.xaxis"
+                                                    [yaxis]="payoutsPerDayChart.yaxis"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- rewards list -->
+                            <div class="d-flex mb-1">
+                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" style="width: 50px;">Reward ID</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Block(s)</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col" style="width: 150px;">Paid</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="(payoutaddrs$ | async) as payoutaddrs;">
+                                        <tr *ngFor="let payoutaddr of payoutaddrs; let i = index">
+                                            <td><a [routerLink]="['/reward', payoutaddr.payout.id]">{{ payoutaddr.payout.id }}</a></td>
+                                            <td>{{ payoutaddr.payout.datetime | date:"medium" }}</td>
+                                            <td><span *ngFor="let block of payoutaddr.payout.blocks">#{{ block.farmed_height}} </span></td>
+                                            <td>{{ payoutaddr.amount / 1000000000000 }} XCH</td>
+                                            <td>
+                                                <span *ngIf="payoutaddr.transaction && payoutaddr.transaction.confirmed_block_index"
+                                                    class="badge bg-success-subtle text-success">Confirmed</span>
+                                                <span *ngIf="payoutaddr.transaction && !payoutaddr.transaction.confirmed_block_index"
+                                                    class="badge bg-warning-subtle text-warning">Progress</span>
+                                                <span *ngIf="!payoutaddr.transaction"
+                                                    class="badge bg-warning-subtle text-warning">Pending</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <div class="text-md-right float-md-end payouts-pagination">
+                                    <ngb-pagination [collectionSize]="payoutsCollectionSize" [(page)]="payoutsPage"
+                                        [pageSize]="payoutsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        (pageChange)="getRewards(); refreshPayouts()">
+                                    </ngb-pagination>
+                                </div>
+                            </div>
+                        </ng-template>
                     </li>
 
                     <!-- payouts -->

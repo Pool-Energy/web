@@ -56,6 +56,12 @@ export class FarmerComponent {
   harvestersChartData: any[] = [];
   harvestersChartLegend: boolean = false;
 
+  // rewards
+  rewardsData: any[] = [];
+  rewardsChart: any = {};
+  rewardsChartData: any[] = [];
+  rewardsChartLegend: boolean = false;
+
   // payouts
   payoutaddrs$: Observable<any[]>;
   _payoutaddrs$ = new BehaviorSubject<any[]>([]);
@@ -364,6 +370,16 @@ export class FarmerComponent {
       },
       colors: this.getChartColorsArray('["--vz-primary","--vz-success"]')
     };
+  }
+
+  // rewards
+  getRewards() {
+    this.rewardsData = Array.from(this.launcher.rewards.last_per_day, (i: any) => {
+      return {
+        "name": i['day'],
+        "value": i['amount']
+      }
+    })
   }
 
   // payouts
