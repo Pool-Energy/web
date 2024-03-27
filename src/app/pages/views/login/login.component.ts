@@ -7,26 +7,25 @@ import { DataService } from 'src/app/data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent {
-  @ViewChild('name') name: ElementRef;
-  @ViewChild('email') email: ElementRef;
-  @ViewChild('customDifficulty') customDifficulty: ElementRef;
-  @ViewChild('minPayout') minPayout: ElementRef;
+  breadCrumbItems!: Array<{}>;
 
-  // default
+  @ViewChild('farmerName') farmerName!: | ElementRef<any>;
+  @ViewChild('farmerEmail') farmerEmail!: | ElementRef<any>;
+  @ViewChild('minPayout') minPayout!: | ElementRef<any>;
+  @ViewChild('customDifficulty') customDifficulty!: | ElementRef<any>;
+
   loggingIn: boolean = true;
   loggedIn: boolean = false;
-  error: boolean = false;
   farmer: any = {};
-
-  // errors
-  nameError: string = "";
-  emailError: string = "";
-  customDifficultyError: string = "";
-  minPayoutError: string = "";
+  error: boolean = false;
+  farmerNameError: boolean = false;
+  farmerEmailError: boolean = false;
+  minPayoutError: boolean = false;
+  customDifficultyError: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -37,12 +36,12 @@ export class LoginComponent {
   ngOnInit(): void {
     this.breadCrumbItems = [
       { label: 'Home' },
-      { label: 'Login', active: true }
+      { label: 'Settings', active: true }
     ];
 
-    this.route.queryParams.subscribe(data => {
-      if(!data.launcher_id) {
-        this.dataService.getLoggedIn().subscribe(res => {
+    this.route.queryParams.subscribe((data: {[key: string]: any}) => {
+      if(!data['launcher_id']) {
+        this.dataService.getLoggedIn().subscribe((res: {[key: string]: any}) => {
           if(res['launcher_id']) {
             this.onLoggedIn(res['launcher_id']);
           } else {
@@ -53,7 +52,7 @@ export class LoginComponent {
       } else {
         this.dataService.doLogin(data).subscribe(
           success => {
-            this.onLoggedIn(data.launcher_id);
+            this.onLoggedIn(data['launcher_id']);
           },
           error => {
             this.loggingIn = false;
@@ -64,31 +63,34 @@ export class LoginComponent {
     });
   }
 
-  private onLoggedIn(launcher_id: string) {
+  onLoggedIn(launcher_id: string) {
     this.loggingIn = false;
     this.loggedIn = true;
+    this.dataService.getLauncher(launcher_id).subscribe(launcher => {
+      this.farmer = launcher;
+    });
   }
 
-  submit() {
-    this.nameError = "";
-    this.emailError = "";
-    this.customDifficultyError = "";
-    this.minPayoutError = "";
+  saveSettings() {
+    this.farmerNameError = false;
+    this.farmerEmailError = false;
+    this.minPayoutError = false;
+    this.customDifficultyError = false;
 
     this.dataService.updateLauncher(this.farmer.launcher_id, {
-      "name": this.name.nativeElement.value,
-      "email": (this.email.nativeElement.value) ? this.email.nativeElement.value : null,
+      "name": this.farmerName.nativeElement.value,
+      "email": (this.farmerEmail.nativeElement.value) ? this.farmerEmail.nativeElement.value : null,
+      "minimum_payout": (this.minPayout.nativeElement.value) ? this.minPayout.nativeElement.value * 1000000000000 : null,
       "custom_difficulty": (this.customDifficulty.nativeElement.value) ? this.customDifficulty.nativeElement.value : null,
-      "minimum_payout": (this.minPayout.nativeElement.value) ? this.minPayout.nativeElement.value * 1000000000000 : null
     }).subscribe(
       data => {
         this.router.navigate(['/farmer', this.farmer.launcher_id]);
       },
       error => {
-        this.nameError = error.error?.name;
-        this.emailError = error.error?.email;
-        this.customDifficultyError = error.error?.custom_difficulty;
-        this.minPayoutError = error.error?.minimum_payout;
+        this.farmerNameError = error.error?.farmer_name;
+        this.farmerEmailError = error.error?.farmer_email;
+        this.minPayoutError = error.error?.min_payout;
+        this.customDifficultyError = error.error?.custom_difficulty
       }
     );
   }

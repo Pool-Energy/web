@@ -37,7 +37,7 @@ export class DataService {
   }
 
   updateLauncher(id: string, params: any) {
-    return this.httpClient.put(this.REST_API_SERVER + '/launcher/' + id + '/', { params });
+    return this.httpClient.put(this.REST_API_SERVER + '/launcher/' + id + '/', params);
   }
 
   getLaunchers(attrs: any) {
@@ -152,7 +152,7 @@ export class DataService {
   }
 
   doLogin(params: any) {
-    return this.httpClient.post(this.REST_API_SERVER + '/login', { params });
+    return this.httpClient.post(this.REST_API_SERVER + '/login', params);
   }
 
   getLoggedIn() {
