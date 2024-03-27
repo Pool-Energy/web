@@ -13,6 +13,7 @@ import { InfoFaqComponent } from './info-faq/info-faq.component';
 import { InfoApiComponent } from './info-api/info-api.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', component: FarmersComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'info-faq', component: InfoFaqComponent },
   { path: 'info-api', component: InfoApiComponent },
   { path: 'info-fee', component: InfoFeeComponent },
-  { path: 'info-team', component: InfoTeamComponent }
+  { path: 'info-team', component: InfoTeamComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

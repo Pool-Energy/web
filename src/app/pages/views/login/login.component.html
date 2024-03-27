@@ -1,0 +1,158 @@
+<app-breadcrumbs title="Settings" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<!-- authentication failure -->
+<div *ngIf="error" class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col col-lg border-end">
+                    <div class="py-4 px-3" align="center">
+                        <h5 class="text-muted text-uppercase fs-13">Authentication failure!</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1 ms-3">
+                                <span>Authentication failure! Check your login URL and try again.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- profile background -->
+<div *ngIf="loggedIn" class="profile-foreground position-relative mx-n4">
+    <div class="profile-wid-bg">
+        <img src="assets/images/cover-pattern.png" alt="" class="profile-wid-img" />
+    </div>
+</div>
+
+<!-- profile header -->
+<div *ngIf="loggedIn" class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
+    <div class="row g-4">
+        <div class="col-auto">
+            <div class="avatar-lg">
+                <img src="assets/images/users/user-dummy-img.jpg" alt="user-img" class="img-thumbnail rounded-circle" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-2">
+                <h3 class="text-white mb-1">{{ farmer?.name || 'Undefined' }}</h3>
+                <p class="text-white text-opacity-75">{{ farmer?.launcher_id }}</p>
+                <div class="hstack text-white-50 gap-1">
+                    <div *ngIf="farmer?.is_pool_member"><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+                    <div *ngIf="!farmer?.is_pool_member"><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- settings (logged) -->
+<div *ngIf="loggedIn" class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-body">
+                <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
+                    <!-- global -->
+                    <li [ngbNavItem]="1">
+                        <a ngbNavLink>Global</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card crm-widget">
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <!-- farmer name -->
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Farmer Name</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-group-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <input class="form-control" type="text" #farmerName [value]="farmer?.name" placeholder="(not set)" />
+                                                            </div>
+                                                            <div *ngIf="farmerNameError" class="alert alert-danger" role="alert">
+                                                                {{ farmerNameError }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- farmer email -->
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Farmer Email</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-mail-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <input class="form-control" type="text" #farmerEmail [value]="farmer?.email" placeholder="(not set)" />
+                                                            </div>
+                                                            <div *ngIf="farmerEmailError" class="alert alert-danger" role="alert">
+                                                                {{ farmerEmailError }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--  minimum payout -->
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Minimum Payout (XCH)</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-wallet-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <input class="form-control" type="input" #minPayout [value]="farmer?.minimum_payout / 1000000000000" maxlength="14" placeholder="(not set)" />
+                                                            </div>
+                                                            <div *ngIf="minPayoutError" class="alert alert-danger" role="alert">
+                                                                {{ minPayoutError }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--  custom difficulty -->
+                                                <div class="col col-lg border-end">
+                                                    <div class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Difficulty</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-blaze-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <select class="form-control" #customDifficulty [value]="farmer?.custom_difficulty || ''">
+                                                                    <option value="LOWEST">Lowest - Double of partials sent per day</option>
+                                                                    <option value="LOW">Low - 50% more partials sent per day</option>
+                                                                    <option value="">Default - Around 600 partials sent per day</option>
+                                                                    <option value="HIGH">High - 25% less partials sent per day</option>
+                                                                    <option value="HIGHEST">Highest - 50% less partials sent per day</option>
+                                                                </select>
+                                                            </div>
+                                                            <div *ngIf="customDifficultyError" class="alert alert-danger" role="alert">
+                                                                {{ customDifficultyError }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- form submit -->
+                                    <div class="col-12" align="center">
+                                        <button type="input" value="save" class="btn btn-primary" (click)="saveSettings()">Save settings</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                </ul>
+                <div class="tab-content text-muted">
+                    <div [ngbNavOutlet]="Light"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

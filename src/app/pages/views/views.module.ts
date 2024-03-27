@@ -27,6 +27,7 @@ import { InfoFaqComponent } from './info-faq/info-faq.component';
 import { InfoApiComponent } from './info-api/info-api.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { InfoTeamComponent } from './info-team/info-team.component';
     InfoFaqComponent,
     InfoApiComponent,
     InfoFeeComponent,
-    InfoTeamComponent
+    InfoTeamComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
