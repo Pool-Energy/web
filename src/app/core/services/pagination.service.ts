@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
+
 export class PaginationService {
     pageSize: any = 8;
     page: any = 1;
@@ -11,7 +12,6 @@ export class PaginationService {
     startIndex: number = 1;
     endIndex: number = 9;
 
-    // Pagination
     changePage(alldata: any[]) {
         const startItem = (this.page - 1) * this.pageSize + 1;
         const endItem = (this.page - 1) * this.pageSize + this.pageSize;
@@ -22,23 +22,22 @@ export class PaginationService {
         return alldata.slice(startItem - 1, endItem);
     }
 
-    // Sort Data
     onSort(column: any, dataList: any[]) {
         if (this.direction == 'asc') {
             this.direction = 'desc';
         } else {
             this.direction = 'asc';
         }
-        const sortedArray = [...dataList]; // Create a new array
+        const sortedArray = [...dataList];
         sortedArray.sort((a, b) => {
             const res = this.compare(a[column], b[column]);
             return this.direction === 'asc' ? res : -res;
         });
         return dataList = sortedArray;
     }
+
     compare(v1: string | number, v2: string | number) {
         return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
     }
-
 
 }
