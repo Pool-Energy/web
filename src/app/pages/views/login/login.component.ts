@@ -23,6 +23,7 @@ export class LoginComponent {
   loggedIn: boolean = false;
   farmer: any = {};
   error: boolean = false;
+  difficultyValue: string = "";
   farmerNameError: string = "";
   farmerEmailError: string = "";
   minPayoutError: string = "";
@@ -78,13 +79,17 @@ export class LoginComponent {
     this.minPayoutError = "";
     this.customDifficultyError = "";
 
-    this.validateCustomDifficulty(this.customDifficultyValue.nativeElement.value);
+    if(this.customDifficultyValue.nativeElement.value) {
+      if(this.validateCustomDifficulty(this.customDifficultyValue.nativeElement.value)) {
+        this.difficultyValue = ':' + this.customDifficultyValue.nativeElement.value;
+      }
+    }
 
     this.dataService.updateLauncher(this.farmer.launcher_id, {
       "name": this.farmerName.nativeElement.value,
       "email": (this.farmerEmail.nativeElement.value) ? this.farmerEmail.nativeElement.value : null,
       "minimum_payout": (this.minPayout.nativeElement.value) ? this.minPayout.nativeElement.value * 1000000000000 : null,
-      "custom_difficulty": (this.customDifficulty.nativeElement.value) ? this.customDifficulty.nativeElement.value + this.customDifficultyValue.nativeElement.value : null,
+      "custom_difficulty": (this.customDifficulty.nativeElement.value) ? this.customDifficulty.nativeElement.value + this.difficultyValue : null,
     }).subscribe(
       data => {
         this.router.navigate(['/farmer', this.farmer.launcher_id]);
@@ -99,9 +104,9 @@ export class LoginComponent {
   }
 
   setCustomDifficulty(data: any) {
-    const element = document.getElementById("ifCustom");
+    const element = document.getElementById("ifCustomValue");
     if(element && data.target.value) {
-      if(data.target.value == "CUSTOM:") {
+      if(data.target.value == "CUSTOM") {
         element.style.display = "block"
       } else {
         element.style.display = "none"
@@ -110,11 +115,10 @@ export class LoginComponent {
   }
 
   validateCustomDifficulty(value: any) {
-    if (value) {
-      if(value < 10 || value > 150) {
-        this.customDifficultyError = "Difficulty must be between 10 and 150";
-      }
+    if(value < 10 || value > 150) {
+      return false;
     }
+    return true;
   }
 
 }

@@ -125,17 +125,18 @@
                                                             <div class="flex-grow-1 ms-3">
                                                                 <select class="form-control" #customDifficulty
                                                                     (change)="setCustomDifficulty($event)"
-                                                                    [value]="farmer?.custom_difficulty || ''">
+                                                                    [value]="farmer.custom_difficulty?.split(':')[0] || 'MEDIUM'">
                                                                     <option value="LOWEST">Lowest - Double of partials sent per day</option>
                                                                     <option value="LOW">Low - 50% more partials sent per day</option>
-                                                                    <option value="">Default - Around 600 partials sent per day</option>
+                                                                    <option value="MEDIUM">Default - Around 600 partials sent per day</option>
                                                                     <option value="HIGH">High - 25% less partials sent per day</option>
                                                                     <option value="HIGHEST">Highest - 50% less partials sent per day</option>
-                                                                    <option value="CUSTOM:">Custom - Define partials sent per day</option>
+                                                                    <option value="CUSTOM">Custom - Number of partials sent per day</option>
                                                                 </select>
-                                                                <input id="ifCustom" class="form-control" 
-                                                                    style="display: none" type="number"
+                                                                <input id="ifCustomValue" class="form-control" 
+                                                                    style="display: none; margin-top: 10px" type="number"
                                                                     min="10" max="150" pattern="[0-9]{1,3}"
+                                                                    placeholder="{{ farmer.custom_difficulty?.split(':')[1] || '10-150' }}"
                                                                     #customDifficultyValue />
                                                             </div>
                                                             <div *ngIf="customDifficultyError" class="alert alert-danger" role="alert">
