@@ -28,6 +28,7 @@ import { InfoApiComponent } from './info-api/info-api.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
 import { LoginComponent } from './login/login.component';
+import { JoinComponent } from './join/join.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LoginComponent } from './login/login.component';
     InfoApiComponent,
     InfoFeeComponent,
     InfoTeamComponent,
-    LoginComponent
+    LoginComponent,
+    JoinComponent
   ],
   imports: [
     CommonModule,
