@@ -68,7 +68,7 @@ export class PoolStatsComponent {
       this.poolSizeDays = days;
       this.poolSizeData = [{
         "name": "Pool Size (TiB)",
-        "data": (<any[]>d).map((item) => {
+        "data": (<any[]>d).filter(item => item['field'] == 'global').map((item) => {
           return ({
             "x": (new Date(item['datetime']).toLocaleString()),
             "y": item['value'] / 1024 ** 4,
