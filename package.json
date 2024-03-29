@@ -49,6 +49,8 @@
     "@types/humanize-duration": "^3.27.4",
     "@types/jasmine": "^5.1.4",
     "@types/prismjs": "^1.26.3",
+    "angular-csv": "^1.0.0",
+    "angular-csv-ext": "^1.0.5",
     "angular-feather": "^6.5.0",
     "angular-ng-autocomplete": "^2.0.12",
     "angular-ng-stepper": "^2.0.0",

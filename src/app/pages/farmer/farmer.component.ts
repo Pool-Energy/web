@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
 
 import { DataService } from 'src/app/data.service';
-import { AnyObject } from 'chart.js/dist/types/basic';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 
 @Component({
@@ -32,6 +32,7 @@ export class FarmerComponent {
   blocksPerDayChart: any = {};
   blocksPerDayChartLegend: boolean = false;
   blocksPerDayChartData: any[] = [];
+  blocksDownloadLimit: number = 10000;
 
   // partials
   partialsData: any[] = [];
@@ -71,10 +72,10 @@ export class FarmerComponent {
   payoutsPageSize: number = 25;
   payoutsCountTotal: number = 0;
   payoutsAmountTotal: number = 0;
-  payoutsDownloadLimit: number = 50000;
   payoutsPerDayChart: any = {};
   payoutsPerDayChartLegend: boolean = false;
   payoutsPerDayChartData: any[] = [];
+  payoutsDownloadLimit: number = 100000;
 
   // payoutstxs
   payouttxs$: Observable<any[]>;
@@ -375,6 +376,49 @@ export class FarmerComponent {
     };
   }
 
+  csvDownloadBlocks() {
+    this.dataService.getBlocks({
+      launcher: this.launcher_id,
+      limit: this.blocksDownloadLimit
+    }).subscribe((res: {[key: string]: any}) => {
+      let csv_array: Array<any> = [];
+      const out = Object.keys(res['results']).map(index => {
+        let data = res['results'][index];
+        // halving block (https://docs.chia.net/block-rewards/#rewards-schedule)
+        let price_rewards = Math.max(0.25 / 2 ** (Math.trunc((data['farmed_height']) / 5045760)), 0.015625);
+        csv_array.push({
+          datetime: (new Date(Math.floor(data['timestamp']) * 1000).toLocaleString()),
+          height: data['farmed_height'],
+          amount: data['amount'] / 1000000000000,
+          price: (data['xch_price']) ? (data['xch_price']['usd'] * (data['amount'] / 1000000000000)).toFixed(3) : "",
+          pool_space: (data['pool_space']) ? (data['pool_space'] / 1024 ** 5).toFixed(2) : "",
+          pool_effort: (data['luck']) ? data['luck'] : "",
+          farmer_amount: price_rewards,
+          farmer_price: (data['xch_price']) ? (data['xch_price']['usd'] * price_rewards).toFixed(3) : "",
+          farmer_effort: (data['launcher_effort']) ? data['launcher_effort'] : "",
+          farmer_difficulty: data['farmed_by']['difficulty'],
+          farmer_estimated_size: (data['farmed_by']['estimated_size']  / 1024 ** 4).toFixed(2)
+        });
+      });
+      var options = {
+        headers: [
+          "Datetime",
+          "Height",
+          "Amount (XCH)",
+          "Price (USD)",
+          "Pool Space (PiB)",
+          "Pool Effort (%)",
+          "Farmer Amount (XCH)",
+          "Farmer Price (USD)",
+          "Farmer Effort (%)",
+          "Farmer Difficulty",
+          "Farmer Estimated Size (TiB)"
+        ]
+      };
+      new AngularCsv(csv_array, 'blocks', options);
+    });
+  }
+
   // rewards
   getRewards() {
     this.rewardsData = Array.from(this.launcher.rewards.last_per_day, (i: any) => {
@@ -447,6 +491,33 @@ export class FarmerComponent {
       },
       colors: this.getChartColorsArray('["--vz-primary","--vz-success"]')
     };
+  }
+
+  csvDownloadPayouts() {
+    this.dataService.getPayoutTxs({
+      launcher: this.launcher_id,
+      limit: this.payoutsDownloadLimit
+    }).subscribe((res: {[key: string]: any}) => {
+      let csv_array: Array<any> = [];
+      const out = Object.keys(res['results']).map(index => {
+        let data = res['results'][index];
+        csv_array.push({
+          datetime: data['created_at_time'],
+          transaction: data['transaction_name'],
+          amount: data['amount'] / 1000000000000,
+          price: (data['xch_price']) ? data['xch_price']['usd'] * (data['amount'] / 1000000000000) : "",
+        });
+      });
+      var options = {
+        headers: [
+          "Datetime",
+          "Transaction",
+          "Amount",
+          "Price USD"
+        ]
+      };
+      new AngularCsv(csv_array, 'payouts', options);
+    });
   }
 
   // stats
