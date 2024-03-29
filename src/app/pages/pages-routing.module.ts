@@ -23,13 +23,14 @@ const routes: Routes = [
   { path: 'rewards', component: RewardsComponent },
   { path: 'reward/:id', component: RewardComponent },
   { path: 'chia', component: ChiaComponent },
-  { path: 'pool-status', component: PoolStatusComponent },
-  { path: 'pool-stats', component: PoolStatsComponent },
-  { path: 'info-faq', component: InfoFaqComponent },
-  { path: 'info-api', component: InfoApiComponent },
-  { path: 'info-fee', component: InfoFeeComponent },
-  { path: 'info-team', component: InfoTeamComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'pool/status', component: PoolStatusComponent },
+  { path: 'pool/stats', component: PoolStatsComponent },
+  { path: 'info/faq', component: InfoFaqComponent },
+  { path: 'info/api', component: InfoApiComponent },
+  { path: 'info/fee', component: InfoFeeComponent },
+  { path: 'info/team', component: InfoTeamComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'settings', component: LoginComponent }
 ];
 
 @NgModule({
