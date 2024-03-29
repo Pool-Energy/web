@@ -16,7 +16,14 @@
       "TEXT": "Rewards"
     },
     "CHIA": {
-      "TEXT": "Chia"
+      "TEXT": "Chia",
+      "LIST": {
+        "BLOCKCHAIN_STATE": "Blockchain State",
+        "ECOSYSTEM_ACT": "Ecosystem Activity",
+        "MEMPOOL_TXS_FEES": "Mempool, Txs & Fees",
+        "NAKAMOTO_COEF": "Nakamoto Coefficient",
+        "PEER_INFO": "Peer info"
+      }
     },
     "POOL": {
       "TEXT": "Pool",

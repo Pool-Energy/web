@@ -28,7 +28,38 @@ export const MENU: MenuItem[] = [
     id: 5,
     label: 'MENUITEMS.CHIA.TEXT',
     icon: 'ri-plant-line',
-    link: '/chia'
+    subItems: [
+      {
+        id: 51,
+        label: 'MENUITEMS.CHIA.LIST.BLOCKCHAIN_STATE',
+        link: 'https://dashboard.chia.net/d/CL1X4UWnk/blockchain-state?orgId=1',
+        parentId: 5
+      },
+      {
+        id: 52,
+        label: 'MENUITEMS.CHIA.LIST.ECOSYSTEM_ACT',
+        link: 'https://dashboard.chia.net/d/bede53ff-3d90-4c35-bad0-3154f121ac2b/ecosystem-activity?orgId=1',
+        parentId: 5
+      },
+      {
+        id: 53,
+        label: 'MENUITEMS.CHIA.LIST.MEMPOOL_TXS_FEES',
+        link: 'https://dashboard.chia.net/d/46EAA05E/mempool-transactions-and-fees?orgId=1',
+        parentId: 5
+      },
+      {
+        id: 54,
+        label: 'MENUITEMS.CHIA.LIST.NAKAMOTO_COEF',
+        link: 'https://dashboard.chia.net/d/6S16D9AVk/nakamoto-coefficient?orgId=1',
+        parentId: 5
+      },
+      {
+        id: 55,
+        label: 'MENUITEMS.CHIA.LIST.PEER_INFO',
+        link: 'https://dashboard.chia.net/d/em15uQ47k/peer-info?orgId=1',
+        parentId: 5
+      },
+    ]
   },
   {
     id: 6,
