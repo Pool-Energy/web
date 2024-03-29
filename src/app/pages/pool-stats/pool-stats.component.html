@@ -1,22 +1,49 @@
 <app-breadcrumbs title="Stats" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- pool size -->
 <div class="row">
     <div class="col-xxl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Mempool Size</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Pool Space (TiB)</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
-                        [series]="mempoolChart.series"
-                        [chart]="mempoolChart.chart"
-                        [labels]="mempoolChart.labels"
-                        [legend]="mempoolChart.legend"
-                        [dataLabels]="mempoolChart.dataLabels"
-                        [colors]="mempoolChart.colors"
-                        [xaxis]="mempoolChart.xaxis"
-                        [yaxis]="mempoolChart.yaxis"
+                        [series]="poolSizeChart.series"
+                        [chart]="poolSizeChart.chart"
+                        [labels]="poolSizeChart.labels"
+                        [legend]="poolSizeChart.legend"
+                        [dataLabels]="poolSizeChart.dataLabels"
+                        [colors]="poolSizeChart.colors"
+                        [xaxis]="poolSizeChart.xaxis"
+                        [yaxis]="poolSizeChart.yaxis"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- mempool size -->
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Mempool Size (%)</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="mempoolSizeChart.series"
+                        [chart]="mempoolSizeChart.chart"
+                        [labels]="mempoolSizeChart.labels"
+                        [legend]="mempoolSizeChart.legend"
+                        [dataLabels]="mempoolSizeChart.dataLabels"
+                        [colors]="mempoolSizeChart.colors"
+                        [xaxis]="mempoolSizeChart.xaxis"
+                        [yaxis]="mempoolSizeChart.yaxis"
                         dir="ltr">
                     </apx-chart>
                 </div>

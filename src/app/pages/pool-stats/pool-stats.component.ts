@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 
 import { DataService } from 'src/app/data.service';
 
@@ -12,10 +11,17 @@ import { DataService } from 'src/app/data.service';
 export class PoolStatsComponent {
   breadCrumbItems!: Array<{}>;
 
-  mempoolDays: number = 7;
-  mempoolData: any[] = [];
-  mempoolChart: any = {};
-  mempoolChartLegend: boolean = false;
+  // pool size
+  poolSizeDays: number = 14;
+  poolSizeData: any[] = [];
+  poolSizeChart: any = {};
+  poolSizeChartLegend: boolean = false;
+
+  // mempool size
+  mempoolSizeDays: number = 14;
+  mempoolSizeData: any[] = [];
+  mempoolSizeChart: any = {};
+  mempoolSizeChartLegend: boolean = false;
 
   constructor(
     private dataService: DataService
@@ -26,26 +32,13 @@ export class PoolStatsComponent {
       { label: 'Pool' },
       { label: 'Stats', active: true }
     ];
-    this.getMempool(this.mempoolDays);
+
+    this.getPoolSize(this.poolSizeDays);
+    this.getMempoolSize(this.mempoolSizeDays);
   }
 
-  getMempool(days: number) {
-    this.dataService.getMempool(days).subscribe((d) => {
-      this.mempoolDays = days;
-      this.mempoolData = [{
-        "name": "Full Percentage",
-        "data": (<any[]>d).filter(item => item['field'] == 'full_pct').map((item) => {
-          return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
-            "y": item['value'],
-          })
-        })
-      }];
-      this.chartMempool(this.mempoolData);
-    })
-  }
-
-  private getChartColorsArray(colors:any) {
+  // common
+  private getChartColorsArray(colors: any) {
     colors = JSON.parse(colors);
     return colors.map(function (value:any) {
       var newValue = value.replace(" ", "");
@@ -69,11 +62,79 @@ export class PoolStatsComponent {
     });
   }
 
-  private chartMempool(data: any) {
-    this.mempoolChart = {
+  // pool size
+  getPoolSize(days: number) {
+    this.dataService.getPoolSize(days).subscribe((d: any) => {
+      this.poolSizeDays = days;
+      this.poolSizeData = [{
+        "name": "Pool Size (TiB)",
+        "data": (<any[]>d).map((item) => {
+          return ({
+            "x": (new Date(item['datetime']).toLocaleString()),
+            "y": item['value'] / 1024 ** 4,
+          })
+        })
+      }];
+      this.chartPoolSize(this.poolSizeData);
+    })
+  }
+
+  private chartPoolSize(data: any) {
+    this.poolSizeChart = {
       series: data,
       legend: {
-        show: this.mempoolChartLegend
+        show: this.poolSizeChartLegend
+      },
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        labels: {
+          show: false
+        }
+      },
+      yaxis: {
+        decimalsInFloat: 0
+      },
+      colors: this.getChartColorsArray('["--vz-success"]')
+    }
+  }
+
+  // mempool size
+  getMempoolSize(days: number) {
+    this.dataService.getMempool(days).subscribe((d: any) => {
+      this.mempoolSizeDays = days;
+      this.mempoolSizeData = [{
+        "name": "Full Percentage (%)",
+        "data": (<any[]>d).filter(item => item['field'] == 'full_pct').map((item) => {
+          return ({
+            "x": (new Date(item['datetime']).toLocaleString()),
+            "y": item['value'],
+          })
+        })
+      }];
+      this.chartMempoolSize(this.mempoolSizeData);
+    })
+  }
+
+  private chartMempoolSize(data: any) {
+    this.mempoolSizeChart = {
+      series: data,
+      legend: {
+        show: this.mempoolSizeChartLegend
       },
       chart: {
         height: 350,
