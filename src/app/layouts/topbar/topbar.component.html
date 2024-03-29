@@ -33,9 +33,11 @@
                     </button>
                 </div>
                 <div class="ms-1 header-item d-none d-sm-flex d-join-pool">
-                    <button type="button" class="btn btn-light custom-toggle" data-bs-toggle="button">
-                        <span><i class="ri-rocket-line align-bottom me-1"></i> JOIN OUR POOL</span>
-                    </button>
+                    <a [routerLink]="['/join']">
+                        <button type="button" class="btn btn-light custom-toggle" data-bs-toggle="button">
+                            <span><i class="ri-rocket-line align-bottom me-1"></i> JOIN OUR POOL</span>
+                        </button>
+                    </a>
                 </div>
                 <div class="dropdown ms-1 topbar-head-dropdown header-item" ngbDropdown>
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
