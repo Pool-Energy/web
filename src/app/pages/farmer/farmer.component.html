@@ -593,6 +593,14 @@
                                 </table>
                             </div>
                             <div>
+                                <div *ngIf="(blocks$ | async) as blocks"
+                                    class="download-button-div">
+                                    <button *ngIf="blocks.length >= 1"
+                                        (click)="csvDownloadBlocks()"
+                                        class="btn btn-primary download-button">
+                                        Download CSV
+                                    </button>
+                                </div>
                                 <div class="text-md-right float-md-end blocks-pagination">
                                     <ngb-pagination [collectionSize]="blocksCollectionSize" [(page)]="blocksPage"
                                         [pageSize]="blocksPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
@@ -863,6 +871,14 @@
                                 </table>
                             </div>
                             <div>
+                                <div *ngIf="(payouttxs$ | async) as payouttxs"
+                                    class="download-button-div">
+                                    <button *ngIf="payouttxs.length >= 1"
+                                        (click)="csvDownloadPayouts()"
+                                        class="btn btn-primary download-button">
+                                        Download CSV
+                                    </button>
+                                </div>
                                 <div class="text-md-right float-md-end payouts-pagination">
                                     <ngb-pagination [collectionSize]="payouttxsCollectionSize" [(page)]="payouttxsPage"
                                         [pageSize]="payouttxsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
