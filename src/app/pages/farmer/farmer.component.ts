@@ -19,6 +19,7 @@ export class FarmerComponent {
   // launcher
   launcher_id: any = null;
   launcher: any = {};
+  launcherAddressTruncate: boolean = false;
 
   // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();
@@ -103,6 +104,8 @@ export class FarmerComponent {
       { label: 'Farmers' },
       { label: 'Details', active: true }
     ];
+
+    window.onresize = () => this.launcherAddressTruncate = window.innerWidth <= 1200;
 
     this.route.paramMap.subscribe(data => {
       this.launcher_id = data.get('id');
