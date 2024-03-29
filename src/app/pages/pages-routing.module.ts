@@ -14,6 +14,7 @@ import { InfoApiComponent } from './info-api/info-api.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
 import { LoginComponent } from './login/login.component';
+import { JoinComponent } from './join/join.component';
 
 const routes: Routes = [
   { path: '', component: FarmersComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'info/fee', component: InfoFeeComponent },
   { path: 'info/team', component: InfoTeamComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'settings', component: LoginComponent }
+  { path: 'settings', component: LoginComponent },
+  { path: 'join', component: JoinComponent }
 ];
 
 @NgModule({
