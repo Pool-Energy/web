@@ -16,7 +16,7 @@ export class PoolStatusComponent {
   pool_wallets: Array<any> = new Array();
 
   // mempool size
-  mempoolSizeDays: number = 14;
+  mempoolSizeDays: number = 7;
   mempoolSizeData: any[] = [];
   mempoolSizeChart: any = {};
   mempoolSizeChartLegend: boolean = false;

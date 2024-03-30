@@ -18,19 +18,19 @@ export class PoolStatsComponent {
   poolSizeChartLegend: boolean = false;
 
   // mempool size
-  mempoolSizeDays: number = 14;
+  mempoolSizeDays: number = 7;
   mempoolSizeData: any[] = [];
   mempoolSizeChart: any = {};
   mempoolSizeChartLegend: boolean = false;
 
   // netspace size
-  netspaceSizeDays: number = 14;
+  netspaceSizeDays: number = 7;
   netspaceSizeData: any[] = [];
   netspaceSizeChart: any = {};
   netspaceSizeChartLegend: boolean = false;
 
   // xch price
-  xchPriceDays: number = 14;
+  xchPriceDays: number = 7;
   xchPriceData: any[] = [];
   xchPriceChart: any = {};
   xchPriceChartLegend: boolean = false;
@@ -235,7 +235,7 @@ export class PoolStatsComponent {
       this.xchPriceDays = days;
       this.xchPriceData = [
         {
-          "name": "XCH Price (eur)",
+          "name": "XCH Price (€)",
           "data": (<any[]>d).filter(item => item['field'] == 'eur').map((item) => {
             return ({
               "x": (new Date(item['datetime']).toLocaleString()),
@@ -244,7 +244,7 @@ export class PoolStatsComponent {
           })
         },
         {
-          "name": "XCH Price (usd)",
+          "name": "XCH Price ($)",
           "data": (<any[]>d).filter(item => item['field'] == 'usd').map((item) => {
             return ({
               "x": (new Date(item['datetime']).toLocaleString()),
