@@ -51,11 +51,20 @@
     </div>
 </div>
 
-<!-- halving -->
-<div *ngIf="blockchain_halving_popup" class="alert alert-{{ blockchain_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
+<!-- block reward halving -->
+<div *ngIf="block_reward_halving_enabled" class="alert alert-{{ block_reward_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
     <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
-    Current block: {{ blockchain_current_block }}. Next halving block: {{ blockchain_halving_block }}.
-    Progression: <strong>{{ blockchain_halving_percent | number:".2-2" }}%</strong>.
+    Current block: {{ block_reward_halving_current_block }}. Next halving block: {{ block_reward_halving_block }}.
+    Progression: <strong>{{ block_reward_halving_percent | number:".2-2" }}%</strong>.
+    Rewards change from 1 XCH to 0.5 XCH.
+</div>
+
+<!-- plot filter halving -->
+<div *ngIf="plot_filter_halving_enabled" class="alert alert-{{ plot_filter_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
+    <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
+    Current block: {{ plot_filter_halving_current_block }}. Next halving block: {{ plot_filter_halving_block }}.
+    Progression: <strong>{{ plot_filter_halving_percent | number:".2-2" }}%</strong>.
+    Plot filter change from 512 to 256.
 </div>
 
 <!-- leaderboard -->

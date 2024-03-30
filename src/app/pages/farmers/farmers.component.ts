@@ -16,12 +16,21 @@ export class FarmersComponent {
   total_active_farmers: any = 0;
   current_fee: any = 0;
 
-  blockchain_halving_popup: boolean = false;
-  blockchain_halving_block: number = 10091520;
-  blockchain_halving_diff: number = 0;
-  blockchain_halving_percent: number = 0;
-  blockchain_halving_class: string = "info";
-  blockchain_current_block: number = 0;
+  // block reward halving
+  block_reward_halving_enabled: boolean = false;
+  block_reward_halving_block: number = 10091520;
+  block_reward_halving_diff: number = 0;
+  block_reward_halving_percent: number = 0;
+  block_reward_halving_class: string = "info";
+  block_reward_halving_current_block: number | undefined;
+
+  // plot filter halving
+  plot_filter_halving_enabled: boolean = true;
+  plot_filter_halving_block: number = 5496000;
+  plot_filter_halving_diff: number = 0;
+  plot_filter_halving_percent: number = 0;
+  plot_filter_halving_class: string = "info";
+  plot_filter_halving_current_block: number | undefined;
 
   leaderboard: Array<any> = new Array();
 
@@ -47,8 +56,11 @@ export class FarmersComponent {
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.total_active_farmers = data['farmers_active'];
       this.current_fee = data['fee'] * 100;
-      if (this.blockchain_halving_popup) {
-        this.handleHalving(data['blockchain_height']);
+      if(this.block_reward_halving_enabled) {
+        this.handleBlockRewardHalving(data['blockchain_height']);
+      }
+      if(this.plot_filter_halving_enabled) {
+        this.handlePlotFilterHalving(data['blockchain_height']);
       }
     })
 
@@ -58,16 +70,29 @@ export class FarmersComponent {
     }).subscribe(this.handleLaunchers.bind(this));
   }
 
-  private handleHalving(block: number) {
-    this.blockchain_current_block = block;
-    this.blockchain_halving_diff = this.blockchain_current_block - this.blockchain_halving_block;
-    this.blockchain_halving_percent = this.blockchain_current_block * 100 / this.blockchain_halving_block;
-    if(this.blockchain_halving_percent >= 99.5) {
-      this.blockchain_halving_class = "danger";
-    } else if(this.blockchain_halving_percent >= 99) {
-      this.blockchain_halving_class = "warning";
+  private handleBlockRewardHalving(block: number) {
+    this.block_reward_halving_current_block = block;
+    this.block_reward_halving_diff = this.block_reward_halving_current_block - this.block_reward_halving_block;
+    this.block_reward_halving_percent = this.block_reward_halving_current_block * 100 / this.block_reward_halving_block;
+    if(this.block_reward_halving_percent >= 99.5) {
+      this.block_reward_halving_class = "danger";
+    } else if(this.block_reward_halving_percent >= 99) {
+      this.block_reward_halving_class = "warning";
     } else {
-      this.blockchain_halving_class = "info";
+      this.block_reward_halving_class = "info";
+    }
+  }
+
+  private handlePlotFilterHalving(block: number) {
+    this.plot_filter_halving_current_block = block;
+    this.plot_filter_halving_diff = this.plot_filter_halving_current_block - this.plot_filter_halving_block;
+    this.plot_filter_halving_percent = this.plot_filter_halving_current_block * 100 / this.plot_filter_halving_block;
+    if(this.plot_filter_halving_percent >= 99.5) {
+      this.plot_filter_halving_class = "danger";
+    } else if(this.plot_filter_halving_percent >= 99) {
+      this.plot_filter_halving_class = "warning";
+    } else {
+      this.plot_filter_halving_class = "info";
     }
   }
 
