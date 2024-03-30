@@ -12,7 +12,7 @@ export class PoolStatsComponent {
   breadCrumbItems!: Array<{}>;
 
   // pool size
-  poolSizeDays: number = 14;
+  poolSizeDays: number = 7;
   poolSizeData: any[] = [];
   poolSizeChart: any = {};
   poolSizeChartLegend: boolean = false;
@@ -81,11 +81,11 @@ export class PoolStatsComponent {
     this.dataService.getPoolSize(days).subscribe((d: any) => {
       this.poolSizeDays = days;
       this.poolSizeData = [{
-        "name": "Pool Size (TiB)",
+        "name": "Pool Size (PiB)",
         "data": (<any[]>d).filter(item => item['field'] == 'global').map((item) => {
           return ({
             "x": (new Date(item['datetime']).toLocaleString()),
-            "y": item['value'] / 1024 ** 4,
+            "y": item['value'] / 1024 ** 5,
           })
         })
       }];
