@@ -23,6 +23,12 @@ export class PoolStatsComponent {
   mempoolSizeChart: any = {};
   mempoolSizeChartLegend: boolean = false;
 
+  // netspace size
+  netspaceSizeDays: number = 14;
+  netspaceSizeData: any[] = [];
+  netspaceSizeChart: any = {};
+  netspaceSizeChartLegend: boolean = false;
+
   constructor(
     private dataService: DataService
   ) { }
@@ -35,6 +41,7 @@ export class PoolStatsComponent {
 
     this.getPoolSize(this.poolSizeDays);
     this.getMempoolSize(this.mempoolSizeDays);
+    this.getNetspaceSize(this.netspaceSizeDays);
   }
 
   // common
@@ -163,5 +170,56 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success"]')
     }
   }
+
+    // netspace size
+    getNetspaceSize(days: number) {
+      this.dataService.getNetspace(days).subscribe((d: any) => {
+        this.netspaceSizeDays = days;
+        this.netspaceSizeData = [{
+          "name": "Netspace Size (EiB)",
+          "data": (<any[]>d).filter(item => item['field'] == 'size').map((item) => {
+            return ({
+              "x": (new Date(item['datetime']).toLocaleString()),
+              "y": item['value'] / 1024 ** 4,
+            })
+          })
+        }];
+        this.chartNetspaceSize(this.netspaceSizeData);
+      })
+    }
+  
+    private chartNetspaceSize(data: any) {
+      this.netspaceSizeChart = {
+        series: data,
+        legend: {
+          show: this.netspaceSizeChartLegend
+        },
+        chart: {
+          height: 350,
+          type: "area",
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        noData: {
+          text: "Loading..."
+        },
+        xaxis: {
+          labels: {
+            show: false
+          }
+        },
+        yaxis: {
+          decimalsInFloat: 0
+        },
+        colors: this.getChartColorsArray('["--vz-success"]')
+      }
+    }
 
 }

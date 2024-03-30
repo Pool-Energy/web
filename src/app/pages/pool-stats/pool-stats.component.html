@@ -51,3 +51,29 @@
         </div>
     </div>
 </div>
+
+<!-- netspace size -->
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Netspace Size (EiB)</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="netspaceSizeChart.series"
+                        [chart]="netspaceSizeChart.chart"
+                        [labels]="netspaceSizeChart.labels"
+                        [legend]="netspaceSizeChart.legend"
+                        [dataLabels]="netspaceSizeChart.dataLabels"
+                        [colors]="netspaceSizeChart.colors"
+                        [xaxis]="netspaceSizeChart.xaxis"
+                        [yaxis]="netspaceSizeChart.yaxis"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
