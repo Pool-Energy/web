@@ -1,5 +1,6 @@
 <app-breadcrumbs title="Status" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- wallet -->
 <div class="row" *ngFor="let wallet of pool_wallets; let i = index">
     <div class="col-xl-12">
         <div class="card crm-widget">
@@ -69,6 +70,32 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- mempool size -->
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Mempool Size (%)</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="mempoolSizeChart.series"
+                        [chart]="mempoolSizeChart.chart"
+                        [labels]="mempoolSizeChart.labels"
+                        [legend]="mempoolSizeChart.legend"
+                        [dataLabels]="mempoolSizeChart.dataLabels"
+                        [colors]="mempoolSizeChart.colors"
+                        [xaxis]="mempoolSizeChart.xaxis"
+                        [yaxis]="mempoolSizeChart.yaxis"
+                        dir="ltr">
+                    </apx-chart>
                 </div>
             </div>
         </div>
