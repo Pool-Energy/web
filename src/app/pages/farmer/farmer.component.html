@@ -363,7 +363,7 @@
                             <div>
                                 <div class="text-md-right float-md-end partials-pagination">
                                     <ngb-pagination [collectionSize]="partialsCollectionSize" [(page)]="partialsPage"
-                                        [pageSize]="partialsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="partialsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
                                         (pageChange)="refreshPartials(launcher.launcher_id)">
                                     </ngb-pagination>
                                 </div>
@@ -603,7 +603,7 @@
                                 </div>
                                 <div class="text-md-right float-md-end blocks-pagination">
                                     <ngb-pagination [collectionSize]="blocksCollectionSize" [(page)]="blocksPage"
-                                        [pageSize]="blocksPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="blocksPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
                                         (pageChange)="refreshBlocks()">
                                     </ngb-pagination>
                                 </div>
@@ -756,7 +756,7 @@
                             <div>
                                 <div class="text-md-right float-md-end payouts-pagination">
                                     <ngb-pagination [collectionSize]="payoutsCollectionSize" [(page)]="payoutsPage"
-                                        [pageSize]="payoutsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="payoutsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
                                         (pageChange)="getRewards(); refreshPayouts()">
                                     </ngb-pagination>
                                 </div>
@@ -881,7 +881,7 @@
                                 </div>
                                 <div class="text-md-right float-md-end payouts-pagination">
                                     <ngb-pagination [collectionSize]="payouttxsCollectionSize" [(page)]="payouttxsPage"
-                                        [pageSize]="payouttxsPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="payouttxsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
                                         (pageChange)="refreshPayoutTxs()">
                                     </ngb-pagination>
                                 </div>
