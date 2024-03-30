@@ -29,6 +29,12 @@ export class PoolStatsComponent {
   netspaceSizeChart: any = {};
   netspaceSizeChartLegend: boolean = false;
 
+  // xch price
+  xchPriceDays: number = 14;
+  xchPriceData: any[] = [];
+  xchPriceChart: any = {};
+  xchPriceChartLegend: boolean = false;
+
   constructor(
     private dataService: DataService
   ) { }
@@ -42,6 +48,7 @@ export class PoolStatsComponent {
     this.getPoolSize(this.poolSizeDays);
     this.getMempoolSize(this.mempoolSizeDays);
     this.getNetspaceSize(this.netspaceSizeDays);
+    this.getXchPrice(this.xchPriceDays);
   }
 
   // common
@@ -171,55 +178,117 @@ export class PoolStatsComponent {
     }
   }
 
-    // netspace size
-    getNetspaceSize(days: number) {
-      this.dataService.getNetspace(days).subscribe((d: any) => {
-        this.netspaceSizeDays = days;
-        this.netspaceSizeData = [{
-          "name": "Netspace Size (EiB)",
-          "data": (<any[]>d).filter(item => item['field'] == 'size').map((item) => {
+  // netspace size
+  getNetspaceSize(days: number) {
+    this.dataService.getNetspace(days).subscribe((d: any) => {
+      this.netspaceSizeDays = days;
+      this.netspaceSizeData = [{
+        "name": "Netspace Size (EiB)",
+        "data": (<any[]>d).filter(item => item['field'] == 'size').map((item) => {
+          return ({
+            "x": (new Date(item['datetime']).toLocaleString()),
+            "y": item['value'] / 1024 ** 4,
+          })
+        })
+      }];
+      this.chartNetspaceSize(this.netspaceSizeData);
+    })
+  }
+  
+  private chartNetspaceSize(data: any) {
+    this.netspaceSizeChart = {
+      series: data,
+      legend: {
+        show: this.netspaceSizeChartLegend
+      },
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        labels: {
+          show: false
+        }
+      },
+      yaxis: {
+        decimalsInFloat: 0
+      },
+      colors: this.getChartColorsArray('["--vz-success"]')
+    }
+  }
+
+  // xch price
+  getXchPrice(days: number) {
+    this.dataService.getXchPrice(days).subscribe((d: any) => {
+      this.xchPriceDays = days;
+      this.xchPriceData = [
+        {
+          "name": "XCH Price (eur)",
+          "data": (<any[]>d).filter(item => item['field'] == 'eur').map((item) => {
             return ({
               "x": (new Date(item['datetime']).toLocaleString()),
-              "y": item['value'] / 1024 ** 4,
+              "y": item['value'],
             })
           })
-        }];
-        this.chartNetspaceSize(this.netspaceSizeData);
-      })
+        },
+        {
+          "name": "XCH Price (usd)",
+          "data": (<any[]>d).filter(item => item['field'] == 'usd').map((item) => {
+            return ({
+              "x": (new Date(item['datetime']).toLocaleString()),
+              "y": item['value'],
+            })
+          })
+        }
+        ];
+      this.chartXchPrice(this.xchPriceData);
+    })
+  }
+    
+  private chartXchPrice(data: any) {
+    this.xchPriceChart = {
+      series: data,
+      legend: {
+        show: this.xchPriceChartLegend
+      },
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        labels: {
+          show: false
+        }
+      },
+      yaxis: {
+        decimalsInFloat: 0
+      },
+      colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
     }
-  
-    private chartNetspaceSize(data: any) {
-      this.netspaceSizeChart = {
-        series: data,
-        legend: {
-          show: this.netspaceSizeChartLegend
-        },
-        chart: {
-          height: 350,
-          type: "area",
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled: true
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        noData: {
-          text: "Loading..."
-        },
-        xaxis: {
-          labels: {
-            show: false
-          }
-        },
-        yaxis: {
-          decimalsInFloat: 0
-        },
-        colors: this.getChartColorsArray('["--vz-success"]')
-      }
-    }
+  }
 
 }

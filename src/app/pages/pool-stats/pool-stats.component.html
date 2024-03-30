@@ -77,3 +77,29 @@
         </div>
     </div>
 </div>
+
+<!-- xch price -->
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">XCH Price</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="xchPriceChart.series"
+                        [chart]="xchPriceChart.chart"
+                        [labels]="xchPriceChart.labels"
+                        [legend]="xchPriceChart.legend"
+                        [dataLabels]="xchPriceChart.dataLabels"
+                        [colors]="xchPriceChart.colors"
+                        [xaxis]="xchPriceChart.xaxis"
+                        [yaxis]="xchPriceChart.yaxis"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
