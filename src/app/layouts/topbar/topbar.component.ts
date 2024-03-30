@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Inject, ViewChild, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { EventService } from '../../core/services/event.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,17 +12,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class TopbarComponent implements OnInit {
   element: any;
-  mode: string | undefined;
   @Output() mobileMenuButtonClicked = new EventEmitter();
   flagvalue: any;
   valueset: any;
   countryName: any;
   cookieValue: any;
-  isDropdownOpen = false;
+  isDropdownOpen: boolean = false;
+  mode: string = 'light';
 
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private eventService: EventService,
     public languageService: LanguageService,
     private modalService: NgbModal,
     public _cookiesService: CookieService,
@@ -40,6 +38,17 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+
+    // light/dark mode
+    var mode = localStorage.getItem('dashboard_mode');
+    if(mode != '') {
+      this.mode = (mode == 'dark') ? 'dark' : 'light';
+    } else {
+      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        this.mode = 'dark';
+      }
+    }
+    this.changeMode(this.mode);
   }
 
   toggleMobileMenu(event: any) {
@@ -86,19 +95,12 @@ export class TopbarComponent implements OnInit {
   }
 
   changeMode(mode: string) {
-    this.mode = mode;
-    this.eventService.broadcast('changeMode', mode);
-    switch (mode) {
-      case 'light':
-        document.documentElement.setAttribute('data-bs-theme', "light");
-        break;
-      case 'dark':
-        document.documentElement.setAttribute('data-bs-theme', "dark");
-        break;
-      default:
-        document.documentElement.setAttribute('data-bs-theme', "light");
-        break;
+    if(mode == 'dark') {
+      document.documentElement.setAttribute('data-bs-theme', "dark");
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', "light");
     }
+    localStorage.setItem('dashboard_mode', mode);
   }
 
   listLang = [
