@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';

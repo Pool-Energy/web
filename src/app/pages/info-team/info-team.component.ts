@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-
 
 @Component({
   selector: 'app-info-team',
