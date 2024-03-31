@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject, interval } from 'rxjs';
 
 
 @Component({
@@ -13,9 +12,7 @@ export class JoinComponent {
   breadCrumbItems!: Array<{}>;
 
   // latency
-  pingStream: Subject<number> = new Subject<number>();
   pingPoolLatency: number = 0;
-  pingPoolInterval: number = 3000;
   pingPoolUrl: string = 'https://chia.pool.energy';
 
   constructor(
@@ -29,19 +26,22 @@ export class JoinComponent {
     ];
 
     // latency
-    this.getPoolLatency(this.pingPoolUrl, this.pingPoolInterval);
+    this.getPingLatency(this.pingPoolUrl);
   }
 
-  getPoolLatency(pingUrl: string, pingInterval: number) {
-    interval(pingInterval).subscribe(() => {
-      let timeStart: number = performance.now();
-      this.httpClient.get(pingUrl, {observe:'response', responseType:'text'}).subscribe(() => {
-        let timeEnd: number = performance.now();
-        let ping: number = timeEnd - timeStart;
-        this.pingPoolLatency = ping;
-        this.pingStream.next(ping);
-      });
-    });
+  getPingLatency(pingUrl: string) {
+    let arr: number[] = [];
+    for(let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        let timeStart: number = performance.now();
+        this.httpClient.get(pingUrl, {observe:'response', responseType:'text'}).subscribe(() => {
+          let timeEnd: number = performance.now();
+          let ping: number = timeEnd - timeStart;
+          arr.push(ping);
+          this.pingPoolLatency = arr.reduce((a, b) => a + b, 0) / arr.length;
+        });
+      }, 2000);
+    }
   }
 
 }
