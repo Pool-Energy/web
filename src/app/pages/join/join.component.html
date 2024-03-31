@@ -1,5 +1,30 @@
 <app-breadcrumbs title="Join" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- latency -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted fs-13">Pool Latency (pool.energy)</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-earth-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ pingPoolLatency | number:'1.0-0' }} ms</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- requirements -->
 <div class="row">
     <div class="col-xl-12">
