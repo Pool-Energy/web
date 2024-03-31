@@ -24,7 +24,6 @@ import { ChiaComponent } from './chia/chia.component';
 import { PoolStatusComponent } from './pool-status/pool-status.component';
 import { PoolStatsComponent } from './pool-stats/pool-stats.component';
 import { InfoFaqComponent } from './info-faq/info-faq.component';
-import { InfoApiComponent } from './info-api/info-api.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
 import { LoginComponent } from './login/login.component';
@@ -42,7 +41,6 @@ import { JoinComponent } from './join/join.component';
     PoolStatusComponent,
     PoolStatsComponent,
     InfoFaqComponent,
-    InfoApiComponent,
     InfoFeeComponent,
     InfoTeamComponent,
     LoginComponent,
