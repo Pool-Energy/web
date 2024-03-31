@@ -60,7 +60,7 @@ export class FarmersComponent {
       this.pool_space = data['pool_space'];
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.total_active_farmers = data['farmers_active'];
-      this.estimate_win = data['estimate_win'];
+      this.estimate_win = data['estimate_win'] * 60;
       this.current_fee = data['fee'] * 100;
       this.xch_current_price = data['xch_current_price']['usd'];
       if(this.block_reward_halving_enabled) {
@@ -82,7 +82,7 @@ export class FarmersComponent {
     var h = humanizer();
     return h(seconds, {
       language: "en",
-      units: ["m", "s"],
+      units: ["h", "m"],
       largest: 2
     });
   }
