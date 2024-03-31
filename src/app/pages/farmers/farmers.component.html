@@ -8,6 +8,19 @@
                 <div class="row row-cols-md-3 row-cols-1">
                     <div class="col col-lg border-end">
                         <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Pool Space</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-earth-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ pool_space || 0 | filesize:{"base": 2, "standard": "iec"} }}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
                             <h5 class="text-muted text-uppercase fs-13">Total active farmers</h5>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
@@ -34,6 +47,19 @@
                     </div>
                     <div class="col col-lg border-end">
                         <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Estimate To Win</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-heart-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">{{ humanize(estimate_win * 1000) }}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
                             <h5 class="text-muted text-uppercase fs-13">Current fee</h5>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
@@ -41,6 +67,19 @@
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <h2 class="mb-0"><span class="counter-value">{{ current_fee | number:".2-2" }}%</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">XCH Price</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-price-tag-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">${{ xch_current_price | number }}</span></h2>
                                 </div>
                             </div>
                         </div>

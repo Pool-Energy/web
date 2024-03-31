@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { humanizer } from 'humanize-duration';
 
 import { DataService } from 'src/app/data.service';
 
@@ -12,9 +13,12 @@ import { DataService } from 'src/app/data.service';
 export class FarmersComponent {
   breadCrumbItems!: Array<{}>;
 
+  pool_space: number = 0;
   current_effort: any = 0;
   total_active_farmers: any = 0;
+  estimate_win: any | undefined;
   current_fee: any = 0;
+  xch_current_price: number = 0;
 
   // block reward halving
   block_reward_halving_enabled: boolean = false;
@@ -53,9 +57,12 @@ export class FarmersComponent {
     ];
 
     this.dataService.getStats().subscribe((data: any) => {
+      this.pool_space = data['pool_space'];
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.total_active_farmers = data['farmers_active'];
+      this.estimate_win = data['estimate_win'];
       this.current_fee = data['fee'] * 100;
+      this.xch_current_price = data['xch_current_price']['usd'];
       if(this.block_reward_halving_enabled) {
         this.handleBlockRewardHalving(data['blockchain_height']);
       }
@@ -70,6 +77,17 @@ export class FarmersComponent {
     }).subscribe(this.handleLaunchers.bind(this));
   }
 
+  // common
+  humanize(seconds: number) {
+    var h = humanizer();
+    return h(seconds, {
+      language: "en",
+      units: ["m", "s"],
+      largest: 2
+    });
+  }
+
+  // halving
   private handleBlockRewardHalving(block: number) {
     this.block_reward_halving_current_block = block;
     this.block_reward_halving_diff = this.block_reward_halving_current_block - this.block_reward_halving_block;
@@ -96,6 +114,7 @@ export class FarmersComponent {
     }
   }
 
+  // launchers
   private handleLaunchers(data: any) {
     if(this.leaderboard.length == 0) {
       this.leaderboard = data['results'].slice(0, 3);
