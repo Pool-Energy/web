@@ -83,6 +83,9 @@ export class JoinComponent {
       legend: {
         show: this.pingPoolLatencyChartLegend
       },
+      noData: {
+        text: "Loading..."
+      },
       chart: {
         height: 250,
         type: "area",
@@ -95,6 +98,9 @@ export class JoinComponent {
         formatter: function(val: any) {
           return val + " ms";
         }
+      },
+      yaxis: {
+        decimalsInFloat: 0
       },
       colors: this.getChartColorsArray('["--vz-primary"]')
     };
