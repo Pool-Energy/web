@@ -3,7 +3,6 @@
 set -x
 
 if [ ! -e "/etc/Caddyfile" ]; then
-    sed -i "s|%%DOMAIN%%|${DOMAIN:=localhost}|g" /etc/Caddyfile.tpl
     sed -i "s|%%LOGLEVEL%%|${LOGLEVEL:=INFO}|g" /etc/Caddyfile.tpl
     sed -i "s|%%LOGFORMAT%%|${LOGFORMAT:=json}|g" /etc/Caddyfile.tpl
     mv /etc/Caddyfile.tpl /etc/Caddyfile
