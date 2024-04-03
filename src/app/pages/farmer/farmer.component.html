@@ -18,8 +18,8 @@
         <div class="col">
             <div class="p-2">
                 <h3 class="text-white mb-1">{{ launcher.name || 'Undefined' }}</h3>
-                <p *ngIf="!launcherAddressTruncate" class="text-white text-opacity-75">{{ launcher_id }}</p>
-                <p *ngIf="launcherAddressTruncate" class="text-white text-opacity-75">{{ launcher_id | maxLength:16 }}</p>
+                <p *ngIf="!truncateRequired" class="text-white text-opacity-75">{{ launcher_id }}</p>
+                <p *ngIf="truncateRequired" class="text-white text-opacity-75">{{ launcher_id | maxLength:32 }}</p>
                 <div class="hstack text-white-50 gap-1">
                     <div *ngIf="launcher.is_pool_member"><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
                     <div *ngIf="!launcher.is_pool_member"><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline</div>
@@ -389,7 +389,10 @@
                                                                 <i class="ri-stack-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[0] | maxLength:32 }}</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="!truncateRequired" class="counter-value">{{ harvester[0] | maxLength:24 }}</span>
+                                                                    <span *ngIf="truncateRequired" class="counter-value">{{ harvester[0] | maxLength:12 }}</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>

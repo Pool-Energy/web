@@ -16,10 +16,12 @@ import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 export class FarmerComponent {
   breadCrumbItems!: Array<{}>;
 
+  // common
+  truncateRequired: boolean = false;
+
   // launcher
   launcher_id: any = null;
   launcher: any = {};
-  launcherAddressTruncate: boolean = false;
 
   // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();
@@ -106,7 +108,7 @@ export class FarmerComponent {
       { label: 'Details', active: true }
     ];
 
-    window.onresize = () => this.launcherAddressTruncate = window.innerWidth <= 1200;
+    window.onresize = () => this.truncateRequired = window.innerWidth <= 1200;
 
     this.route.paramMap.subscribe(data => {
       this.launcher_id = data.get('id');
