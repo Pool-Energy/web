@@ -447,7 +447,7 @@ export class FarmerComponent {
 
   private handlePayoutTxs(data: any) {
     this.payouttxsCollectionSize = data['count'];
-    this._payouttxs$.next(data['results'].reverse());
+    this._payouttxs$.next(data['results']);
     this.chartPayouts(data);
   }
 
