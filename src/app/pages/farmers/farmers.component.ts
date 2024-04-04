@@ -14,7 +14,8 @@ export class FarmersComponent {
   breadCrumbItems!: Array<{}>;
 
   pool_space: number = 0;
-  current_effort: any = 0;
+  current_effort: number = 0;
+  average_effort: number = 0;
   total_active_farmers: any = 0;
   estimate_win: any | undefined;
   current_fee: any = 0;
@@ -59,6 +60,7 @@ export class FarmersComponent {
     this.dataService.getStats().subscribe((data: any) => {
       this.pool_space = data['pool_space'];
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
+      this.average_effort = data['average_effort'];
       this.total_active_farmers = data['farmers_active'];
       this.estimate_win = data['estimate_win'] * 60;
       this.current_fee = data['fee'] * 100;

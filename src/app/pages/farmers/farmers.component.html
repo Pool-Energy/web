@@ -34,13 +34,13 @@
                     </div>
                     <div class="col col-lg border-end">
                         <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Current effort</h5>
+                            <h5 class="text-muted text-uppercase fs-13">Effort current / average</h5>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                     <i class="ri-scales-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ current_effort | number:".2-2" }}%</span></h2>
+                                    <h2 class="mb-0"><span class="counter-value">{{ current_effort | number:".0-0" }}% / {{ average_effort | number:".0-0" }}%</span></h2>
                                 </div>
                             </div>
                         </div>
