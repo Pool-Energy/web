@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataService } from 'src/app/data.service';
@@ -114,7 +114,7 @@ export class LoginComponent {
   }
 
   validateCustomDifficulty(value: any) {
-    if(value < 10 || value > 150) {
+    if(value < 1 || value > 100000 || isNaN(value)) {
       return false;
     }
     return true;
