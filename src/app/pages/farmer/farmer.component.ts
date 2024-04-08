@@ -226,11 +226,11 @@ export class FarmerComponent {
         series: [
           {
             name: "Successful Partials",
-            data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; })
+            data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
           },
           {
             name: "Failed Partials",
-            data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; })
+            data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
           }
         ],
         legend: {
