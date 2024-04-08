@@ -153,7 +153,24 @@
                 <div class="live-preview">
                     <div class="row">
                         <p>
-
+                            Our pool adjusts the difficulty based on the number of partials you submit. Here's how it works:
+                            <br />
+                            <br />
+                            First, we set a target number of partials based on the difficulty you chose. Difficulty options are LOWEST, LOW, MEDIUM, HIGH and HIGHEST.
+                            Also you can select CUSTOM difficulty with a custom value if you have Gigahorse.
+                            <br />
+                            The value is your own target number of partials sent per day.
+                            For example 100 would set the target number of partials to 100. You should aim to send approximately this number of partials. If you send a lot less or a lot more, the system will adjust the time taken accordingly.
+                            <br />
+                            - If the number of recent partials is less than the target number and the time taken is less than 80% of the target time, the current difficulty is returned unchanged.
+                            <br />
+                            - If the number of recent partials is less than the target number, the time taken is adjusted by multiplying it by the ratio of the target number to the number of recent partials.
+                            <br />
+                            - If the number of recent partials is greater than 150% of the target number, the time taken is also adjusted by decreasing it, so that it appears that you sent fewer.
+                            <br />
+                            <br />
+                            Finally, the new difficulty is calculated by multiplying the current difficulty by the ratio of the target time to the time taken, and returns the the greater value between difficulty and the new difficulty.
+                            <br />
                         </p>
                     </div>
                 </div>
