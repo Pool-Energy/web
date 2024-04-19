@@ -145,7 +145,8 @@
                                                                 <i class="ri-shield-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.difficulty }}</span></h2>
+                                                                <h2 *ngIf="!launcher.custom_difficulty" class="mb-0">{{ launcher.difficulty }} <span class="custom-difficulty">(auto)</span></h2>
+                                                                <h2 *ngIf="launcher.custom_difficulty" class="mb-0">{{ launcher.difficulty }} <span class="custom-difficulty">(fixed)</span></h2>
                                                             </div>
                                                         </div>
                                                     </div>
