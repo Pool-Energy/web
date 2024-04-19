@@ -102,10 +102,10 @@ export class LoginComponent {
     );
   }
 
-  setCustomDifficulty(data: any) {
-    const element = document.getElementById("ifCustomValue");
+  setUserDefinedDifficulty(data: any) {
+    const element = document.getElementById("ifUserDefinedValue");
     if(element && data.target.value) {
-      if(data.target.value == "CUSTOM") {
+      if(data.target.value == "CUSTOM" || data.target.value == "EXPERT") {
         element.style.display = "block"
       } else {
         element.style.display = "none"
