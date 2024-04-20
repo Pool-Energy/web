@@ -50,8 +50,25 @@
                     </div>
                     <div class="col col-lg border-end">
                         <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Height</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-checkbox-multiple-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0">
+                                        <span class="counter-value">
+                                            {{ wallet.height || '-' }}
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg border-end">
+                        <div class="py-4 px-3">
                             <h5 class="text-muted text-uppercase fs-13">Status</h5>
-                            <div class="d-flex align-items-center" *ngIf="wallet.synced">
+                            <div class="d-flex align-items-center" *ngIf="wallet.synced && !wallet.syncing">
                                 <div class="flex-shrink-0">
                                     <i class="ri-checkbox-circle-line display-6 text-muted"></i>
                                 </div>
@@ -59,9 +76,17 @@
                                     <h2 class="mb-0"><span class="counter-value">Synced</span></h2>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center" *ngIf="!wallet.synced">
+                            <div class="d-flex align-items-center" *ngIf="!wallet.synced && wallet.syncing">
                                 <div class="flex-shrink-0">
                                     <i class="ri-error-warning-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span class="counter-value">Syncing</span></h2>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center" *ngIf="!wallet.synced && !wallet.syncing">
+                                <div class="flex-shrink-0">
+                                    <i class="ri-close-circle-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <h2 class="mb-0"><span class="counter-value">Not synced</span></h2>
