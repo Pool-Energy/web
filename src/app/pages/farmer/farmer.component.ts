@@ -211,7 +211,7 @@ export class FarmerComponent {
           }
         },
         dataLabels: {
-          enabled: false
+          enabled: true
         },
         xaxis: {
           labels: {
