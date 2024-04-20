@@ -36,6 +36,11 @@ export class FarmerComponent {
   blocksPerDayChartData: any[] = [];
   blocksDownloadLimit: number = 10000;
 
+  // overview
+  difficultyAndPointsData: any[] = [];
+  difficultyAndPointsChart: any = {};
+  difficultyAndPointsChartLegend: boolean = false;
+
   // partials
   partialsData: any[] = [];
   partialsTable: any[] = [];
@@ -121,6 +126,7 @@ export class FarmerComponent {
 
     // default overview tab
     this.refreshLauncherSize(this.launcher_id);
+    this.refreshDifficultyAndPoints(this.launcher_id);
     this.refreshPartials(this.launcher_id);
   }
 
@@ -159,13 +165,87 @@ export class FarmerComponent {
     });
   }
 
+  // overview
+  refreshDifficultyAndPoints(launcher_id: any) {
+    var successes = new Map();
+    var errors = new Map();
+    var difficulty = new Map();
+    var points = new Map();
+    var hours = new Set();
+
+    this.partialsTable = [];
+    this.partialsFiltered = [];
+    this.harvesters.clear();
+
+    var obs = new Observable(subscriber => {
+      this.dataService.getPartials(launcher_id).subscribe((data: any) => {
+        this.partialsCollectionSize = data['count'];
+        this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
+      });
+    });
+
+    obs.subscribe(
+      (x) => { },
+      (err) => { console.error("Something wrong occurred: " + err); },
+      () => this.difficultyAndPointsChart = {
+        series: [
+          {
+            name: "Difficulty",
+            type: "line",
+            data: Array.from(difficulty, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
+          },
+          {
+            name: "Points",
+            type: "column",
+            data: Array.from(points, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
+          }
+        ],
+        legend: {
+          show: this.difficultyAndPointsChartLegend
+        },
+        chart: {
+          height: 250,
+          type: "area",
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          labels: {
+            show: false
+          }
+        },
+        yaxis: [
+          {
+            title: {
+              text: "Difficulty",
+            }
+          },
+          {
+            opposite: true,
+            title: {
+              text: "Points",
+            }
+          }
+        ],
+        colors: this.getChartColorsArray('["--vz-success","--vz-primary"]')
+      }
+    );
+  }
+
   // partials
-  private handlePartials(subscriber: any, data: any, successes: any, errors: any, hours: any) {
+  private handlePartials(subscriber: any, data: any, successes: any, errors: any, difficulty: any, points: any, hours: any) {
     this.partialsTable = this.partialsTable.concat(data['results']);
     data['results'].forEach((v: any) => {
       this.harvesters.add(v['harvester_id']);
       var hour = Math.floor(v['timestamp'] / 3600) * 3600;
+
       hours.add(hour);
+      difficulty.set(hour, v['difficulty']);
+      points.set(hour, (points.get(hour) || 0) + v['difficulty']);
 
       if(v.error === null) {
         this.partialsSuccessful++;
@@ -181,7 +261,7 @@ export class FarmerComponent {
 
     if(data['next']) {
       this.dataService.getNext(data['next']).subscribe((data) => {
-        this.handlePartials(subscriber, data, successes, errors, hours);
+        this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
       });
     } else {
       subscriber.complete();
@@ -206,6 +286,8 @@ export class FarmerComponent {
   refreshPartials(launcher_id: any) {
     var successes = new Map();
     var errors = new Map();
+    var difficulty = new Map();
+    var points = new Map();
     var hours = new Set();
 
     this.partialsTable = [];
@@ -215,7 +297,7 @@ export class FarmerComponent {
     var obs = new Observable(subscriber => {
       this.dataService.getPartials(launcher_id).subscribe((data: any) => {
         this.partialsCollectionSize = data['count'];
-        this.handlePartials(subscriber, data, successes, errors, hours);
+        this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
       });
     });
 
@@ -226,10 +308,12 @@ export class FarmerComponent {
         series: [
           {
             name: "Successful Partials",
+            type: "area",
             data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
           },
           {
             name: "Failed Partials",
+            type: "area",
             data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
           }
         ],
@@ -251,7 +335,7 @@ export class FarmerComponent {
             show: false
           }
         },
-        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+        colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]')
       }
     );
   }
