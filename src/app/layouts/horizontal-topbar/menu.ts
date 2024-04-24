@@ -150,6 +150,13 @@ export const MENU: MenuItem[] = [
         icon: 'ri-facebook-line',
         link: 'https://www.facebook.com/pool.energy/',
         parentId: 8
+      },
+      {
+        id: 86,
+        label: 'MENUITEMS.CONTACT.LIST.DISCORD',
+        icon: 'ri-discord-line',
+        link: 'https://discord.gg/arZDWsY5xZ',
+        parentId: 8
       }
     ]
   }

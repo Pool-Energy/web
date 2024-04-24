@@ -48,7 +48,8 @@
         "TWITTER": "Twitter",
         "REDDIT": "Reddit",
         "YOUTUBE": "Youtube",
-        "FACEBOOK": "Facebook"
+        "FACEBOOK": "Facebook",
+        "DISCORD": "Discord"
       }
     }
   }
