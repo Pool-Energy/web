@@ -91,7 +91,7 @@
 </div>
 
 <!-- block reward halving -->
-<div *ngIf="block_reward_halving_enabled && block_reward_halving_percent >= 98.5"
+<div *ngIf="block_reward_halving_enabled && block_reward_halving_percent >= 98.5 && block_reward_halving_percent <= 100.0"
     class="alert alert-{{ block_reward_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
     <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
     Current block: {{ block_reward_halving_current_block }}. Next halving block: {{ block_reward_halving_block }}.
@@ -100,7 +100,7 @@
 </div>
 
 <!-- plot filter halving -->
-<div *ngIf="plot_filter_halving_enabled && plot_filter_halving_percent >= 98.5"
+<div *ngIf="plot_filter_halving_enabled && plot_filter_halving_percent >= 98.5 && plot_filter_halving_percent <= 100.0"
     class="alert alert-{{ plot_filter_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
     <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
     Current block: {{ plot_filter_halving_current_block }}. Next halving block: {{ plot_filter_halving_block }}.
