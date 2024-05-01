@@ -172,7 +172,7 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 0
+        decimalsInFloat: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }
@@ -223,7 +223,7 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 0
+        decimalsInFloat: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }
@@ -285,7 +285,7 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 0
+        decimalsInFloat: 2
       },
       colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
     }

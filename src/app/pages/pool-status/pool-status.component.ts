@@ -109,7 +109,7 @@ export class PoolStatusComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 0
+        decimalsInFloat: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }

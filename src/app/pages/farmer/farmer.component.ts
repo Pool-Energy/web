@@ -575,6 +575,9 @@ export class FarmerComponent {
           return val;
         }
       },
+      yaxis: {
+        decimalsInFloat: 2
+      },
       colors: this.getChartColorsArray('["--vz-primary","--vz-success"]')
     };
   }
