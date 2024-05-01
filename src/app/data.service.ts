@@ -67,7 +67,7 @@ export class DataService {
 
   getPartialTs(attrs?: any) {
     var params = new HttpParams();
-    params = params.set('days', '1');
+    params = params.set('days', '2');
     if(attrs) {
       if(attrs.launcher) params = params.set('launcher', attrs.launcher);
     }
