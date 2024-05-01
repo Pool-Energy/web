@@ -149,7 +149,8 @@
                         <table class="table align-middle table-nowrap table-striped-columns mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col" style="width: 50px;">#</th>
+                                    <th scope="col" style="width: 50px;"></th>
                                     <th scope="col">Launcher ID</th>
                                     <th scope="col">Points (24 hours)</th>
                                     <th scope="col">Difficulty</th>
@@ -160,6 +161,10 @@
                             <tbody>
                                 <tr *ngFor="let launcher of launchers$ | async; let i = index">
                                     <th scope="row">{{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}</th>
+                                    <td>
+                                        <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="img-thumbnail-farmer" />
+                                        <img *ngIf="!launcher.picture_url" src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail-farmer" />
+                                    </td>
                                     <td><a [routerLink]="['/farmer', launcher.launcher_id]">{{ launcher.name || launcher.launcher_id }}</a></td>
                                     <td>{{ launcher.points_pplns }}</td>
                                     <td>{{ launcher.difficulty }}</td>

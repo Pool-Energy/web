@@ -13,3 +13,11 @@
 .leaderboard-3::before {
     color: #c49c48;
 }
+
+.img-thumbnail-farmer {
+    max-width: 20px;
+    border-top-left-radius: var(--vz-border-radius) !important;
+    border-top-right-radius: var(--vz-border-radius) !important;
+    border-bottom-left-radius: var(--vz-border-radius) !important;
+    border-bottom-right-radius: var(--vz-border-radius) !important;
+}
