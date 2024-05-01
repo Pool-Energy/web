@@ -3,7 +3,8 @@
 <!-- profile background -->
 <div class="profile-foreground position-relative mx-n4">
     <div class="profile-wid-bg profile-wid-rounded">
-        <img src="assets/images/cover-pattern.png" alt="" class="profile-wid-img" />
+        <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="profile-wid-img" />
+        <img *ngIf="!launcher.picture_url" src="assets/images/cover-pattern.png" alt="" class="profile-wid-img" />
     </div>
 </div>
 
@@ -12,7 +13,8 @@
     <div class="row g-4">
         <div class="col-auto">
             <div class="avatar-lg">
-                <img src="assets/images/users/user-dummy-img.jpg" alt="user-img" class="img-thumbnail rounded-circle" />
+                <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="img-thumbnail" />
+                <img *ngIf="!launcher.picture_url" src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail" />
             </div>
         </div>
         <div class="col">

@@ -14,6 +14,7 @@ export class LoginComponent {
 
   @ViewChild('farmerName') farmerName!: | ElementRef<any>;
   @ViewChild('farmerEmail') farmerEmail!: | ElementRef<any>;
+  @ViewChild('farmerPicture') farmerPicture!: | ElementRef<any>;
   @ViewChild('minPayout') minPayout!: | ElementRef<any>;
   @ViewChild('customDifficulty') customDifficulty!: | ElementRef<any>;
   @ViewChild('customDifficultyValue') customDifficultyValue!: | ElementRef<any>;
@@ -25,6 +26,7 @@ export class LoginComponent {
   difficultyValue: string = "";
   farmerNameError: string = "";
   farmerEmailError: string = "";
+  farmerPictureError: string = "";
   minPayoutError: string = "";
   customDifficultyError: string = "";
 
@@ -75,6 +77,7 @@ export class LoginComponent {
   saveSettings() {
     this.farmerNameError = "";
     this.farmerEmailError = "";
+    this.farmerPictureError = "";
     this.minPayoutError = "";
     this.customDifficultyError = "";
 
@@ -87,6 +90,7 @@ export class LoginComponent {
     this.dataService.updateLauncher(this.farmer.launcher_id, {
       "name": this.farmerName.nativeElement.value,
       "email": (this.farmerEmail.nativeElement.value) ? this.farmerEmail.nativeElement.value : null,
+      "picture_url": (this.farmerPicture.nativeElement.value) ? this.farmerPicture.nativeElement.value : null,
       "minimum_payout": (this.minPayout.nativeElement.value) ? this.minPayout.nativeElement.value * 1000000000000 : null,
       "custom_difficulty": (this.customDifficulty.nativeElement.value) ? this.customDifficulty.nativeElement.value + this.difficultyValue : null,
     }).subscribe(
@@ -96,6 +100,7 @@ export class LoginComponent {
       error => {
         this.farmerNameError = error.error?.farmer_name;
         this.farmerEmailError = error.error?.farmer_email;
+        this.farmerPictureError = error.error?.farmer_picture;
         this.minPayoutError = error.error?.min_payout;
         this.customDifficultyError = error.error?.custom_difficulty
       }
