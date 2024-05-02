@@ -345,6 +345,7 @@ export class FarmerComponent {
     var ticks: Set<number> = new Set();
     this.harvestersTemp.clear();
     this.dataService.getPartialTs({launcher: launcher_id}).subscribe((d: any) => {
+      console.log(d);
       (<any[]>d).forEach(i => {
         var harvester: any = this.harvestersTemp.get(i['harvester']);
         if(!harvester) {
@@ -352,6 +353,7 @@ export class FarmerComponent {
             "points_total": 0,
             "partials_failed": 0,
             "partials_success": 0,
+            "version": null,
             "data": [
               {"name": "Successful Partials", "data": []},
               {"name": "Failed Partials", "data": []}
@@ -369,6 +371,9 @@ export class FarmerComponent {
           } else {
             harvester['data'][0]['data'].push({"x": date, "y": i['value']});
             harvester['partials_success'] += i['value'];
+          }
+          if(i['version']) {
+            harvester['version'] = i['version'];
           }
         } else {
           if(!i['error']) {
