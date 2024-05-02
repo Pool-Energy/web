@@ -329,6 +329,7 @@
                                             <th scope="col">Harvester ID</th>
                                             <th scope="col">Plot ID</th>
                                             <th scope="col" style="width: 150px;">Chia Version</th>
+                                            <th scope="col" style="width: 100px;">Time Taken</th>
                                             <th scope="col" style="width: 200px;">State</th>
                                         </tr>
                                     </thead>
@@ -339,6 +340,10 @@
                                             <td>{{ partial.harvester_id | maxLength:32 }}</td>
                                             <td>{{ partial.plot_id | maxLength:32 }}</td>
                                             <td>{{ partial.chia_version }}</td>
+                                            <td>
+                                                <span *ngIf="!partial.time_taken">-</span>
+                                                <span *ngIf="partial.time_taken">{{ partial.time_taken | number:".2-2" }} s</span>
+                                            </td>
                                             <td>
                                                 <span *ngIf="partial.error" class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
                                                 <span *ngIf="!partial.error" class="badge bg-success-subtle text-success">SUCCESS</span>
