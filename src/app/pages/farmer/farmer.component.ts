@@ -353,11 +353,16 @@ export class FarmerComponent {
             "partials_failed": 0,
             "partials_success": 0,
             "version": null,
+            "name": null,
             "data": [
               {"name": "Successful Partials", "data": []},
               {"name": "Failed Partials", "data": []}
             ]
           }
+          this.dataService.getHarvester({harvester: i['harvester']}).subscribe((h: any) => {
+            harvester['version'] = h['results'][0]['version'] ? h['results'][0]['version'] : null;
+            harvester['name'] = h['results'][0]['name'] ? h['results'][0]['name'] : null;
+          });
           this.harvestersTemp.set(i['harvester'], harvester);
         }
         if(i['result'] == "count") {
