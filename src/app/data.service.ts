@@ -171,6 +171,16 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/launcher_size/', { params });
   }
 
+  getHarvester(attrs?: any) {
+    var params = new HttpParams();
+    if(attrs) {
+      if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+      if(attrs.harvester) params = params.set('harvester', attrs.harvester);
+      if(attrs.limit) params = params.set('limit', attrs.limit);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/harvester/', { params });
+  }
+
   getNext(url: any) {
     return this.httpClient.get(url);
   }

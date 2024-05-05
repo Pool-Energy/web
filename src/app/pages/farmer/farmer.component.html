@@ -342,7 +342,8 @@
                                             <td>{{ partial.chia_version }}</td>
                                             <td>
                                                 <span *ngIf="!partial.time_taken">-</span>
-                                                <span *ngIf="partial.time_taken">{{ partial.time_taken | number:".2-2" }} s</span>
+                                                <span *ngIf="partial.time_taken && partial.time_taken == 999.999">-</span>
+                                                <span *ngIf="partial.time_taken && partial.time_taken != 999.999">{{ partial.time_taken | number:".3-3" }} s</span>
                                             </td>
                                             <td>
                                                 <span *ngIf="partial.error" class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
@@ -381,7 +382,10 @@
                                                                 <i class="ri-stack-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
+                                                                <h2 *ngIf="harvester[1].name" class="mb-0">
+                                                                    <span class="counter-value">{{ harvester[1].name | maxLength:24 }}</span>
+                                                                </h2>
+                                                                <h2 *ngIf="!harvester[1].name" class="mb-0">
                                                                     <span *ngIf="!truncateRequired" class="counter-value">{{ harvester[0] | maxLength:24 }}</span>
                                                                     <span *ngIf="truncateRequired" class="counter-value">{{ harvester[0] | maxLength:12 }}</span>
                                                                 </h2>
