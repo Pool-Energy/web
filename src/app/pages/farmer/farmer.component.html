@@ -343,7 +343,8 @@
                                             <td>
                                                 <span *ngIf="!partial.time_taken">-</span>
                                                 <span *ngIf="partial.time_taken && partial.time_taken == 999.999">-</span>
-                                                <span *ngIf="partial.time_taken && partial.time_taken != 999.999">{{ partial.time_taken | number:".3-3" }} s</span>
+                                                <span *ngIf="partial.time_taken && partial.time_taken < 000.000">-</span>
+                                                <span *ngIf="partial.time_taken && partial.time_taken != 999.999 && partial.time_taken >= 000.000">{{ partial.time_taken | number:".3-3" }} s</span>
                                             </td>
                                             <td>
                                                 <span *ngIf="partial.error" class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
