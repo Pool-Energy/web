@@ -27,6 +27,7 @@ export class PoolStatusComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
+      { label: 'Home', link: '/'},
       { label: 'Pool' },
       { label: 'Status', active: true }
     ];

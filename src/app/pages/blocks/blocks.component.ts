@@ -38,7 +38,7 @@ export class BlocksComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home' },
+      { label: 'Home', link: '/' },
       { label: 'Blocks', active: true }
     ];
 

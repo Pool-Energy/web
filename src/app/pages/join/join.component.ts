@@ -25,7 +25,7 @@ export class JoinComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Pool' },
+      { label: 'Home', link: '/' },
       { label: 'Join', active: true }
     ];
 

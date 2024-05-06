@@ -13,7 +13,7 @@ export class InfoFaqComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Info' },
+      { label: 'Info', link: '/' },
       { label: 'FAQ', active: true }
     ];
   }

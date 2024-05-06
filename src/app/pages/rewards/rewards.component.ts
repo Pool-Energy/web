@@ -34,7 +34,7 @@ export class RewardsComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home' },
+      { label: 'Home', link: '/' },
       { label: 'Rewards', active: true }
     ];
 

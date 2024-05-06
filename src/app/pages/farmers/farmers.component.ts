@@ -53,7 +53,7 @@ export class FarmersComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home' },
+      { label: 'Home', link: '/' },
       { label: 'Farmers', active: true }
     ];
 

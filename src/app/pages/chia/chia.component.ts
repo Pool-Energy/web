@@ -17,7 +17,7 @@ export class ChiaComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home' },
+      { label: 'Home', link: '/' },
       { label: 'Chia', active: true }
     ];
   }

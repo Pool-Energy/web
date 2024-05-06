@@ -38,7 +38,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home' },
+      { label: 'Home', link: '/' },
       { label: 'Settings', active: true }
     ];
 
