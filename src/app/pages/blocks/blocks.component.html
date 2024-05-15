@@ -124,6 +124,7 @@
                                     <th scope="col">Height</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Farmer</th>
+                                    <th scope="col" style="width: 50px;">Fee</th>
                                     <th scope="col" style="width: 150px;">Pool Space</th>
                                     <th scope="col" style="width: 75px;">Pool Effort</th>
                                 </tr>
@@ -137,6 +138,15 @@
                                     </td>
                                     <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
                                     <td><a [routerLink]="['/farmer', block.farmed_by.launcher_id]">{{ block.farmed_by.name || block.farmed_by.launcher_id }}</a></td>
+                                    <td class="td-center">
+                                        <span *ngIf="!block.gigahorse_fee"></span>
+                                        <span *ngIf="block.gigahorse_fee"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title="This reward has been taken as a fee by Gigahorse">
+                                            <i class="ri-ticket-2-line ri-ticket-2-line-color"></i>
+                                        </span>
+                                    </td>
                                     <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                                     <td>
                                         <span *ngIf="block.luck == -1" class="badge bg-warning-subtle text-warning">Unknown</span>

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 import { DataService } from 'src/app/data.service';
-import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 
 @Component({

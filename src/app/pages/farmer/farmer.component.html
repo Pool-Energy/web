@@ -575,6 +575,7 @@
                                             <th scope="col">Price</th>
                                             <th scope="col">Pool reward</th>
                                             <th scope="col">Pool size</th>
+                                            <th scope="col" style="width: 50px;">Fee</th>
                                             <th scope="col" style="width: 50px;">Confirmed</th>
                                             <th scope="col" style="width: 75px;">Pool effort</th>
                                         </tr>
@@ -590,6 +591,15 @@
                                             <td>${{ block.xch_price.usd }}</td>
                                             <td>{{ block.amount / 1000000000000 }} XCH</td>
                                             <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
+                                            <td class="td-center">
+                                                <span *ngIf="!block.gigahorse_fee"></span>
+                                                <span *ngIf="block.gigahorse_fee"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="This reward has been taken as a fee by Gigahorse">
+                                                    <i class="ri-ticket-2-line ri-ticket-2-line-color"></i>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <a href="https://xchscan.com/blocks/{{ block.confirmed_block_index }}" target="_blank">
                                                     {{ block.confirmed_block_index }}
