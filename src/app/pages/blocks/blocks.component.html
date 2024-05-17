@@ -121,12 +121,15 @@
                         <table class="table align-middle table-nowrap table-striped-columns mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col">Height</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Farmer</th>
-                                    <th scope="col" style="width: 50px;">Fee</th>
+                                    <th scope="col" style="width: 150px;">Height</th>
+                                    <th scope="col" style="width: 250px;">Date</th>
+                                    <th scope="col" style="width: 300px;">Farmer</th>
+                                    <th scope="col" style="width: 30px;"></th>
+                                    <th scope="col" style="width: 300px;">Puzzle Hash</th>
+                                    <th scope="col" style="width: 300px;">Singleton</th>
+                                    <th scope="col" style="width: 200px;">Pool Reward</th>
                                     <th scope="col" style="width: 150px;">Pool Space</th>
-                                    <th scope="col" style="width: 75px;">Pool Effort</th>
+                                    <th scope="col" style="width: 100px;">Pool Effort</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="(blocks$ | async) as blocks;">
@@ -137,16 +140,23 @@
                                         </a>
                                     </td>
                                     <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
-                                    <td><a [routerLink]="['/farmer', block.farmed_by.launcher_id]">{{ block.farmed_by.name || block.farmed_by.launcher_id }}</a></td>
+                                    <td>
+                                        <a [routerLink]="['/farmer', block.farmed_by.launcher_id]">
+                                            {{ block.farmed_by.name || block.farmed_by.launcher_id }}
+                                        </a>
+                                    </td>
                                     <td class="td-center">
                                         <span *ngIf="!block.gigahorse_fee"></span>
                                         <span *ngIf="block.gigahorse_fee"
                                             data-bs-toggle="tooltip"
                                             data-bs-placement="top"
                                             title="This reward has been taken as a fee by Gigahorse">
-                                            <i class="ri-ticket-2-line ri-ticket-2-line-color"></i>
+                                            <i class="mdi mdi-horse mdi-horse-color"></i>
                                         </span>
                                     </td>
+                                    <td>{{ block.puzzle_hash }}</td>
+                                    <td>{{ block.singleton }}</td>
+                                    <td>{{ block.amount / 1000000000000 }} XCH</td>
                                     <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                                     <td>
                                         <span *ngIf="block.luck == -1" class="badge bg-warning-subtle text-warning">Unknown</span>

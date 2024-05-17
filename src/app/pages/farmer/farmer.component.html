@@ -570,14 +570,16 @@
                                 <table class="table align-middle table-nowrap table-striped-columns mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                            <th scope="col">Height</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Pool reward</th>
-                                            <th scope="col">Pool size</th>
-                                            <th scope="col" style="width: 50px;">Fee</th>
-                                            <th scope="col" style="width: 50px;">Confirmed</th>
-                                            <th scope="col" style="width: 75px;">Pool effort</th>
+                                            <th scope="col" style="width: 150px;">Height</th>
+                                            <th scope="col" style="width: 250px;">Date</th>
+                                            <th scope="col" style="width: 30px;"></th>
+                                            <th scope="col" style="width: 100px;">Difficulty</th>
+                                            <th scope="col" style="width: 300px;">Puzzle Hash</th>
+                                            <th scope="col" style="width: 300px;">Singleton</th>
+                                            <th scope="col" style="width: 100px;">Price</th>
+                                            <th scope="col" style="width: 150px;">Pool Reward</th>
+                                            <th scope="col" style="width: 150px;">Pool size</th>
+                                            <th scope="col" style="width: 100px;">Pool effort</th>
                                         </tr>
                                     </thead>
                                     <tbody *ngIf="(blocks$ | async) as blocks;">
@@ -588,23 +590,21 @@
                                                 </a>
                                             </td>
                                             <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
-                                            <td>${{ block.xch_price.usd }}</td>
-                                            <td>{{ block.amount / 1000000000000 }} XCH</td>
-                                            <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                                             <td class="td-center">
                                                 <span *ngIf="!block.gigahorse_fee"></span>
                                                 <span *ngIf="block.gigahorse_fee"
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="top"
                                                     title="This reward has been taken as a fee by Gigahorse">
-                                                    <i class="ri-ticket-2-line ri-ticket-2-line-color"></i>
+                                                    <i class="mdi mdi-horse mdi-horse-color"></i>
                                                 </span>
                                             </td>
-                                            <td>
-                                                <a href="https://xchscan.com/blocks/{{ block.confirmed_block_index }}" target="_blank">
-                                                    {{ block.confirmed_block_index }}
-                                                </a>
-                                            </td>
+                                            <td>{{ block.farmed_by.difficulty }}</td>
+                                            <td>{{ block.puzzle_hash }}</td>
+                                            <td>{{ block.singleton }}</td>
+                                            <td>${{ block.xch_price.usd }}</td>
+                                            <td>{{ block.amount / 1000000000000 }} XCH</td>
+                                            <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                                             <td>
                                                 <span *ngIf="block.luck == -1" class="badge bg-warning-subtle text-warning">Unknown</span>
                                                 <span *ngIf="block.luck < 100" class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
