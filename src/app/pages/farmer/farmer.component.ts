@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
 import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
+import { compare } from 'compare-versions';
 
 import { DataService } from 'src/app/data.service';
 
@@ -18,6 +19,8 @@ export class FarmerComponent {
 
   // common
   truncateRequired: boolean = false;
+  warningChiaVersion: string = "2.2.0";
+  criticalChiaVersion: string = "1.6.2";
 
   // launcher
   launcher_id: any = null;
@@ -341,6 +344,20 @@ export class FarmerComponent {
   }
 
   // harvesters
+  supportHarvesterVersion(client_version: any) {
+    if(!client_version) { return true; }
+    client_version = client_version.split('.');
+    if(client_version.length > 3) { client_version.splice(client_version.length-1, 1); }
+    client_version = client_version.join('.');
+    if(compare(client_version, this.criticalChiaVersion, '<')) {
+      return "critical";
+    } else if(compare(client_version, this.warningChiaVersion, '<')) {
+      return "warning";
+    } else {
+      return "ok";
+    }
+  }
+
   refreshHarvesters(launcher_id: any) {
     var ticks: Set<number> = new Set();
     this.harvestersTemp.clear();

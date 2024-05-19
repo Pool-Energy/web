@@ -11,6 +11,10 @@ import { DataService } from 'src/app/data.service';
 export class PoolStatusComponent {
   breadCrumbItems!: Array<{}>;
 
+  // pool
+  blockchainHeight: number = 0;
+  blockchainShare: number = 0;
+
   // wallet
   walletAddressTruncate: boolean = false;
   pool_wallets: Array<any> = new Array();
@@ -35,6 +39,8 @@ export class PoolStatusComponent {
     window.onresize = () => this.walletAddressTruncate = window.innerWidth <= 1200;
 
     this.dataService.getStats().subscribe((data: any) => {
+      this.blockchainHeight = data['blockchain_height'];
+      this.blockchainShare = this.getBlockchainShare(data);
       this.pool_wallets = data['pool_wallets'];
     });
     this.getMempoolSize(this.mempoolSizeDays);
@@ -63,6 +69,11 @@ export class PoolStatusComponent {
             }
         }
     });
+  }
+
+  // blockchain
+  getBlockchainShare(data: any) {
+    return data['pool_space'] * 100 / data['blockchain_space'];
   }
 
   // mempool size

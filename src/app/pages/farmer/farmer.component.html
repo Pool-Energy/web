@@ -450,6 +450,22 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- harvesters extra -->
+                                <div class="col-xxl-12">
+                                    <div *ngIf="supportHarvesterVersion(harvester[1]?.version) == 'critical'"
+                                        class="alert alert-danger alert-border-left alert-dismissible fade show" role="alert">
+                                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Critical:</strong>
+                                        Version {{ harvester[1]?.version }} is not supported by pool. Please upgrade your harvester to the latest version.
+                                        Minimum version {{ warningChiaVersion }} is required by pool, currently your partials will not be accepted.
+                                    </div>
+                                    <div *ngIf="supportHarvesterVersion(harvester[1]?.version) == 'warning'"
+                                        class="alert alert-warning alert-border-left alert-dismissible fade show" role="alert">
+                                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Warning:</strong>
+                                        Version {{ harvester[1]?.version }} is supported by pool but upgrade your harvester to the latest version if possible.
+                                    </div>
+                                </div>
+                                
                                 <!-- harvesters chart -->
                                 <div class="col-xxl-12">
                                     <div class="card">

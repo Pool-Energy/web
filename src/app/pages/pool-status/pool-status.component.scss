@@ -10,8 +10,10 @@
     color: red;
 }
 
-.wallet-split-line {
-    color: grey;
-    margin-left: 1%;
-    margin-right: 1%;
+.wallet-col-size {
+    min-width: 50%;
+}
+
+.wallet-py-size {
+    width: 2000px;
 }
