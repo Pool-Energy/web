@@ -370,7 +370,7 @@
                         <a ngbNavLink>Harvesters</a>
                         <ng-template ngbNavContent>
                             <!-- harvesters stats -->
-                            <div *ngFor="let harvester of harvestersData" class="row">
+                            <div *ngFor="let harvester of harvestersData; let i = index" class="row">
                                 <div class="col-xl-12">
                                     <div class="card crm-widget">
                                         <div class="card-body p-0">
@@ -487,7 +487,7 @@
                                     </div>
                                 </div>
                                 <!-- harvesters separator -->
-                                <hr />
+                                <hr *ngIf="i != harvestersData.length - 1" />
                             </div>
                         </ng-template>
                     </li>
