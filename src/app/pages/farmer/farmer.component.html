@@ -328,6 +328,7 @@
                                             <th scope="col">Difficulty</th>
                                             <th scope="col">Harvester ID</th>
                                             <th scope="col">Plot ID</th>
+                                            <th scope="col" style="width: 100px;">Plot Size</th>
                                             <th scope="col" style="width: 150px;">Chia Version</th>
                                             <th scope="col" style="width: 100px;">Time Taken</th>
                                             <th scope="col" style="width: 200px;">State</th>
@@ -339,6 +340,10 @@
                                             <td>{{ partial.difficulty }}</td>
                                             <td>{{ partial.harvester_id | maxLength:32 }}</td>
                                             <td>{{ partial.plot_id | maxLength:32 }}</td>
+                                            <td>
+                                                <span *ngIf="!partial.plot_size">-</span>
+                                                <span *ngIf="partial.plot_size">k{{ partial.plot_size }}</span>
+                                            </td>
                                             <td>{{ partial.chia_version }}</td>
                                             <td>
                                                 <span *ngIf="!partial.time_taken">-</span>
