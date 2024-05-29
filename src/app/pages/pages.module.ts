@@ -7,9 +7,10 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgxFilesizeModule } from 'ngx-filesize';
-import { defineElement } from "@lordicon/element";
+import { defineElement } from '@lordicon/element';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbAccordionModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgTerminalModule } from 'ng-terminal';
 import lottie from 'lottie-web';
 
 import { MaxLengthPipe } from './pipes/maxlength.pipe';
@@ -23,6 +24,7 @@ import { RewardComponent } from './reward/reward.component';
 import { ChiaComponent } from './chia/chia.component';
 import { PoolStatusComponent } from './pool-status/pool-status.component';
 import { PoolStatsComponent } from './pool-stats/pool-stats.component';
+import { PoolLogsComponent } from './pool-logs/pool-logs.component';
 import { InfoFaqComponent } from './info-faq/info-faq.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
@@ -40,6 +42,7 @@ import { JoinComponent } from './join/join.component';
     ChiaComponent,
     PoolStatusComponent,
     PoolStatsComponent,
+    PoolLogsComponent,
     InfoFaqComponent,
     InfoFeeComponent,
     InfoTeamComponent,
@@ -63,6 +66,7 @@ import { JoinComponent } from './join/join.component';
     NgApexchartsModule,
     NgbAccordionModule,
     NgbNavModule,
+    NgTerminalModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,0 +1,30 @@
+<app-breadcrumbs title="Logs" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row col-lg-12">
+    <div class="flex-shrink-0">
+        <div class="form-check form-switch form-switch-right form-switch-md">
+            <input 
+                class="form-check-input code-switcher"
+                type="checkbox"
+                (change)="changeTopic()"
+                #partials>
+            <label for="partials-failed-only" class="form-label text-muted">Show partials logs</label>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="form-check form-switch form-switch-right form-switch-md">
+            <input
+                class="form-check-input code-switcher"
+                type="checkbox"
+                (change)="changeTopic()"
+                #payments
+                checked>
+            <label for="partials-failed-only" class="form-label text-muted">Show payments logs</label>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row col-lg-12">
+  <ng-terminal #term [draggable]="false"></ng-terminal>
+</div>

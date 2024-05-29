@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
 import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 import { compare } from 'compare-versions';
+import { NgTerminal } from 'ng-terminal';
 
 import { DataService } from 'src/app/data.service';
 
@@ -14,7 +15,8 @@ import { DataService } from 'src/app/data.service';
   styleUrl: './farmer.component.scss'
 })
 
-export class FarmerComponent {
+export class FarmerComponent implements AfterViewInit {
+  @ViewChild('term') term!: NgTerminal;
   breadCrumbItems!: Array<{}>;
 
   // common
@@ -101,6 +103,10 @@ export class FarmerComponent {
   launcherSizeChartLegend: boolean = false;
   launcherSizeChartData: any[] = [];
 
+  // logs
+  logBeta: boolean = true;
+  log$: Observable<object> | undefined;
+
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute
@@ -126,6 +132,7 @@ export class FarmerComponent {
     });
 
     this.partialsShowFailed = (localStorage.getItem('farmer_show_failed_partials') == 'true') ? true : false;
+    this.log$ = this.dataService.log$;
 
     // default overview tab
     this.refreshLauncherSize(this.launcher_id);
@@ -691,6 +698,32 @@ export class FarmerComponent {
         colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
       };
     });
+  }
+
+  // logs
+  viewLogs() {
+    this.dataService.connectLog();
+    this.dataService.sendLog(['partials', 'payments']);
+  }
+
+  ngAfterViewInit(): void {
+    this.log$!.subscribe({
+      next: (log: any) => {
+        if(log['message']) {
+          if(log['message'].match(this.launcher_id)) {
+            this.term.write(log['timestamp'] + ': ' + log['message'] + '\r\n');
+          }
+        }
+      },
+      error: (error: any) => {
+        this.term.write('Error: ' + error);
+      },
+      complete: () => { }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dataService.disconnectLog();
   }
 
 }

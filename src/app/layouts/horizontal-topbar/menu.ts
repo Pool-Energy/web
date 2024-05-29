@@ -77,6 +77,12 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.POOL.LIST.STATS',
         link: '/pool/stats',
         parentId: 6
+      },
+      {
+        id: 63,
+        label: 'MENUITEMS.POOL.LIST.LOGS',
+        link: '/pool/logs',
+        parentId: 6
       }
     ]
   },

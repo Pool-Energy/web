@@ -29,7 +29,8 @@
       "TEXT": "Pool",
       "LIST": {
         "STATUS": "Status",
-        "STATS": "Stats"
+        "STATS": "Stats",
+        "LOGS": "Logs"
       }
     },
     "INFO": {

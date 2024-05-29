@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,8 @@ export class DataService {
   private _launchers$ = new Subject<any[]>();
   private _payouts$ = new BehaviorSubject<any[]>([]);
   private _payoutaddrs$ = new BehaviorSubject<any[]>([]);
+  private _log$ = new BehaviorSubject<any>({});
+  private socket$ = new Subject<any>();
 
   constructor(
     private httpClient: HttpClient
@@ -191,6 +195,49 @@ export class DataService {
 
   getLoggedIn() {
     return this.httpClient.get(this.REST_API_SERVER + '/loggedin');
+  }
+
+  get log$() {
+    return this._log$.asObservable();
+  }
+
+  connectLog(msgCallback?: any) {
+    var proto = (window.location.protocol == 'https:') ? 'wss://' : 'ws://';
+    var wspath;
+
+    if(environment.production) {
+      wspath = 'ws';
+    } else {
+      wspath = '_proxy_ws';
+    }
+
+    this.socket$ = webSocket<string>({
+      url: proto + window.location.host + '/' + wspath + '/log/'
+    });
+
+    this.socket$.subscribe({
+      next: msg => {
+        msg['data'].forEach((element: any) => {
+          if(typeof element !== 'string') {
+            this._log$.next(element);
+          }
+        });
+        if(msgCallback) {
+          msgCallback(msg);
+        }
+      },
+      error: err => console.error("error", err),
+      complete: () => { }
+    });
+  }
+
+  sendLog(msg: any) {
+    if(!this.socket$) { return; }
+    this.socket$.next(JSON.stringify(msg));
+  }
+
+  disconnectLog() {
+    if(this.socket$) { this.socket$.unsubscribe(); };
   }
 
 }
