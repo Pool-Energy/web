@@ -36,7 +36,7 @@ export class PoolStatusComponent {
       { label: 'Status', active: true }
     ];
 
-    window.onresize = () => this.walletAddressTruncate = window.innerWidth <= 1200;
+    window.onresize = () => this.walletAddressTruncate = window.innerWidth <= 2350;
 
     this.dataService.getStats().subscribe((data: any) => {
       this.blockchainHeight = data['blockchain_height'];
