@@ -935,11 +935,6 @@
                     <li [ngbNavItem]="7" (click)="viewLogs()">
                         <a ngbNavLink>Logs</a>
                         <ng-template ngbNavContent>
-                            <div class="col-xxl-12">
-                                <div *ngIf="logBeta" class="alert alert-warning alert-border-left alert-dismissible fade show" role="alert">
-                                    <i class="ri-alert-line me-3 align-middle"></i> Currently in beta. Please report any issues to the pool operator.
-                                </div>
-                            </div>
                             <div class="row col-lg-12">
                                 <ng-terminal #term [draggable]="false"></ng-terminal>
                             </div>

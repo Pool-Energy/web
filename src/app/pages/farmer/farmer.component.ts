@@ -22,7 +22,7 @@ export class FarmerComponent implements AfterViewInit {
   // common
   truncateRequired: boolean = false;
   warningChiaVersion: string = "2.2.0";
-  criticalChiaVersion: string = "1.6.2";
+  criticalChiaVersion: string = "2.1.0";
 
   // launcher
   launcher_id: any = null;
@@ -104,7 +104,6 @@ export class FarmerComponent implements AfterViewInit {
   launcherSizeChartData: any[] = [];
 
   // logs
-  logBeta: boolean = true;
   log$: Observable<object> | undefined;
 
   constructor(
