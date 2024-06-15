@@ -332,7 +332,7 @@
                                             <th scope="col">Date</th>
                                             <th scope="col">Difficulty</th>
                                             <th scope="col">Harvester ID</th>
-                                            <th scope="col">Plot ID</th>
+                                            <th scope="col">Plot Filename</th>
                                             <th scope="col" style="width: 100px;">Plot Size</th>
                                             <th scope="col" style="width: 150px;">Chia Version</th>
                                             <th scope="col" style="width: 100px;">Time Taken</th>
@@ -344,7 +344,7 @@
                                             <td>{{ partial.timestamp * 1000 | date:"medium" }}</td>
                                             <td>{{ partial.difficulty }}</td>
                                             <td>{{ partial.harvester_id | maxLength:32 }}</td>
-                                            <td>{{ partial.plot_id | maxLength:32 }}</td>
+                                            <td><span>plot-k{{ partial.plot_size || "??" }}-*-{{ partial.plot_id }}.plot</span></td>
                                             <td>
                                                 <span *ngIf="!partial.plot_size">-</span>
                                                 <span *ngIf="partial.plot_size">k{{ partial.plot_size }}</span>
