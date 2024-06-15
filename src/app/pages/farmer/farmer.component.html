@@ -787,9 +787,9 @@
                                             <td><span *ngFor="let block of payoutaddr.payout.blocks">#{{ block.farmed_height}} </span></td>
                                             <td>{{ payoutaddr.amount / 1000000000000 }} XCH</td>
                                             <td>
-                                                <span *ngIf="payoutaddr.transaction && payoutaddr.transaction.confirmed_block_index"
+                                                <span *ngIf="payoutaddr.transaction && payoutaddr.transaction?.confirmed_block_index"
                                                     class="badge bg-success-subtle text-success">Confirmed</span>
-                                                <span *ngIf="payoutaddr.transaction && !payoutaddr.transaction.confirmed_block_index"
+                                                <span *ngIf="payoutaddr.transaction && !payoutaddr.transaction?.confirmed_block_index"
                                                     class="badge bg-warning-subtle text-warning">Progress</span>
                                                 <span *ngIf="!payoutaddr.transaction"
                                                     class="badge bg-warning-subtle text-warning">Pending</span>
@@ -907,7 +907,7 @@
                                         <tr *ngFor="let payouttx of payouttxs; let i = index">
                                             <td>{{ payouttx.created_at_time | date:"medium" }}</td>
                                             <td>{{ payouttx.transaction_name }}</td>
-                                            <td>{{ payouttx.confirmed_block_index }}</td>
+                                            <td>{{ payouttx.confirmed_block_index || "-" }}</td>
                                             <td>{{ payouttx.amount / 1000000000000 }} XCH</td>
                                             <td *ngIf="payouttx.xch_price">{{ payouttx.xch_price?.usd * (payouttx.amount / 1000000000000) | number }} USD</td>
                                             <td *ngIf="!payouttx.xch_price">Unknown</td>
