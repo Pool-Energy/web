@@ -36,6 +36,7 @@ export class PoolStatusComponent {
       { label: 'Status', active: true }
     ];
 
+    this.walletAddressTruncate = window.innerWidth <= 2350;
     window.onresize = () => this.walletAddressTruncate = window.innerWidth <= 2350;
 
     this.dataService.getStats().subscribe((data: any) => {
