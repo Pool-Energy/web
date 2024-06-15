@@ -104,7 +104,12 @@
                                                                 </h2>
                                                                 <h2 *ngIf="launcher.custom_difficulty" class="mb-0">
                                                                     {{ launcher.difficulty }}
-                                                                    <span class="custom-difficulty">(fixed)</span>
+                                                                    <span class="custom-difficulty"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Custom difficulty is: {{ launcher.custom_difficulty }}">
+                                                                        (fixed)
+                                                                    </span>
                                                                 </h2>
                                                             </div>
                                                         </div>
