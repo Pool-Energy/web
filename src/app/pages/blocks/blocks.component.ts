@@ -138,7 +138,7 @@ export class BlocksComponent {
           return val + "%";
         }
       },
-      colors: this.getChartColorsArray('["--vz-primary"]')
+      colors: this.getChartColorsArray('["--vz-success"]')
     };
   }
 
