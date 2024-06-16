@@ -341,13 +341,23 @@
                                 </div>
                             </div>
                             <!-- partials list -->
-                            <div class="card-header align-items-center d-flex">
+                            <div class="card-button align-items-center d-flex">
                                 <div class="flex-shrink-0">
-                                    <div class="form-check form-switch form-switch-right form-switch-md">
+                                    <div class="form-check form-switch form-switch-left form-switch-md">
                                         <label for="partials-failed-only" class="form-label text-muted">Show partials failed only</label>
                                         <input class="form-check-input code-switcher" type="checkbox" id="partials-failed-only"
                                             (click)="togglePartialsFailed($event)"
                                             [checked]="partialsShowFailed">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-button align-items-center d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="form-check form-switch form-switch-left form-switch-md">
+                                        <label for="partials-too-late-only" class="form-label text-muted">Show partials too late only</label>
+                                        <input class="form-check-input code-switcher" type="checkbox" id="partials-too-late-only"
+                                            (click)="togglePartialsTooLate($event)"
+                                            [checked]="partialsShowTooLate">
                                     </div>
                                 </div>
                             </div>

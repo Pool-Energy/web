@@ -55,8 +55,10 @@ export class FarmerComponent implements AfterViewInit {
   partialsPageSize: number = 100;
   partialsSuccessful: number = 0;
   partialsFailed: number = 0;
+  partialsTooLate: number = 0;
   partialsPoints: number = 0;
   partialsShowFailed: boolean = false;
+  partialsShowTooLate: boolean = false;
   partialsChart: any = {};
   partialsChartLegend: boolean = false;
   partialsChartData: any[] = [];
@@ -277,19 +279,33 @@ export class FarmerComponent implements AfterViewInit {
       });
     } else {
       subscriber.complete();
-      this.filterPartials();
+      this.filterPartialsFailed();
     }
   }
 
   togglePartialsFailed(event: any): void {
     this.partialsShowFailed = event.target.checked;
-    this.filterPartials();
+    this.filterPartialsFailed();
     localStorage.setItem('farmer_show_failed_partials', event.target.checked);
   }
 
-  private filterPartials() {
+  togglePartialsTooLate(event: any): void {
+    this.partialsShowTooLate = event.target.checked;
+    this.filterPartialsTooLate();
+    localStorage.setItem('farmer_show_too_late_partials', event.target.checked);
+  }
+
+  private filterPartialsFailed() {
     if(this.partialsShowFailed) {
       this.partialsFiltered = this.partialsTable.filter(entry => entry.error !== null);
+    } else {
+      this.partialsFiltered = [...this.partialsTable];
+    }
+  }
+
+  private filterPartialsTooLate() {
+    if(this.partialsShowTooLate) {
+      this.partialsFiltered = this.partialsTable.filter(entry => entry.time_taken >= 27);
     } else {
       this.partialsFiltered = [...this.partialsTable];
     }
