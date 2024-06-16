@@ -60,6 +60,9 @@ export class FarmerComponent implements AfterViewInit {
   partialsChart: any = {};
   partialsChartLegend: boolean = false;
   partialsChartData: any[] = [];
+  partialsTimetakenChart: any = {};
+  partialsTimetakenChartLegend: boolean = false;
+  partialsTimetakenChartData: any[] = [];
 
   // harvesters
   harvesters: Set<string> = new Set();
@@ -108,7 +111,7 @@ export class FarmerComponent implements AfterViewInit {
 
   constructor(
     private dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.blocks$ = this._blocks$.asObservable();
     this.payoutaddrs$ = this._payoutaddrs$.asObservable();
@@ -313,38 +316,99 @@ export class FarmerComponent implements AfterViewInit {
     obs.subscribe(
       (x) => { },
       (err) => { console.error("Something wrong occurred: " + err); },
-      () => this.partialsChart = {
-        series: [
-          {
-            name: "Successful Partials",
-            type: "area",
-            data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
+      () => {
+        return [
+          this.partialsChart = {
+            title: {
+              text: "Partials successful & failed",
+              align: "left"
+            },
+            series: [
+              {
+                name: "Successful Partials",
+                type: "area",
+                data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
+              },
+              {
+                name: "Failed Partials",
+                type: "area",
+                data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
+              }
+            ],
+            legend: {
+              show: this.partialsChartLegend
+            },
+            chart: {
+              height: 250,
+              type: "area",
+              toolbar: {
+                show: false
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              labels: {
+                show: false
+              }
+            },
+            colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]')
           },
-          {
-            name: "Failed Partials",
-            type: "area",
-            data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
+          this.partialsTimetakenChart = {
+            title: {
+              text: "Partial Time Taken",
+              align: "left"
+            },
+            series: [
+              {
+                name: "Partial Time Taken",
+                data: Array.from(this.partialsTable, (i) => {
+                  return {
+                    "x": new Date(i['timestamp'] * 1000),
+                    "y": i['time_taken'],
+                  };
+                }).reverse()
+              }
+            ],
+            legend: {
+              show: this.partialsTimetakenChartLegend
+            },
+            chart: {
+              height: 250,
+              type: "area",
+              toolbar: {
+                show: false
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              labels: {
+                show: false
+              }
+            },
+            yaxis: {
+              min: 0,
+              labels: {
+                formatter: function (val: number) {
+                  return val.toFixed(4) + "s";
+                }
+              }
+            },
+            annotations: {
+              yaxis: [{
+                y: 27,
+                borderColor: '#FF0000'
+              }]
+            },
+            stroke: {
+              width: 3
+            },
+            colors: this.getChartColorsArray('["--vz-success"]')
           }
-        ],
-        legend: {
-          show: this.partialsChartLegend
-        },
-        chart: {
-          height: 250,
-          type: "area",
-          toolbar: {
-            show: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        xaxis: {
-          labels: {
-            show: false
-          }
-        },
-        colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]')
+        ]
       }
     );
   }
@@ -682,12 +746,14 @@ export class FarmerComponent implements AfterViewInit {
         },
         dataLabels: {
           enabled: false,
-          formatter: function(val: any) {
-            return val + "TiB";
-          }
         },
         yaxis: {
-          min: 0
+          min: 0,
+          labels: {
+            formatter: function (val: number) {
+              return val.toFixed(0) + "TiB";
+            }
+          }
         },
         xaxis: {
           labels: {

@@ -307,6 +307,32 @@
                                                     [colors]="partialsChart.colors"
                                                     [xaxis]="partialsChart.xaxis"
                                                     [yaxis]="partialsChart.yaxis"
+                                                    [annotations]="partialsChart.annotations"
+                                                    [title]="partialsChart.title"
+                                                    dir="ltr">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xxl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <apx-chart
+                                                    [series]="partialsTimetakenChart.series"
+                                                    [chart]="partialsTimetakenChart.chart"
+                                                    [labels]="partialsTimetakenChart.labels"
+                                                    [legend]="partialsTimetakenChart.legend"
+                                                    [dataLabels]="partialsTimetakenChart.dataLabels"
+                                                    [colors]="partialsTimetakenChart.colors"
+                                                    [xaxis]="partialsTimetakenChart.xaxis"
+                                                    [yaxis]="partialsTimetakenChart.yaxis"
+                                                    [annotations]="partialsTimetakenChart.annotations"
+                                                    [title]="partialsTimetakenChart.title"
+                                                    [stroke]="partialsTimetakenChart.stroke"
                                                     dir="ltr">
                                                 </apx-chart>
                                             </div>
@@ -938,7 +964,7 @@
                     <li [ngbNavItem]="7" (click)="viewLogs()">
                         <a ngbNavLink>Logs</a>
                         <ng-template ngbNavContent>
-                            <div class="row col-lg-12">
+                            <div class="row col-lg-12" style="height: 720px;">
                                 <ng-terminal #term [draggable]="false"></ng-terminal>
                             </div>
                         </ng-template>
