@@ -138,6 +138,9 @@ export class BlocksComponent {
           return val + "%";
         }
       },
+      stroke: {
+        width: 2
+      },
       colors: this.getChartColorsArray('["--vz-success"]')
     };
   }

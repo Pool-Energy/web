@@ -7,6 +7,7 @@ import { compare } from 'compare-versions';
 import { NgTerminal } from 'ng-terminal';
 
 import { DataService } from 'src/app/data.service';
+import { tick } from '@angular/core/testing';
 
 
 @Component({
@@ -245,7 +246,10 @@ export class FarmerComponent implements AfterViewInit {
             }
           }
         ],
-        colors: this.getChartColorsArray('["--vz-success","--vz-primary"]')
+        stroke: {
+          width: 2
+        },
+        colors: this.getChartColorsArray('["--vz-success","--vz-info"]')
       }
     );
   }
@@ -369,6 +373,9 @@ export class FarmerComponent implements AfterViewInit {
                 show: false
               }
             },
+            stroke: {
+              width: 2
+            },
             colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]')
           },
           this.partialsTimetakenChart = {
@@ -382,7 +389,16 @@ export class FarmerComponent implements AfterViewInit {
                 data: Array.from(this.partialsTable, (i) => {
                   return {
                     "x": new Date(i['timestamp'] * 1000),
-                    "y": i['time_taken'],
+                    "y": i['time_taken'] <= 27 ? i['time_taken'] : 0,
+                  };
+                }).reverse()
+              },
+              {
+                name: "Partial Time Taken Error",
+                data: Array.from(this.partialsTable, (i) => {
+                  return {
+                    "x": new Date(i['timestamp'] * 1000),
+                    "y": i['time_taken'] > 27 ? i['time_taken'] : 0,
                   };
                 }).reverse()
               }
@@ -409,20 +425,22 @@ export class FarmerComponent implements AfterViewInit {
               min: 0,
               labels: {
                 formatter: function (val: number) {
-                  return val.toFixed(4) + "s";
+                  return val.toFixed(0) + "s";
                 }
               }
             },
             annotations: {
-              yaxis: [{
-                y: 27,
-                borderColor: '#FF0000'
-              }]
+              yaxis: [
+                {
+                  y: 25,
+                  borderColor: '#FF0000',
+                }
+              ]
             },
             stroke: {
-              width: 3
+              width: 2
             },
-            colors: this.getChartColorsArray('["--vz-success"]')
+            colors: this.getChartColorsArray('["--vz-success","--vz-warning"]')
           }
         ]
       }
@@ -505,6 +523,9 @@ export class FarmerComponent implements AfterViewInit {
           labels: {
             show: false
           }
+        },
+        stroke: {
+          width: 2
         },
         colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
       }
@@ -767,7 +788,7 @@ export class FarmerComponent implements AfterViewInit {
           min: 0,
           labels: {
             formatter: function (val: number) {
-              return val.toFixed(0) + "TiB";
+              return val.toFixed(0) + " TiB";
             }
           }
         },
@@ -775,6 +796,9 @@ export class FarmerComponent implements AfterViewInit {
           labels: {
             show: false
           }
+        },
+        stroke: {
+          width: 2
         },
         colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
       };

@@ -5,7 +5,7 @@
     <div class="col-xxl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Pool Space in PiB (7 days)</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Pool Space (7 days)</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
@@ -18,6 +18,7 @@
                         [colors]="poolSizeChart.colors"
                         [xaxis]="poolSizeChart.xaxis"
                         [yaxis]="poolSizeChart.yaxis"
+                        [stroke]="poolSizeChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>
@@ -31,7 +32,7 @@
     <div class="col-xxl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Mempool Size in % (7 days)</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Mempool Size (7 days)</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
@@ -44,6 +45,7 @@
                         [colors]="mempoolSizeChart.colors"
                         [xaxis]="mempoolSizeChart.xaxis"
                         [yaxis]="mempoolSizeChart.yaxis"
+                        [stroke]="mempoolSizeChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>
@@ -57,7 +59,7 @@
     <div class="col-xxl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Netspace Size in EiB (7 days)</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Netspace Size (7 days)</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
@@ -70,6 +72,7 @@
                         [colors]="netspaceSizeChart.colors"
                         [xaxis]="netspaceSizeChart.xaxis"
                         [yaxis]="netspaceSizeChart.yaxis"
+                        [stroke]="netspaceSizeChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>
@@ -96,6 +99,7 @@
                         [colors]="xchPriceChart.colors"
                         [xaxis]="xchPriceChart.xaxis"
                         [yaxis]="xchPriceChart.yaxis"
+                        [stroke]="xchPriceChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>

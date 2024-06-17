@@ -20,6 +20,7 @@ export class FarmersComponent {
   estimate_win: any | undefined;
   current_fee: any = 0;
   xch_current_price: number = 0;
+  last_block: any = null;
 
   // block reward halving
   block_reward_halving_enabled: boolean = false;
@@ -31,7 +32,7 @@ export class FarmersComponent {
 
   // plot filter halving
   plot_filter_halving_enabled: boolean = true;
-  plot_filter_halving_block: number = 5496000;
+  plot_filter_halving_block: number = 10542000;
   plot_filter_halving_diff: number = 0;
   plot_filter_halving_percent: number = 0;
   plot_filter_halving_class: string = "info";

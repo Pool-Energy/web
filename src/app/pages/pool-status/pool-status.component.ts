@@ -122,7 +122,15 @@ export class PoolStatusComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 2
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val.toFixed(2) + " %";
+          }
+        }
+      },
+      stroke: {
+        width: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }

@@ -122,7 +122,15 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 0
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val.toFixed(0) + " PiB";
+          }
+        }
+      },
+      stroke: {
+        width: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }
@@ -173,7 +181,15 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 2
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val.toFixed(2) + " %";
+          }
+        }
+      },
+      stroke: {
+        width: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }
@@ -224,7 +240,15 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 2
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val.toFixed(2) + " EiB";
+          }
+        }
+      },
+      stroke: {
+        width: 2
       },
       colors: this.getChartColorsArray('["--vz-success"]')
     }
@@ -235,15 +259,6 @@ export class PoolStatsComponent {
     this.dataService.getXchPrice(days).subscribe((d: any) => {
       this.xchPriceDays = days;
       this.xchPriceData = [
-        {
-          "name": "XCH Price (€)",
-          "data": (<any[]>d).filter(item => item['field'] == 'eur').map((item) => {
-            return ({
-              "x": (new Date(item['datetime']).toLocaleString()),
-              "y": item['value'],
-            })
-          })
-        },
         {
           "name": "XCH Price ($)",
           "data": (<any[]>d).filter(item => item['field'] == 'usd').map((item) => {
@@ -286,7 +301,15 @@ export class PoolStatsComponent {
         }
       },
       yaxis: {
-        decimalsInFloat: 2
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return "$" + val.toFixed(2);
+          }
+        }
+      },
+      stroke: {
+        width: 2
       },
       colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
     }
