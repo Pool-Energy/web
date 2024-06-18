@@ -149,7 +149,7 @@
                         <table class="table align-middle table-nowrap table-striped-columns mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" style="width: 50px;">#</th>
+                                    <th scope="col" style="width: 10px;">#</th>
                                     <th scope="col" style="width: 30px;"></th>
                                     <th scope="col" style="width: 400px;">Launcher ID</th>
                                     <th scope="col" style="width: 300px;">Singleton Puzzle Hash</th>
@@ -161,7 +161,14 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let launcher of launchers$ | async; let i = index">
-                                    <th scope="row">{{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}</th>
+                                    <td scope="row">
+                                        <span *ngIf="last_block?.farmed_by.launcher_id == launcher.launcher_id"
+                                            ngbTooltip="Won the last block">🏆
+                                        </span>
+                                        <span *ngIf="last_block?.farmed_by.launcher_id != launcher.launcher_id">
+                                            {{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}
+                                        </span>
+                                    </td>
                                     <td class="td-center">
                                         <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="img-thumbnail-farmer" />
                                         <img *ngIf="!launcher.picture_url" src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail-farmer" />

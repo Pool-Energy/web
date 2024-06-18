@@ -21,6 +21,7 @@ export class FarmersComponent {
   current_fee: any = 0;
   xch_current_price: number = 0;
   last_block: any = null;
+  leaderboard: Array<any> = new Array();
 
   // block reward halving
   block_reward_halving_enabled: boolean = false;
@@ -31,25 +32,29 @@ export class FarmersComponent {
   block_reward_halving_current_block: number | undefined;
 
   // plot filter halving
-  plot_filter_halving_enabled: boolean = true;
+  plot_filter_halving_enabled: boolean = false;
   plot_filter_halving_block: number = 10542000;
   plot_filter_halving_diff: number = 0;
   plot_filter_halving_percent: number = 0;
   plot_filter_halving_class: string = "info";
   plot_filter_halving_current_block: number | undefined;
 
-  leaderboard: Array<any> = new Array();
-
+  // launchers
   _launchers$: Subject<any[]> = new Subject<any[]>();
   launchers$: Observable<any[]>;
   launchersCollectionSize: number = 0;
   launchersPage: number = 1;
   launchersPageSize: number = 10;
 
+  // blocks
+  _blocks$: Subject<any[]> = new Subject<any[]>();
+  blocks$: Observable<any[]>;
+
   constructor(
     private dataService: DataService
   ) {
     this.launchers$ = this._launchers$.asObservable();
+    this.blocks$ = this._blocks$.asObservable();
   }
 
   ngOnInit(): void {
@@ -78,6 +83,10 @@ export class FarmersComponent {
       limit: this.launchersPageSize,
       points_pplns__gt: 1
     }).subscribe(this.handleLaunchers.bind(this));
+
+    this.dataService.getBlocks({
+      limit: 1,
+    }).subscribe(this.handleBlocks.bind(this));
   }
 
   // common
@@ -132,6 +141,12 @@ export class FarmersComponent {
       limit: this.launchersPageSize,
       points_pplns__gt: 1
     }).subscribe(this.handleLaunchers.bind(this));
+  }
+
+  // blocks
+  private handleBlocks(data: any) {
+    this.last_block = data['results'][0];
+    this._blocks$.next(data['results']);
   }
 
 }
