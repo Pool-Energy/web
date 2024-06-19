@@ -107,8 +107,16 @@ export class LoginComponent {
     );
   }
 
+  showUserDefinedDifficulty(data: any) {
+    if(data == "CUSTOM" || data == "EXPERT") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   setUserDefinedDifficulty(data: any) {
-    const element = document.getElementById("ifUserDefinedValue");
+    const element = document.getElementById("userDefinedValue");
     if(element && data.target.value) {
       if(data.target.value == "CUSTOM" || data.target.value == "EXPERT") {
         element.style.display = "block"

@@ -149,19 +149,22 @@
                                                                 <i class="ri-blaze-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <select class="form-control" #customDifficulty
+                                                                <select 
+                                                                    class="form-control" #customDifficulty
                                                                     (change)="setUserDefinedDifficulty($event)"
                                                                     [value]="farmer.custom_difficulty?.split(':')[0] || 'MEDIUM'">
-                                                                    <option value="LOWEST">Lowest - Double of partials sent per day</option>
-                                                                    <option value="LOW">Low - 50% more partials sent per day</option>
-                                                                    <option value="MEDIUM">Default - Around 600 partials sent per day</option>
-                                                                    <option value="HIGH">High - 25% less partials sent per day</option>
-                                                                    <option value="HIGHEST">Highest - 50% less partials sent per day</option>
-                                                                    <option value="CUSTOM">Custom - Number of partials sent per day</option>
-                                                                    <option value="EXPERT">Expert - Manual difficulty</option>
+                                                                        <option value="LOWEST">Lowest - Double of partials sent per day</option>
+                                                                        <option value="LOW">Low - 50% more partials sent per day</option>
+                                                                        <option value="MEDIUM">Default - Around 600 partials sent per day</option>
+                                                                        <option value="HIGH">High - 25% less partials sent per day</option>
+                                                                        <option value="HIGHEST">Highest - 50% less partials sent per day</option>
+                                                                        <option value="CUSTOM">Custom - Number of partials sent per day</option>
+                                                                        <option value="EXPERT">Expert - Manual difficulty</option>
                                                                 </select>
-                                                                <input id="ifUserDefinedValue" class="form-control" 
-                                                                    style="display: none; margin-top: 10px" type="number"
+                                                                <input 
+                                                                    [style.display]="showUserDefinedDifficulty(farmer.custom_difficulty?.split(':')[0] || 'MEDIUM') ? 'block' : 'none'"
+                                                                    id="userDefinedValue" class="form-control" 
+                                                                    style="margin-top: 10px" type="number"
                                                                     min="1" max="99999" pattern="[0-9]{1,5}"
                                                                     placeholder="{{ farmer.custom_difficulty?.split(':')[1] || '1-99999' }}"
                                                                     #customDifficultyValue />
