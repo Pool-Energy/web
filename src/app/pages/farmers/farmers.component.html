@@ -163,7 +163,8 @@
                                 <tr *ngFor="let launcher of launchers$ | async; let i = index">
                                     <td scope="row">
                                         <span *ngIf="last_block?.farmed_by.launcher_id == launcher.launcher_id"
-                                            ngbTooltip="Won the last block">🏆
+                                            ngbTooltip="Won the last block">
+                                            <i class="ri-trophy-fill trophy-style"></i> 
                                         </span>
                                         <span *ngIf="last_block?.farmed_by.launcher_id != launcher.launcher_id">
                                             {{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}
