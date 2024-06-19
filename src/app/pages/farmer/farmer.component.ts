@@ -432,7 +432,7 @@ export class FarmerComponent implements AfterViewInit {
             annotations: {
               yaxis: [
                 {
-                  y: 25,
+                  y: 27,
                   borderColor: '#FF0000',
                 }
               ]
