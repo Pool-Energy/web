@@ -75,6 +75,7 @@ export class FarmerComponent implements AfterViewInit {
   harvestersChart: any = {};
   harvestersChartData: any[] = [];
   harvestersChartLegend: boolean = false;
+  harvestersList: any = {};
 
   // rewards
   rewardsData: any[] = [];
@@ -133,7 +134,10 @@ export class FarmerComponent implements AfterViewInit {
       this.launcher_id = data.get('id');
       this.dataService.getLauncher(this.launcher_id).subscribe(launcher => {
         this.launcher = launcher;
-      })
+      });
+      this.dataService.getHarvesters({launcher: this.launcher_id}).subscribe(harvesters => {
+        this.harvestersList = harvesters;
+      });
     });
 
     this.partialsShowFailed = (localStorage.getItem('farmer_show_failed_partials') == 'true') ? true : false;
@@ -181,6 +185,10 @@ export class FarmerComponent implements AfterViewInit {
   }
 
   // overview
+  getDifficultyLowercase(value: string): string {
+    return value.split(':')[0].toLowerCase();
+  }
+
   refreshDifficultyAndPoints(launcher_id: any) {
     var successes = new Map();
     var errors = new Map();
@@ -530,6 +538,11 @@ export class FarmerComponent implements AfterViewInit {
         colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
       }
     });
+  }
+
+  getHarvesterNameById(id: string): string {
+    const harvester = this.harvestersList.results.find((h: any) => h.harvester === id);
+    return harvester ? harvester.name : null;
   }
 
   // blocks

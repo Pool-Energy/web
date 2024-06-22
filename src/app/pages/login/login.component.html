@@ -159,18 +159,39 @@
                                                                         <option value="HIGH">High - 25% less partials sent per day</option>
                                                                         <option value="HIGHEST">Highest - 50% less partials sent per day</option>
                                                                         <option value="CUSTOM">Custom - Number of partials sent per day</option>
-                                                                        <option value="EXPERT">Expert - Manual difficulty</option>
+                                                                        <option value="EXPERT">Expert - Set manual difficulty (warning)</option>
+                                                                        {{ farmer.custom_difficulty?.split(':')[0] }}
                                                                 </select>
-                                                                <input 
+                                                                <input
                                                                     [style.display]="showUserDefinedDifficulty(farmer.custom_difficulty?.split(':')[0] || 'MEDIUM') ? 'block' : 'none'"
                                                                     id="userDefinedValue" class="form-control" 
-                                                                    style="margin-top: 10px" type="number"
+                                                                    style="margin-top: 10px;" type="number"
                                                                     min="1" max="99999" pattern="[0-9]{1,5}"
                                                                     placeholder="{{ farmer.custom_difficulty?.split(':')[1] || '1-99999' }}"
                                                                     #customDifficultyValue />
                                                             </div>
-                                                            <div *ngIf="customDifficultyError" class="alert alert-danger" role="alert">
+                                                            <div *ngIf="customDifficultyError" class="alert alert-danger alert-custom-difficulty" role="alert">
                                                                 {{ customDifficultyError }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="hr-opacity-line" />
+                                        <!-- third line -->
+                                        <div class="card-body p-0">
+                                            <div class="row row-cols-md-3 row-cols-1">
+                                                <!-- harvester(s) name -->
+                                                <div class="col col-lg border-end">
+                                                    <div *ngFor="let harvester of harvesters.results" class="py-4 px-3">
+                                                        <h5 class="text-muted text-uppercase fs-13">Harvester {{ harvester.harvester }} ({{ harvester.version }})</h5>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <i class="ri-window-line display-6 text-muted"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3">
+                                                                <input class="form-control" type="text" [(ngModel)]="harvester.name" placeholder="Enter harvester name">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,6 +202,11 @@
                                     <!-- form submit -->
                                     <div class="col-12" align="center">
                                         <button type="input" value="save" class="btn btn-primary" (click)="saveSettings()">Save settings</button>
+                                    </div>
+                                    <div class="col-12" align="center">
+                                        <div *ngIf="customDifficultyError" class="alert alert-danger alert-global-save" role="alert">
+                                            An error occurred in one of the parameters. Please check the form and try again.
+                                        </div>
                                     </div>
                                 </div>
                             </div>

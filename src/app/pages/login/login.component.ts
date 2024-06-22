@@ -22,6 +22,7 @@ export class LoginComponent {
   loggingIn: boolean = true;
   loggedIn: boolean = false;
   farmer: any = {};
+  harvesters: any = [];
   error: boolean = false;
   difficultyValue: string = "";
   farmerNameError: string = "";
@@ -72,6 +73,9 @@ export class LoginComponent {
     this.dataService.getLauncher(launcher_id).subscribe(launcher => {
       this.farmer = launcher;
     });
+    this.dataService.getHarvesters({launcher: launcher_id}).subscribe(harvesters => {
+      this.harvesters = harvesters;
+    });
   }
 
   saveSettings() {
@@ -105,6 +109,16 @@ export class LoginComponent {
         this.customDifficultyError = error.error?.custom_difficulty
       }
     );
+
+    this.harvesters.results.forEach((harvester: any) => {
+      this.dataService.updateHarvester(harvester.harvester, {
+        "name": harvester.name || null,
+      }).subscribe(
+        data => { },
+        error => { }
+      );
+    });
+
   }
 
   showUserDefinedDifficulty(data: any) {

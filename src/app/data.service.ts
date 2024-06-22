@@ -57,6 +57,20 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/launcher/', { params });
   }
 
+  getHarvesters(attrs: any) {
+    var params = new HttpParams();
+    if(attrs) {
+        if(attrs.launcher) params = params.set('launcher', attrs.launcher);
+        if(attrs.harvester) params = params.set('harvester', attrs.harvester);
+        if(attrs.version) params = params.set('version', attrs.version);
+    }
+    return this.httpClient.get(this.REST_API_SERVER + '/harvester/', { params });
+  }
+
+  updateHarvester(id: string, params: any) {
+    return this.httpClient.put(this.REST_API_SERVER + '/harvester/' + id + '/', params);
+  }
+
   getPartials(launcher: any, offset?: any) {
     var params = new HttpParams();
     var timestamp = new Date().getTime();
