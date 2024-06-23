@@ -57,7 +57,7 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/launcher/', { params });
   }
 
-  getHarvesters(attrs: any) {
+  getHarvesters(attrs?: any) {
     var params = new HttpParams();
     if(attrs) {
         if(attrs.launcher) params = params.set('launcher', attrs.launcher);
@@ -79,7 +79,7 @@ export class DataService {
     params = params.set('min_timestamp', timestamp.toString());
     params = params.set('launcher', launcher);
     params = params.set('offset', (offset || ''));
-    params = params.set('limit', 1300);
+    params = params.set('limit', 2000);
     return this.httpClient.get(this.REST_API_SERVER + '/partial/', { params });
   }
 

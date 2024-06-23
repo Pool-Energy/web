@@ -107,3 +107,56 @@
         </div>
     </div>
 </div>
+
+<!-- farmers / harvesters / partials -->
+<div class="row">
+    <!-- versions -->
+    <div class="col-xxl-6">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Harvesters Versions</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="harvestersVersionsChart.series"
+                        [chart]="harvestersVersionsChart.chart"
+                        [labels]="harvestersVersionsChart.labels"
+                        [legend]="harvestersVersionsChart.legend"
+                        [dataLabels]="harvestersVersionsChart.dataLabels"
+                        [colors]="harvestersVersionsChart.colors"
+                        [xaxis]="harvestersVersionsChart.xaxis"
+                        [yaxis]="harvestersVersionsChart.yaxis"
+                        [stroke]="harvestersVersionsChart.stroke"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- partials -->
+    <div class="col-xxl-6">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Partials Errors</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        [series]="partialsChart.series"
+                        [chart]="partialsChart.chart"
+                        [labels]="partialsChart.labels"
+                        [legend]="partialsChart.legend"
+                        [dataLabels]="partialsChart.dataLabels"
+                        [colors]="partialsChart.colors"
+                        [xaxis]="partialsChart.xaxis"
+                        [yaxis]="partialsChart.yaxis"
+                        [stroke]="partialsChart.stroke"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

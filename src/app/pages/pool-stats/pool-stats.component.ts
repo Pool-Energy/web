@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { expand } from 'rxjs';
 
 import { DataService } from 'src/app/data.service';
 
@@ -35,6 +36,12 @@ export class PoolStatsComponent {
   xchPriceChart: any = {};
   xchPriceChartLegend: boolean = false;
 
+  // farmers / harvesters / partials
+  harvestersVersionsData: any[] = [];
+  harvestersVersionsChart: any = {};
+  partialsData: any[] = [];
+  partialsChart: any = {};
+
   constructor(
     private dataService: DataService
   ) { }
@@ -50,6 +57,8 @@ export class PoolStatsComponent {
     this.getMempoolSize(this.mempoolSizeDays);
     this.getNetspaceSize(this.netspaceSizeDays);
     this.getXchPrice(this.xchPriceDays);
+    this.getHarvestersVersions();
+    this.getPartials();
   }
 
   // common
@@ -312,6 +321,163 @@ export class PoolStatsComponent {
         width: 2
       },
       colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+    }
+  }
+
+  // harvesters versions
+  getHarvestersVersions() {
+    this.dataService.getHarvesters().subscribe((d: any) => {
+      let versionCounts: { [version: string]: number } = {};
+      d.results.forEach((item: any) => {
+        const version = item['version'];
+        if (versionCounts[version]) {
+          versionCounts[version] += 1;
+        } else {
+          versionCounts[version] = 1;
+        }
+      });
+      const data = Object.entries(versionCounts).map(([version, count]) => ({
+        version: version,
+        count: count
+      }));
+      this.chartHarvestersVersions(data);
+    });
+  }
+
+  private chartHarvestersVersions(data: any) {
+    this.harvestersVersionsChart = {
+      series: data.map((item: any) => item.count),
+      labels: data.map((item: any) => item.version),
+      legend: {
+        show: true
+      },
+      chart: {
+        height: 350,
+        type: "donut",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        position: 'outside',
+        dropShadow: {
+          enabled: true
+        }
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        labels: {
+          show: true
+        }
+      },
+      yaxis: {
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val + " harvesters";
+          }
+        }
+      },
+      stroke: {
+        width: 2
+      },
+      colors: [
+        "#a6e6c5","#F3B415","#F27036","#663F59","#6A6E94","#4E88B4","#00A7C6","#18D8D8",
+        "#A9D794","#46AF78","#A93F55","#8C5E58","#2176FF","#33A1FD","#7A918D","#BAFF29"
+      ],
+      plotOptions: {
+        pie: {
+          pie: {
+            expandOnClick: true
+          }
+        }
+      }
+    }
+  }
+
+  // partials errors
+  getPartials() {
+    this.dataService.getPartials('').subscribe((d: any) => {
+      let errorCounts: { [error: string]: number } = {};
+      d.results.forEach((item: any) => {
+        if (item['error'] == null) {
+          item['error'] = "Ok";
+        }
+        const error = item['error'];
+        if (errorCounts[error]) {
+          errorCounts[error] += 1;
+        } else {
+          errorCounts[error] = 1;
+        }
+      });
+      const data = Object.entries(errorCounts).map(([error, count]) => ({
+        error: error,
+        count: count
+      }));
+      this.chartPartialsError(data);
+    });
+  }
+
+  private chartPartialsError(data: any) {
+    this.partialsChart = {
+      series: data.map((item: any) => item.count),
+      labels: data.map((item: any) => item.error),
+      legend: {
+        show: true
+      },
+      chart: {
+        height: 350,
+        type: "donut",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        position: 'outside',
+        dropShadow: {
+          enabled: true
+        }
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        labels: {
+          show: true
+        }
+      },
+      yaxis: {
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val + " partial(s)";
+          }
+        }
+      },
+      stroke: {
+        width: 2
+      },
+      colors: [
+        "#a6e6c5","#F3B415","#F27036","#663F59","#6A6E94","#4E88B4","#00A7C6","#18D8D8",
+        "#A9D794","#46AF78","#A93F55","#8C5E58","#2176FF","#33A1FD","#7A918D","#BAFF29"
+      ],
+      plotOptions: {
+        pie: {
+          pie: {
+            expandOnClick: true
+          }
+        }
+      }
     }
   }
 
