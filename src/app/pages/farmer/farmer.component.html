@@ -23,8 +23,13 @@
                 <p *ngIf="!truncateRequired" class="text-white text-opacity-75">{{ launcher_id }}</p>
                 <p *ngIf="truncateRequired" class="text-white text-opacity-75">{{ launcher_id | maxLength:32 }}</p>
                 <div class="hstack text-white-50 gap-1">
-                    <div *ngIf="launcher.is_pool_member"><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
-                    <div *ngIf="!launcher.is_pool_member"><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline</div>
+                    <div *ngIf="launcher.is_pool_member">
+                        <div *ngIf="partialsCollectionSize == 0"><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (no partials)</div>
+                        <div *ngIf="partialsCollectionSize > 0"><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+                    </div>
+                    <div *ngIf="!launcher.is_pool_member">
+                        <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (left the pool)
+                    </div>
                 </div>
             </div>
         </div>
