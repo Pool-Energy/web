@@ -122,7 +122,10 @@
                                                                 <i class="ri-bubble-chart-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="launcher.current_etw >= 0" class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span>
+                                                                    <span *ngIf="launcher.current_etw < 0" class="counter-value">-</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,7 +138,10 @@
                                                                 <i class="ri-bubble-chart-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.current_effort || 0 | number:".2-2" }}%</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="launcher.current_effort >= 0" class="counter-value">{{ launcher.current_effort || 0 | number:".2-2" }}%</span>
+                                                                    <span *ngIf="launcher.current_effort < 0" class="counter-value">-</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -283,7 +289,10 @@
                                                                 <i class="ri-line-chart-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="partialsFailed != 0 && partialsSuccessful != 0" class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span>
+                                                                    <span *ngIf="partialsFailed == 0 && partialsSuccessful == 0" class="counter-value">-</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -572,7 +581,10 @@
                                                                 <i class="ri-scales-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ blocksEffortAverage | number:".2-2" }}%</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="blocksEffortAverage" class="counter-value">{{ blocksEffortAverage | number:".2-2" }}%</span>
+                                                                    <span *ngIf="!blocksEffortAverage" class="counter-value">-</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -585,7 +597,10 @@
                                                                 <i class="ri-scales-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.current_effort | number:".2-2" }}%</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="launcher.current_effort >= 0" class="counter-value">{{ launcher.current_effort | number:".2-2" }}%</span>
+                                                                    <span *ngIf="launcher.current_effort < 0" class="counter-value">-</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -598,7 +613,10 @@
                                                                 <i class="ri-time-line display-6 text-muted"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span></h2>
+                                                                <h2 class="mb-0">
+                                                                    <span *ngIf="launcher.current_etw >= 0" class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span>
+                                                                    <span *ngIf="launcher.current_etw < 0" class="counter-value">-</span>
+                                                                </h2>
                                                             </div>
                                                         </div>
                                                     </div>
