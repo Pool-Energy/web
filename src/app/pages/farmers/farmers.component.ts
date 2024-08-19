@@ -44,7 +44,7 @@ export class FarmersComponent {
   launchers$: Observable<any[]>;
   launchersCollectionSize: number = 0;
   launchersPage: number = 1;
-  launchersPageSize: number = 10;
+  launchersPageSize: number = 20;
 
   // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();

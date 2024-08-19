@@ -20,7 +20,7 @@ export class RewardsComponent {
   rewards$: Observable<any[]>;
   rewardsCollectionSize: number = 0;
   rewardsPage: number = 1;
-  rewardsPageSize: number = 10;
+  rewardsPageSize: number = 20;
 
   rewardsChart: any = {};
   rewardsChartLegend: boolean = false;

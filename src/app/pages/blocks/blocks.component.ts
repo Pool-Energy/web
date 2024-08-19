@@ -19,7 +19,7 @@ export class BlocksComponent {
   blocks$: Observable<any[]>;
   blocksCollectionSize: number = 0;
   blocksPage: number = 1;
-  blocksPageSize: number = 15;
+  blocksPageSize: number = 20;
   lastBlock: any;
 
   blocksPerDayChart: any = {};
