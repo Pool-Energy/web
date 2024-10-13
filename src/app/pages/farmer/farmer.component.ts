@@ -138,6 +138,9 @@ export class FarmerComponent implements AfterViewInit {
       this.dataService.getHarvesters({launcher: this.launcher_id}).subscribe(harvesters => {
         this.harvestersList = harvesters;
       });
+      this.dataService.getBlocks({launcher: this.launcher_id }).subscribe(data => {
+        this.handleBlocks(data);
+      });
     });
 
     this.partialsShowFailed = (localStorage.getItem('farmer_show_failed_partials') == 'true') ? true : false;
