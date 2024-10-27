@@ -61,7 +61,15 @@
                 <div class="col col-lg border-end">
                     <div class="py-4 px-3">
                         <h5 class="text-muted text-uppercase fs-13">Wallets Status</h5>
-                        <div *ngIf="!pool_wallets || pool_wallets.length == 0" class="d-flex align-items-center">
+                        <div *ngIf="!pool_wallets" class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <i class="ri-close-circle-line display-6 text-muted"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">Unknown</span></h2>
+                            </div>
+                        </div>
+                        <div *ngIf="pool_wallets && pool_wallets.length != 2" class="d-flex align-items-center">
                             <div class="flex-shrink-0">
                                 <i class="ri-close-circle-line display-6 text-muted"></i>
                             </div>
@@ -77,27 +85,12 @@
                                 <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
                             </div>
                         </div>
-                        <div *ngIf="pool_wallets && pool_wallets.length < 2" class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-error-warning-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Progressing</span></h2>
-                            </div>
-                        </div>
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- wallet -->
 <div class="row" *ngFor="let wallet of pool_wallets; let i = index">
