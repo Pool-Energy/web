@@ -2,7 +2,7 @@
 # docker build environment #
 ############################
 
-FROM node:18.19.0-bookworm AS build
+FROM node:18.20.4-bookworm AS build
 
 WORKDIR /build
 
@@ -15,7 +15,10 @@ RUN npm install --legacy-peer-deps && \
 # docker final environment #
 ############################
 
-FROM caddy:2.7.6-alpine
+FROM caddy:2.8.4-alpine
+
+# Identify the maintainer of an image
+LABEL maintainer="contact@pool.energy"
 
 EXPOSE 80
 
