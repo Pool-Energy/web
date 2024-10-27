@@ -166,6 +166,7 @@
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="launcherSizeChart && launcherSizeChart.series && launcherSizeChart.series.length > 0"
                                                     [series]="launcherSizeChart.series"
                                                     [chart]="launcherSizeChart.chart"
                                                     [labels]="launcherSizeChart.labels"
@@ -192,6 +193,7 @@
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="difficultyAndPointsChart && difficultyAndPointsChart.series && difficultyAndPointsChart.series.length > 0"
                                                     [series]="difficultyAndPointsChart.series"
                                                     [chart]="difficultyAndPointsChart.chart"
                                                     [labels]="difficultyAndPointsChart.labels"
@@ -300,7 +302,7 @@
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
                                                                 <h2 class="mb-0">
-                                                                    <span *ngIf="partialsFailed != 0 && partialsSuccessful != 0" class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span>
+                                                                    <span *ngIf="partialsFailed >= 0 && partialsSuccessful > 0" class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span>
                                                                     <span *ngIf="partialsFailed == 0 && partialsSuccessful == 0" class="counter-value">-</span>
                                                                 </h2>
                                                             </div>
@@ -313,12 +315,13 @@
                                 </div>
                             </div>
                             <!-- partials chart -->
-                            <div *ngIf="partialsSuccessful != 0 && partialsFailed != 0" class="row">
+                            <div *ngIf="partialsFailed >= 0 && partialsSuccessful > 0" class="row">
                                 <div class="col-xxl-12">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="partialsChart && partialsChart.series && partialsChart.series.length > 0"
                                                     [series]="partialsChart.series"
                                                     [chart]="partialsChart.chart"
                                                     [labels]="partialsChart.labels"
@@ -343,6 +346,7 @@
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="partialsTimetakenChart && partialsTimetakenChart.series && partialsTimetakenChart.series.length > 0"
                                                     [series]="partialsTimetakenChart.series"
                                                     [chart]="partialsTimetakenChart.chart"
                                                     [labels]="partialsTimetakenChart.labels"
@@ -653,6 +657,7 @@
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="blocksPerDayChart && blocksPerDayChart.series && blocksPerDayChart.series.length > 0"
                                                     [series]="blocksPerDayChart.series"
                                                     [chart]="blocksPerDayChart.chart"
                                                     [labels]="blocksPerDayChart.labels"
@@ -835,6 +840,7 @@
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="payoutsPerDayChart && payoutsPerDayChart.series && payoutsPerDayChart.series.length > 0"
                                                     [series]="payoutsPerDayChart.series"
                                                     [chart]="payoutsPerDayChart.chart"
                                                     [labels]="payoutsPerDayChart.labels"
@@ -958,6 +964,7 @@
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <apx-chart
+                                                    *ngIf="payoutsPerDayChart && payoutsPerDayChart.series && payoutsPerDayChart.series.length > 0"
                                                     [series]="payoutsPerDayChart.series"
                                                     [chart]="payoutsPerDayChart.chart"
                                                     [labels]="payoutsPerDayChart.labels"

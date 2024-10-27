@@ -66,22 +66,23 @@ export class PoolStatsComponent {
     colors = JSON.parse(colors);
     return colors.map(function (value:any) {
       var newValue = value.replace(" ", "");
-      if (newValue.indexOf(",") === -1) {
+      if(newValue.indexOf(",") === -1) {
         var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
-            if (color) {
+          if (color) {
             color = color.replace(" ", "");
             return color;
-            }
-            else return newValue;;
+          } else {
+            return newValue;
+          }
         } else {
-            var val = value.split(',');
-            if (val.length == 2) {
-                var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
-                rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
-                return rgbaColor;
-            } else {
-                return newValue;
-            }
+          var val = value.split(',');
+          if(val.length == 2) {
+            var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+            rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+            return rgbaColor;
+          } else {
+            return newValue;
+          }
         }
     });
   }
@@ -126,6 +127,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -185,6 +187,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -244,6 +247,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -305,6 +309,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
+        type: 'datetime',
         labels: {
           show: false
         }

@@ -9,7 +9,8 @@
             </div>
             <div class="card-body">
                 <div class="live-preview">
-                    <apx-chart
+                    <apx-chart 
+                        *ngIf="poolSizeChart && poolSizeChart.series && poolSizeChart.series.length > 0"
                         [series]="poolSizeChart.series"
                         [chart]="poolSizeChart.chart"
                         [labels]="poolSizeChart.labels"
@@ -37,6 +38,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
+                        *ngIf="mempoolSizeChart && mempoolSizeChart.series && mempoolSizeChart.series.length > 0"
                         [series]="mempoolSizeChart.series"
                         [chart]="mempoolSizeChart.chart"
                         [labels]="mempoolSizeChart.labels"
@@ -64,6 +66,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
+                        *ngIf="netspaceSizeChart && netspaceSizeChart.series && netspaceSizeChart.series.length > 0"
                         [series]="netspaceSizeChart.series"
                         [chart]="netspaceSizeChart.chart"
                         [labels]="netspaceSizeChart.labels"
@@ -91,6 +94,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
+                        *ngIf="xchPriceChart && xchPriceChart.series && xchPriceChart.series.length > 0"
                         [series]="xchPriceChart.series"
                         [chart]="xchPriceChart.chart"
                         [labels]="xchPriceChart.labels"
@@ -119,6 +123,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
+                        *ngIf="harvestersVersionsChart && harvestersVersionsChart.series && harvestersVersionsChart.series.length > 0"
                         [series]="harvestersVersionsChart.series"
                         [chart]="harvestersVersionsChart.chart"
                         [labels]="harvestersVersionsChart.labels"
@@ -144,6 +149,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
+                        *ngIf="partialsChart && partialsChart.series && partialsChart.series.length > 0"
                         [series]="partialsChart.series"
                         [chart]="partialsChart.chart"
                         [labels]="partialsChart.labels"

@@ -197,6 +197,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
+                        *ngIf="mempoolSizeChart && mempoolSizeChart.series && mempoolSizeChart.series.length > 0"
                         [series]="mempoolSizeChart.series"
                         [chart]="mempoolSizeChart.chart"
                         [labels]="mempoolSizeChart.labels"
