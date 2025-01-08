@@ -92,94 +92,44 @@
     </div>
 </div>
 
-<!-- wallet -->
-<div class="row" *ngFor="let wallet of pool_wallets; let i = index">
+<!-- wallets -->
+<div class="row">
     <div class="col-xl-12">
-        <div class="card crm-widget">
-            <div class="card-body p-0">
-                <div class="row row-cols-md-3 row-cols-1">
-                    <div class="col col-lg border-end wallet-col-size">
-                        <div class="py-4 px-3 wallet-py-size">
-                            <h5 class="text-muted text-uppercase fs-13">Address</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-wallet-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0">
-                                        <span class="counter-value">
-                                            <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
-                                                <p *ngIf="!walletAddressTruncate">{{ wallet.address }}</p>
-                                                <p *ngIf="walletAddressTruncate">{{ wallet.address | maxLength:24 }}</p>
-                                            </a>
-                                        </span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Amount</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-coin-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0">
-                                        <span class="counter-value">
-                                            {{ wallet.balance.confirmed_wallet_balance / 1000000000000 | number:".8-8" }} XCH
-                                        </span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Height</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-checkbox-multiple-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0">
-                                        <span class="counter-value">
-                                            {{ wallet.height || '-' }}
-                                        </span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Status</h5>
-                            <div class="d-flex align-items-center" *ngIf="wallet.synced && !wallet.syncing">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-checkbox-circle-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">Synced</span></h2>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center" *ngIf="!wallet.synced && wallet.syncing">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-error-warning-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">Syncing</span></h2>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center" *ngIf="!wallet.synced && !wallet.syncing">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-close-circle-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">Not synced</span></h2>
-                                </div>
-                            </div>
-                        </div>
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Pool wallets</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <div class="table-responsive table-card">
+                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" style="width: 600px;">Address</th>
+                                    <th scope="col" style="width: 100px;">Fingerprint</th>
+                                    <th scope="col" style="width: 150px;">Amount</th>
+                                    <th scope="col" style="width: 100px;">Height</th>
+                                    <th scope="col" style="width: 100px;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let wallet of pool_wallets">
+                                    <td>
+                                        <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
+                                            {{ wallet.address }}
+                                        </a>
+                                    </td>
+                                    <td>{{ wallet.balance.fingerprint }}</td>
+                                    <td>{{ wallet.balance.confirmed_wallet_balance / 1000000000000 | number:".8-8" }} XCH</td>
+                                    <td>{{ wallet.height || '-' }}</td>
+                                    <td>
+                                        <span *ngIf="wallet.synced && !wallet.syncing" class="badge bg-success-subtle text-success">Synced</span>
+                                        <span *ngIf="!wallet.synced && wallet.syncing" class="badge bg-warning-subtle text-warning">Syncing</span>
+                                        <span *ngIf="!wallet.synced && !wallet.syncing" class="badge bg-danger-subtle text-danger">Not synced</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -187,28 +137,31 @@
     </div>
 </div>
 
-<!-- mempool size -->
+<!-- nodes -->
 <div class="row">
-    <div class="col-xxl-12">
+    <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Mempool Size (7 days)</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Pool nodes</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
-                    <apx-chart
-                        *ngIf="mempoolSizeChart && mempoolSizeChart.series && mempoolSizeChart.series.length > 0"
-                        [series]="mempoolSizeChart.series"
-                        [chart]="mempoolSizeChart.chart"
-                        [labels]="mempoolSizeChart.labels"
-                        [legend]="mempoolSizeChart.legend"
-                        [dataLabels]="mempoolSizeChart.dataLabels"
-                        [colors]="mempoolSizeChart.colors"
-                        [xaxis]="mempoolSizeChart.xaxis"
-                        [yaxis]="mempoolSizeChart.yaxis"
-                        [stroke]="mempoolSizeChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
+                    <div class="table-responsive table-card">
+                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" style="width: 600px;">Name</th>
+                                    <th scope="col" style="width: 100px;">Active</th>
+                                    <th scope="col" style="width: 100px;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
