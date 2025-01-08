@@ -163,7 +163,8 @@
                                     <td>{{ node.peak_height }}</td>
                                     <td>{{ node.mempool_full_pct }}%</td>
                                     <td>
-                                        <span *ngIf="node.synced" class="badge bg-success-subtle text-success">Primary</span>
+                                        <span *ngIf="node.primary" class="badge bg-success-subtle text-success">Primary</span>
+                                        <span *ngIf="!node.primary" class="badge bg-warning-subtle text-warning">Standby</span>
                                     </td>
                                     <td>
                                         <span *ngIf="node.synced" class="badge bg-success-subtle text-success">Synced</span>
