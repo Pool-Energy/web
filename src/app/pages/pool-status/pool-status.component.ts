@@ -15,8 +15,11 @@ export class PoolStatusComponent {
   blockchainHeight: number = 0;
   blockchainShare: number = 0;
 
-  // wallet
+  // wallets
   pool_wallets: Array<any> = new Array();
+
+  // nodes
+  pool_nodes: Array<any> = new Array();
 
   constructor(
     private dataService: DataService
@@ -33,6 +36,7 @@ export class PoolStatusComponent {
       this.blockchainHeight = data['blockchain_height'];
       this.blockchainShare = this.getBlockchainShare(data);
       this.pool_wallets = data['pool_wallets'];
+      this.pool_nodes = data['pool_nodes'];
     });
   }
 
