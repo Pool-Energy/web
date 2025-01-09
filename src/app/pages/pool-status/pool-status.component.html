@@ -151,6 +151,8 @@
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" style="width: 600px;">Name</th>
+                                    <th scope="col" style="width: 100px;">Location</th>
+                                    <th scope="col" style="width: 100px;">Region</th>
                                     <th scope="col" style="width: 100px;">Height</th>
                                     <th scope="col" style="width: 100px;">Mempool</th>
                                     <th scope="col" style="width: 100px;">Active</th>
@@ -160,7 +162,9 @@
                             <tbody>
                                 <tr *ngFor="let node of pool_nodes">
                                     <td>{{ node.hostname }}</td>
-                                    <td>{{ node.peak_height }}</td>
+                                    <td>{{ node.country || '-' }}</td>
+                                    <td>{{ node.region || '-' }}</td>
+                                    <td>{{ node.peak_height || '-' }}</td>
                                     <td>{{ node.mempool_full_pct }}%</td>
                                     <td>
                                         <span *ngIf="node.primary" class="badge bg-success-subtle text-success">Primary</span>
