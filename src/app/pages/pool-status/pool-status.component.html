@@ -162,7 +162,7 @@
                             <tbody>
                                 <tr *ngFor="let node of pool_nodes">
                                     <td>{{ node.hostname }}</td>
-                                    <td>{{ node.country || '-' }}</td>
+                                    <td>{{ node.location || '-' }}</td>
                                     <td>{{ node.region || '-' }}</td>
                                     <td>{{ node.peak_height || '-' }}</td>
                                     <td>{{ node.mempool_full_pct }}%</td>
