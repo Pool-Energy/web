@@ -155,7 +155,8 @@
                                     <th scope="col" style="width: 100px;">Region</th>
                                     <th scope="col" style="width: 100px;">Height</th>
                                     <th scope="col" style="width: 100px;">Mempool</th>
-                                    <th scope="col" style="width: 100px;">Active</th>
+                                    <th scope="col" style="width: 100px;">Available</th>
+                                    <th scope="col" style="width: 100px;">Role</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                 </tr>
                             </thead>
@@ -164,15 +165,27 @@
                                     <td>{{ node.hostname }}</td>
                                     <td>{{ node.location || '-' }}</td>
                                     <td>{{ node.region || '-' }}</td>
-                                    <td>{{ node.peak_height || '-' }}</td>
-                                    <td>{{ node.mempool_full_pct }}%</td>
                                     <td>
-                                        <span *ngIf="node.primary" class="badge bg-success-subtle text-success">Primary</span>
-                                        <span *ngIf="!node.primary" class="badge bg-warning-subtle text-warning">Standby</span>
+                                        <span *ngIf="node.available">{{ node.peak_height || '-' }}</span>
+                                        <span *ngIf="!node.available">-</span>
                                     </td>
                                     <td>
-                                        <span *ngIf="node.synced" class="badge bg-success-subtle text-success">Synced</span>
-                                        <span *ngIf="!node.synced" class="badge bg-danger-subtle text-danger">Not synced</span>
+                                        <span *ngIf="node.available">{{ node.mempool_full_pct + '%' || '-' }}</span>
+                                        <span *ngIf="!node.available">-</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="node.available" class="badge bg-success-subtle text-success">Yes</span>
+                                        <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">No</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="node.available && node.primary" class="badge bg-success-subtle text-success">Primary</span>
+                                        <span *ngIf="node.available && !node.primary" class="badge bg-info-subtle text-info">Standby</span>
+                                        <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="node.available && node.synced" class="badge bg-success-subtle text-success">Synced</span>
+                                        <span *ngIf="node.available && !node.synced" class="badge bg-danger-subtle text-danger">Not synced</span>
+                                        <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
                                     </td>
                                 </tr>
                             </tbody>
