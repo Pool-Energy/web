@@ -174,8 +174,9 @@
                                         <span *ngIf="!node.available">-</span>
                                     </td>
                                     <td>
-                                        <span *ngIf="node.available" class="badge bg-success-subtle text-success">Yes</span>
-                                        <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">No</span>
+                                        <span *ngIf="node.available && node.enabled" class="badge bg-success-subtle text-success">Yes</span>
+                                        <span *ngIf="node.available && !node.enabled" class="badge bg-warning-subtle text-warning">Maintenance</span>
+                                        <span *ngIf="!node.available && node.enabled" class="badge bg-danger-subtle text-danger">No</span>
                                     </td>
                                     <td>
                                         <span *ngIf="node.available && node.primary" class="badge bg-success-subtle text-success">Primary</span>
