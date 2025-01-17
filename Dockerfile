@@ -15,12 +15,9 @@ RUN npm install --legacy-peer-deps && \
 # docker final environment #
 ############################
 
-FROM caddy:2.8.4-alpine
+FROM caddy:2.9.1-alpine
 
-# Identify the maintainer of an image
-LABEL maintainer="contact@pool.energy"
-
-EXPOSE 80
+EXPOSE 8080
 
 WORKDIR /var/www/poolenergy
 

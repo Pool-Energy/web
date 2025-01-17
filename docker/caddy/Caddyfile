@@ -1,15 +1,8 @@
-{
-    admin :2019
-    servers {
-        metrics
-    }
-}
-
-:80 {
+:8080 {
 
     root * /var/www/poolenergy
 
-    @spa {
+    @default_path {
         not path */assets/*
         not path *.js
         not path *.css
@@ -24,7 +17,7 @@
         not path /sitemap.xml
     }
 
-    rewrite @spa index.html
+    rewrite @default_path index.html
 
     file_server
 
