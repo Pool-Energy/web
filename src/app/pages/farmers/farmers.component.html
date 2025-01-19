@@ -1,5 +1,15 @@
 <app-breadcrumbs title="Farmers" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+
+
+<!-- message -->
+<div *ngFor="let message of pool_message; let i = index"
+    class="alert alert-{{ message.level }} alert-dismissible fade show"
+    role="alert">
+    <i class="ri-information-line me-3 align-middle"></i> {{ message.name }} ({{ message.datetime | date }}): {{ message.message }}
+    <button type="button" class="btn-close" (click)="closeMessage(i)" aria-label="Close"></button>
+</div>
+
 <!-- stats -->
 <div class="row">
     <div class="col-xl-12">

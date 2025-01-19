@@ -26,6 +26,10 @@ export class DataService {
     return this.httpClient.get(this.REST_API_SERVER + '/stats');
   }
 
+  getMessages() {
+    return this.httpClient.get(this.REST_API_SERVER + '/message');
+  }
+
   getBlocks(attrs: any) {
     var params = new HttpParams();
     if(attrs) {

@@ -14,6 +14,7 @@ export class FarmersComponent {
   breadCrumbItems!: Array<{}>;
 
   pool_space: number = 0;
+  pool_message: Array<any> = new Array();
   current_effort: number = 0;
   average_effort: number = 0;
   total_active_farmers: any = 0;
@@ -77,6 +78,10 @@ export class FarmersComponent {
       if(this.plot_filter_halving_enabled) {
         this.handlePlotFilterHalving(data['blockchain_height']);
       }
+    })
+
+    this.dataService.getMessages().subscribe((data: any) => {
+      this.pool_message = data;
     })
 
     this.dataService.getLaunchers({
@@ -147,6 +152,11 @@ export class FarmersComponent {
   private handleBlocks(data: any) {
     this.last_block = data['results'][0];
     this._blocks$.next(data['results']);
+  }
+
+  // message
+  closeMessage(index: number) {
+    this.pool_message.splice(index, 1);
   }
 
 }
