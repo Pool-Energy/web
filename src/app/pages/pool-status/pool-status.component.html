@@ -105,6 +105,7 @@
                         <table class="table align-middle table-nowrap table-striped-columns mb-0">
                             <thead class="table-light">
                                 <tr>
+                                    <th scope="col" style="width: 100px;">Name</th>
                                     <th scope="col" style="width: 600px;">Address</th>
                                     <th scope="col" style="width: 100px;">Fingerprint</th>
                                     <th scope="col" style="width: 150px;">Amount</th>
@@ -114,6 +115,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let wallet of pool_wallets">
+                                    <td>{{ wallet.name || 'unknown' }}</td>
                                     <td>
                                         <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
                                             {{ wallet.address }}
@@ -150,7 +152,7 @@
                         <table class="table align-middle table-nowrap table-striped-columns mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" style="width: 600px;">Name</th>
+                                    <th scope="col" style="width: 100px;">Name</th>
                                     <th scope="col" style="width: 100px;">Location</th>
                                     <th scope="col" style="width: 100px;">Region</th>
                                     <th scope="col" style="width: 100px;">Height</th>
@@ -162,7 +164,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let node of pool_nodes">
-                                    <td>{{ node.hostname }}</td>
+                                    <td>{{ node.name }}</td>
                                     <td>{{ node.location || '-' }}</td>
                                     <td>{{ node.region || '-' }}</td>
                                     <td>
