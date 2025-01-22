@@ -320,7 +320,7 @@ export class FarmerComponent implements AfterViewInit {
 
   private filterPartialsTooLate() {
     if(this.partialsShowTooLate) {
-      this.partialsFiltered = this.partialsTable.filter(entry => entry.time_taken >= 27);
+      this.partialsFiltered = this.partialsTable.filter(entry => entry.time_taken >= 27  && entry.time_taken != 999.999);
     } else {
       this.partialsFiltered = [...this.partialsTable];
     }
