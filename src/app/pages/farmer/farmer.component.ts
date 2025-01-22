@@ -396,20 +396,11 @@ export class FarmerComponent implements AfterViewInit {
             },
             series: [
               {
-                name: "Partial Time Taken Error",
-                data: Array.from(this.partialsTable, (i) => {
-                  return {
-                    "x": new Date(i['timestamp'] * 1000),
-                    "y": i['time_taken'] > 27 ? i['time_taken'] : 0,
-                  };
-                }).reverse()
-              },
-              {
                 name: "Partial Time Taken",
                 data: Array.from(this.partialsTable, (i) => {
                   return {
                     "x": new Date(i['timestamp'] * 1000),
-                    "y": i['time_taken'] <= 27 ? i['time_taken'] : 0,
+                    "y": (i['time_taken'] > 0 && i['time_taken'] != 999.999) ? i['time_taken'] : 0,
                   };
                 }).reverse()
               }
@@ -436,7 +427,7 @@ export class FarmerComponent implements AfterViewInit {
               min: 0,
               labels: {
                 formatter: function (val: number) {
-                  return val.toFixed(0) + "s";
+                  return val.toFixed(3) + "s";
                 }
               }
             },
@@ -451,7 +442,7 @@ export class FarmerComponent implements AfterViewInit {
             stroke: {
               width: 2
             },
-            colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
+            colors: this.getChartColorsArray('["--vz-info"]')
           }
         ]
       }
