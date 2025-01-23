@@ -4,7 +4,7 @@
 
 <!-- message -->
 <div *ngFor="let message of pool_message; let i = index"
-    class="alert alert-{{ message.level }} alert-dismissible fade show"
+    class="alert alert-{{ message.level }} alert-border-left alert-dismissible fade show"
     role="alert">
     <i class="ri-alarm-warning-line me-1"></i> {{ message.name }} ({{ message.datetime | date }}): {{ message.message }}
     <button type="button" class="btn-close" (click)="closeMessage(i)" aria-label="Close"></button>
