@@ -137,18 +137,17 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "src/proxy.conf.json"
-          },
           "configurations": {
             "production": {
-              "buildTarget": "poolenergy:build:production"
+              "buildTarget": "poolenergy:build:production",
+              "proxyConfig": "src/proxy.conf.prod.json"
             },
             "development": {
-              "buildTarget": "poolenergy:build:development"
+              "buildTarget": "poolenergy:build:development",
+              "proxyConfig": "src/proxy.conf.dev.json"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

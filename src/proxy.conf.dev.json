@@ -1,0 +1,22 @@
+{
+    "/api": {
+      "target": "https://dev-www.pool.energy",
+      "secure": true,
+      "changeOrigin": true
+    },
+    "/static": {
+      "target": "https://dev-www.pool.energy",
+      "secure": true,
+      "changeOrigin": true
+    },
+    "/_proxy_ws": {
+      "target": "https://dev-www.pool.energy",
+      "secure": true,
+      "pathRewrite": {
+        "/_proxy_ws": "/ws"
+      },
+      "ws": true,
+      "changeOrigin": true
+    }
+  }
+  
