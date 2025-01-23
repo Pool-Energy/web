@@ -1,5 +1,12 @@
 <app-breadcrumbs title="Farmer" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- message -->
+<div *ngIf="launcher.message"
+    class="alert alert-warning alert-border-left alert-dismissible fade show"
+    role="alert">
+    <i class="ri-alarm-warning-line me-1"></i> {{ launcher.message }}
+</div>
+
 <!-- profile background -->
 <div class="profile-foreground position-relative mx-n4">
     <div class="profile-wid-bg profile-wid-rounded">
