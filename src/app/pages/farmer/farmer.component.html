@@ -864,7 +864,12 @@
                                 </div>
                             </div>
                             <!-- rewards list -->
-                            <div class="d-flex mb-1">
+                            <div *ngIf="payouttxsCollectionSize == 0" class="col-xxl-12">
+                                <div class="alert alert-info alert-border-left" role="alert">
+                                    No reward found.
+                                </div>
+                            </div>
+                            <div *ngIf="payouttxsCollectionSize != 0" class="d-flex mb-1">
                                 <table class="table align-middle table-nowrap table-striped-columns mb-0">
                                     <thead class="table-light">
                                         <tr>
@@ -893,7 +898,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div>
+                            <div *ngIf="payouttxsCollectionSize != 0">
                                 <div class="text-md-right float-md-end payouts-pagination">
                                     <ngb-pagination [collectionSize]="payoutsCollectionSize" [(page)]="payoutsPage"
                                         [pageSize]="payoutsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
@@ -988,7 +993,12 @@
                                 </div>
                             </div>
                             <!-- payouttxs list -->
-                            <div class="d-flex mb-1">
+                            <div *ngIf="payouttxsCollectionSize == 0" class="col-xxl-12">
+                                <div class="alert alert-info alert-border-left" role="alert">
+                                    No payout found.
+                                </div>
+                            </div>
+                            <div *ngIf="payouttxsCollectionSize != 0" class="d-flex mb-1">
                                 <table class="table align-middle table-nowrap table-striped-columns mb-0">
                                     <thead class="table-light">
                                         <tr>
@@ -1011,7 +1021,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div>
+                            <div *ngIf="payouttxsCollectionSize != 0">
                                 <div *ngIf="(payouttxs$ | async) as payouttxs"
                                     class="download-button-div">
                                     <button *ngIf="payouttxs.length >= 1"
