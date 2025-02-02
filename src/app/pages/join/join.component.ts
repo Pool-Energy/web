@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subscription, Observable, of, interval } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -10,14 +14,11 @@ import { HttpClient } from '@angular/common/http';
 
 export class JoinComponent {
   breadCrumbItems!: Array<{}>;
+  private pingSubscription: Subscription = new Subscription();
 
-  // latency
-  pingPoolUrl: string = 'https://chia.pool.energy';
-  pingPoolLatencyArray: number[] = [];
-  pingPoolLatencyAverage: number = 0;
-  pingPoolLatencyChart: any = {};
-  pingPoolLatencyChartLegend: boolean = false;
-  pingPoolLatencyChartData: any[] = [];
+  // pools
+  endpoints: any[] = environment.pools;
+  latencies: {[key: string]: number} = {};
 
   constructor(
     private httpClient: HttpClient
@@ -29,81 +30,28 @@ export class JoinComponent {
       { label: 'Join', active: true }
     ];
 
-    // latency
-    this.getPingLatency(this.pingPoolUrl);
-  }
-
-  // common
-  private getChartColorsArray(colors:any) {
-    colors = JSON.parse(colors);
-    return colors.map(function (value:any) {
-      var newValue = value.replace(" ", "");
-      if (newValue.indexOf(",") === -1) {
-        var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
-            if (color) {
-            color = color.replace(" ", "");
-            return color;
-            }
-            else return newValue;;
-        } else {
-            var val = value.split(',');
-            if (val.length == 2) {
-                var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
-                rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
-                return rgbaColor;
-            } else {
-                return newValue;
-            }
-        }
+    this.pingSubscription = interval(2000).subscribe(() => {
+      this.endpoints.forEach(endpoint => {
+        this.pingLatency(endpoint.url).subscribe((latency: number) => {
+          this.latencies[endpoint.url] = latency;
+        });
+      });
     });
   }
 
   // latency
-  getPingLatency(pingUrl: string) {
-    for(let i = 0; i < 5; i++) {
-      setTimeout(() => {
-        let timeStart: number = performance.now();
-        this.httpClient.get(pingUrl, {observe:'response', responseType:'text'}).subscribe(() => {
-          let timeEnd: number = performance.now();
-          let ping: number = timeEnd - timeStart;
-          this.pingPoolLatencyArray.push(ping);
-          this.pingPoolLatencyAverage = this.pingPoolLatencyArray.reduce((a, b) => a + b, 0) / this.pingPoolLatencyArray.length;
-        });
-      }, 2000);
-    }
-    this.chartPingLatency(this.pingPoolLatencyArray);
+  private pingLatency(url: string): Observable<number> {
+    const start = Date.now();
+    return this.httpClient.get('https://' + url, {responseType: 'text'}).pipe(
+      map(() => Date.now() - start),
+      catchError(() => of(-1))
+    );
   }
 
-  private chartPingLatency(data: any) {
-    this.pingPoolLatencyChart = {
-      series: [{
-        name: "Ping",
-        data: this.pingPoolLatencyArray,
-      }],
-      legend: {
-        show: this.pingPoolLatencyChartLegend
-      },
-      noData: {
-        text: "Loading..."
-      },
-      chart: {
-        height: 250,
-        type: "area",
-        toolbar: {
-          show: false
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function(val: any) {
-          return val + " ms";
-        }
-      },
-      yaxis: {
-        decimalsInFloat: 0
-      },
-      colors: this.getChartColorsArray('["--vz-primary"]')
-    };
+  ngOnDestroy(): void {
+    if(this.pingSubscription) {
+      this.pingSubscription.unsubscribe();
+    }
   }
 
 }

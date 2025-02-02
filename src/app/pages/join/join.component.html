@@ -6,41 +6,21 @@
         <div class="card crm-widget">
             <div class="card-body p-0">
                 <div class="row row-cols-md-3 row-cols-1">
-                    <div class="col col-lg border-end">
+                    <div class="col col-lg border-end" *ngFor="let endpoint of endpoints">
                         <div class="py-4 px-3">
-                            <h5 class="text-muted fs-13">Pool Latency Average (chia.pool.energy)</h5>
+                            <h5 class="text-muted fs-13">Latency from {{ endpoint.name }} ({{ endpoint.url }})</h5>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <i class="ri-earth-line display-6 text-muted"></i>
+                                    <i *ngIf="latencies[endpoint.url] < 40" class="ping-low ri-earth-line display-6 text-muted"></i>
+                                    <i *ngIf="latencies[endpoint.url] >= 40 && latencies[endpoint.url] < 100" class="ping-medium ri-earth-line display-6 text-muted"></i>
+                                    <i *ngIf="latencies[endpoint.url] >= 100" class="ping-high ri-earth-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ pingPoolLatencyAverage | number:'1.0-0' }} ms</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <div ngbAccordion activeIds="ping-pool-latency">
-                        <div ngbAccordionItem id="ping-pool-latency">
-                            <h2 ngbAccordionHeader class="accordion-header border-0 bg-transparent">
-                                <button ngbAccordionButton>Chart Overview</button>
-                            </h2>
-                            <div ngbAccordionCollapse>
-                                <div ngbAccordionBody>
-                                    <ng-template>
-                                        <apx-chart
-                                            [series]="pingPoolLatencyChart.series"
-                                            [chart]="pingPoolLatencyChart.chart"
-                                            [labels]="pingPoolLatencyChart.labels"
-                                            [legend]="pingPoolLatencyChart.legend"
-                                            [dataLabels]="pingPoolLatencyChart.dataLabels"
-                                            [colors]="pingPoolLatencyChart.colors"
-                                            dir="ltr">
-                                        </apx-chart>
-                                    </ng-template>
+                                    <h2 class="mb-0">
+                                        <span class="counter-value">
+                                            {{ latencies[endpoint.url] !== undefined ? latencies[endpoint.url] : '...' }} ms
+                                        </span>
+                                    </h2>
                                 </div>
                             </div>
                         </div>

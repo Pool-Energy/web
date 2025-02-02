@@ -1,3 +1,15 @@
 .li-join {
     margin-left: 40px;
 }
+
+.ping-low::before {
+    color: green;
+}
+
+.ping-medium::before {
+    color: orange;
+}
+
+.ping-high::before {
+    color: red;
+}
