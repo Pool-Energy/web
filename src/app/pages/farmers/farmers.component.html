@@ -99,21 +99,14 @@
 </div>
 
 <!-- block reward halving -->
-<div *ngIf="block_reward_halving_enabled && block_reward_halving_percent >= 98.5 && block_reward_halving_percent <= 100.0"
-    class="alert alert-{{ block_reward_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
-    <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
-    Current block: {{ block_reward_halving_current_block }}. Next halving block: {{ block_reward_halving_block }}.
-    Progression: <strong>{{ block_reward_halving_percent | number:".2-2" }}%</strong>.
-    Rewards change from 1 XCH to 0.5 XCH.
-</div>
 
-<!-- plot filter halving -->
-<div *ngIf="plot_filter_halving_enabled && plot_filter_halving_percent >= 98.5 && plot_filter_halving_percent <= 100.0"
-    class="alert alert-{{ plot_filter_halving_class }} alert-border-left alert-dismissible fade show" role="alert">
+<!-- chia consensus fork -->
+<div *ngIf="chia_consensus_fork_enabled && chia_consensus_fork_percent >= 98.5 && chia_consensus_fork_percent <= 100.0"
+    class="alert alert-{{ chia_consensus_fork_class }} alert-border-left alert-dismissible fade show" role="alert">
     <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
-    Current block: {{ plot_filter_halving_current_block }}. Next halving block: {{ plot_filter_halving_block }}.
-    Progression: <strong>{{ plot_filter_halving_percent | number:".2-2" }}%</strong>.
-    Plot filter change from 512 to 256.
+    Current block: {{ chia_consensus_fork_current_block }}. Next halving block: {{ chia_consensus_fork_block }}.
+    Progression: <strong>{{ chia_consensus_fork_percent | number:".2-2" }}%</strong>.
+    For more details, please visit <a href="https://docs.chia.net/consensus-forks/" target="_blank">Chia Blockchain documentation</a>.
 </div>
 
 <!-- leaderboard -->

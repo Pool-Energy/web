@@ -24,21 +24,13 @@ export class FarmersComponent {
   last_block: any = null;
   leaderboard: Array<any> = new Array();
 
-  // block reward halving
-  block_reward_halving_enabled: boolean = false;
-  block_reward_halving_block: number = 10091520;
-  block_reward_halving_diff: number = 0;
-  block_reward_halving_percent: number = 0;
-  block_reward_halving_class: string = "info";
-  block_reward_halving_current_block: number | undefined;
-
-  // plot filter halving
-  plot_filter_halving_enabled: boolean = false;
-  plot_filter_halving_block: number = 10542000;
-  plot_filter_halving_diff: number = 0;
-  plot_filter_halving_percent: number = 0;
-  plot_filter_halving_class: string = "info";
-  plot_filter_halving_current_block: number | undefined;
+  // chia fork
+  chia_consensus_fork_enabled: boolean = true;
+  chia_consensus_fork_block: number = 680000;
+  chia_consensus_fork_diff: number = 0;
+  chia_consensus_fork_percent: number = 0;
+  chia_consensus_fork_class: string = "info";
+  chia_consensus_fork_current_block: number | undefined;
 
   // launchers
   _launchers$: Subject<any[]> = new Subject<any[]>();
@@ -72,11 +64,8 @@ export class FarmersComponent {
       this.estimate_win = data['estimate_win'] * 60;
       this.current_fee = data['fee'] * 100;
       this.xch_current_price = data['xch_current_price']['usd'];
-      if(this.block_reward_halving_enabled) {
-        this.handleBlockRewardHalving(data['blockchain_height']);
-      }
-      if(this.plot_filter_halving_enabled) {
-        this.handlePlotFilterHalving(data['blockchain_height']);
+      if(this.chia_consensus_fork_enabled) {
+        this.handleChiaConsensusFork(data['blockchain_height']);
       }
     })
 
@@ -104,30 +93,17 @@ export class FarmersComponent {
     });
   }
 
-  // halving
-  private handleBlockRewardHalving(block: number) {
-    this.block_reward_halving_current_block = block;
-    this.block_reward_halving_diff = this.block_reward_halving_current_block - this.block_reward_halving_block;
-    this.block_reward_halving_percent = this.block_reward_halving_current_block * 100 / this.block_reward_halving_block;
-    if(this.block_reward_halving_percent >= 99.5) {
-      this.block_reward_halving_class = "danger";
-    } else if(this.block_reward_halving_percent >= 99) {
-      this.block_reward_halving_class = "warning";
+  // chia consensus fork
+  private handleChiaConsensusFork(block: number) {
+    this.chia_consensus_fork_current_block = block;
+    this.chia_consensus_fork_diff = this.chia_consensus_fork_current_block - this.chia_consensus_fork_block;
+    this.chia_consensus_fork_percent = this.chia_consensus_fork_current_block * 100 / this.chia_consensus_fork_block;
+    if(this.chia_consensus_fork_percent >= 99.5) {
+      this.chia_consensus_fork_class = "danger";
+    } else if(this.chia_consensus_fork_percent >= 99) {
+      this.chia_consensus_fork_class = "warning";
     } else {
-      this.block_reward_halving_class = "info";
-    }
-  }
-
-  private handlePlotFilterHalving(block: number) {
-    this.plot_filter_halving_current_block = block;
-    this.plot_filter_halving_diff = this.plot_filter_halving_current_block - this.plot_filter_halving_block;
-    this.plot_filter_halving_percent = this.plot_filter_halving_current_block * 100 / this.plot_filter_halving_block;
-    if(this.plot_filter_halving_percent >= 99.5) {
-      this.plot_filter_halving_class = "danger";
-    } else if(this.plot_filter_halving_percent >= 99) {
-      this.plot_filter_halving_class = "warning";
-    } else {
-      this.plot_filter_halving_class = "info";
+      this.chia_consensus_fork_class = "info";
     }
   }
 
