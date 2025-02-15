@@ -36,11 +36,11 @@ export class PoolStatsComponent {
   xchPriceChart: any = {};
   xchPriceChartLegend: boolean = false;
 
-  // farmers / harvesters / partials
-  harvestersVersionsData: any[] = [];
-  harvestersVersionsChart: any = {};
-  partialsData: any[] = [];
-  partialsChart: any = {};
+  // partials
+  partialsVersionsData: any[] = [];
+  partialsVersionsChart: any = {};
+  partialsErrorsData: any[] = [];
+  partialsErrorsChart: any = {};
 
   constructor(
     private dataService: DataService
@@ -57,8 +57,8 @@ export class PoolStatsComponent {
     this.getMempoolSize(this.mempoolSizeDays);
     this.getNetspaceSize(this.netspaceSizeDays);
     this.getXchPrice(this.xchPriceDays);
-    this.getHarvestersVersions();
-    this.getPartials();
+    this.getPartialsVersions();
+    this.getPartialsErrors();
   }
 
   // common
@@ -329,12 +329,12 @@ export class PoolStatsComponent {
     }
   }
 
-  // harvesters versions
-  getHarvestersVersions() {
-    this.dataService.getHarvesters().subscribe((d: any) => {
+  // partials versions
+  getPartialsVersions() {
+    this.dataService.getPartials('').subscribe((d: any) => {
       let versionCounts: { [version: string]: number } = {};
       d.results.forEach((item: any) => {
-        const version = item['version'];
+        const version = item['chia_version'];
         if (versionCounts[version]) {
           versionCounts[version] += 1;
         } else {
@@ -345,12 +345,12 @@ export class PoolStatsComponent {
         version: version,
         count: count
       }));
-      this.chartHarvestersVersions(data);
+      this.chartPartialsVersions(data);
     });
   }
 
-  private chartHarvestersVersions(data: any) {
-    this.harvestersVersionsChart = {
+  private chartPartialsVersions(data: any) {
+    this.partialsVersionsChart = {
       series: data.map((item: any) => item.count),
       labels: data.map((item: any) => item.version),
       legend: {
@@ -385,7 +385,7 @@ export class PoolStatsComponent {
         min: 0,
         labels: {
           formatter: function (val: number) {
-            return val + " harvesters";
+            return val + " partials";
           }
         }
       },
@@ -407,7 +407,7 @@ export class PoolStatsComponent {
   }
 
   // partials errors
-  getPartials() {
+  getPartialsErrors() {
     this.dataService.getPartials('').subscribe((d: any) => {
       let errorCounts: { [error: string]: number } = {};
       d.results.forEach((item: any) => {
@@ -430,7 +430,7 @@ export class PoolStatsComponent {
   }
 
   private chartPartialsError(data: any) {
-    this.partialsChart = {
+    this.partialsErrorsChart = {
       series: data.map((item: any) => item.count),
       labels: data.map((item: any) => item.error),
       legend: {

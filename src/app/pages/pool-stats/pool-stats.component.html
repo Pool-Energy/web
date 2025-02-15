@@ -112,27 +112,27 @@
     </div>
 </div>
 
-<!-- farmers / harvesters / partials -->
+<!-- partials -->
 <div class="row">
     <!-- versions -->
     <div class="col-xxl-6">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Harvesters Versions</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Versions</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
-                        *ngIf="harvestersVersionsChart && harvestersVersionsChart.series && harvestersVersionsChart.series.length > 0"
-                        [series]="harvestersVersionsChart.series"
-                        [chart]="harvestersVersionsChart.chart"
-                        [labels]="harvestersVersionsChart.labels"
-                        [legend]="harvestersVersionsChart.legend"
-                        [dataLabels]="harvestersVersionsChart.dataLabels"
-                        [colors]="harvestersVersionsChart.colors"
-                        [xaxis]="harvestersVersionsChart.xaxis"
-                        [yaxis]="harvestersVersionsChart.yaxis"
-                        [stroke]="harvestersVersionsChart.stroke"
+                        *ngIf="partialsVersionsChart && partialsVersionsChart.series && partialsVersionsChart.series.length > 0"
+                        [series]="partialsVersionsChart.series"
+                        [chart]="partialsVersionsChart.chart"
+                        [labels]="partialsVersionsChart.labels"
+                        [legend]="partialsVersionsChart.legend"
+                        [dataLabels]="partialsVersionsChart.dataLabels"
+                        [colors]="partialsVersionsChart.colors"
+                        [xaxis]="partialsVersionsChart.xaxis"
+                        [yaxis]="partialsVersionsChart.yaxis"
+                        [stroke]="partialsVersionsChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>
@@ -140,25 +140,25 @@
         </div>
     </div>
 
-    <!-- partials -->
+    <!-- errors -->
     <div class="col-xxl-6">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Partials Errors</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Errors</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
                     <apx-chart
-                        *ngIf="partialsChart && partialsChart.series && partialsChart.series.length > 0"
-                        [series]="partialsChart.series"
-                        [chart]="partialsChart.chart"
-                        [labels]="partialsChart.labels"
-                        [legend]="partialsChart.legend"
-                        [dataLabels]="partialsChart.dataLabels"
-                        [colors]="partialsChart.colors"
-                        [xaxis]="partialsChart.xaxis"
-                        [yaxis]="partialsChart.yaxis"
-                        [stroke]="partialsChart.stroke"
+                        *ngIf="partialsErrorsChart && partialsErrorsChart.series && partialsErrorsChart.series.length > 0"
+                        [series]="partialsErrorsChart.series"
+                        [chart]="partialsErrorsChart.chart"
+                        [labels]="partialsErrorsChart.labels"
+                        [legend]="partialsErrorsChart.legend"
+                        [dataLabels]="partialsErrorsChart.dataLabels"
+                        [colors]="partialsErrorsChart.colors"
+                        [xaxis]="partialsErrorsChart.xaxis"
+                        [yaxis]="partialsErrorsChart.yaxis"
+                        [stroke]="partialsErrorsChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>
