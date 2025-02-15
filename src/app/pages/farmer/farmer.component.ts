@@ -22,8 +22,8 @@ export class FarmerComponent implements AfterViewInit {
 
   // common
   truncateRequired: boolean = false;
-  warningChiaVersion: string = "2.2.0";
-  criticalChiaVersion: string = "2.1.0";
+  warningChiaVersion: string = "2.5.1";
+  criticalChiaVersion: string = "2.5.1";
 
   // launcher
   launcher_id: any = null;
