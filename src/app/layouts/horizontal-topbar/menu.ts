@@ -114,6 +114,12 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.INFO.LIST.TEAM',
         link: '/info/team',
         parentId: 7
+      },
+      {
+        id: 75,
+        label: 'MENUITEMS.INFO.LIST.GITHUB',
+        link: 'https://github.com/Pool-Energy',
+        parentId: 7
       }
     ]
   },
@@ -131,9 +137,9 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 82,
-        label: 'MENUITEMS.CONTACT.LIST.TWITTER',
-        icon: 'ri-twitter-line',
-        link: 'https://twitter.com/pool_energy',
+        label: 'MENUITEMS.CONTACT.LIST.XING',
+        icon: 'ri-xing-line',
+        link: 'https://x.com/pool_energy',
         parentId: 8
       },
       {
@@ -162,6 +168,13 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.CONTACT.LIST.DISCORD',
         icon: 'ri-discord-line',
         link: 'https://discord.gg/arZDWsY5xZ',
+        parentId: 8
+      },
+      {
+        id: 87,
+        label: 'MENUITEMS.CONTACT.LIST.GITHUB',
+        icon: 'ri-github-line',
+        link: 'https://github.com/Pool-Energy',
         parentId: 8
       }
     ]

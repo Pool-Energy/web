@@ -15,7 +15,8 @@ export class FooterComponent implements OnInit {
     "reddit": "https://www.reddit.com/r/chia/comments/thv366/new_chia_pool_poolenergy/",
     "youtube": "https://www.youtube.com/channel/UCCHIIBGO-PA-UfxJDlcz0aw",
     "facebook": "https://www.facebook.com/pool.energy/",
-    "discord": "https://discord.gg/arZDWsY5xZ"
+    "discord": "https://discord.gg/arZDWsY5xZ",
+    "github": "https://github.com/Pool-Energy"
   }
 
   constructor() { }

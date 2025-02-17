@@ -39,18 +39,20 @@
         "FAQ": "FAQ",
         "API": "API",
         "FEE": "Fee",
-        "TEAM": "Team"
+        "TEAM": "Team",
+        "GITHUB": "Github"
       }
     },
     "CONTACT": {
       "TEXT": "Contact",
       "LIST": {
         "TELEGRAM": "Telegram",
-        "TWITTER": "Twitter",
+        "XING": "X",
         "REDDIT": "Reddit",
         "YOUTUBE": "Youtube",
         "FACEBOOK": "Facebook",
-        "DISCORD": "Discord"
+        "DISCORD": "Discord",
+        "GITHUB": "Github"
       }
     }
   }
