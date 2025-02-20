@@ -17,6 +17,7 @@ export class FarmersComponent {
   pool_message: Array<any> = new Array();
   current_effort: number = 0;
   average_effort: number = 0;
+  total_farmers: any = 0;
   total_active_farmers: any = 0;
   estimate_win: any | undefined;
   current_fee: any = 0;
@@ -60,6 +61,7 @@ export class FarmersComponent {
       this.pool_space = data['pool_space'];
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.average_effort = data['average_effort'];
+      this.total_farmers = data['farmers'];
       this.total_active_farmers = data['farmers_active'];
       this.estimate_win = data['estimate_win'] * 60;
       this.current_fee = data['fee'] * 100;
@@ -75,7 +77,7 @@ export class FarmersComponent {
 
     this.dataService.getLaunchers({
       limit: this.launchersPageSize,
-      points_pplns__gt: 1
+      points_pplns__gt: 0
     }).subscribe(this.handleLaunchers.bind(this));
 
     this.dataService.getBlocks({
@@ -120,7 +122,7 @@ export class FarmersComponent {
     this.dataService.getLaunchers({
       offset: (this.launchersPage - 1) * this.launchersPageSize,
       limit: this.launchersPageSize,
-      points_pplns__gt: 1
+      points_pplns__gt: 0
     }).subscribe(this.handleLaunchers.bind(this));
   }
 
