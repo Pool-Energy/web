@@ -24,6 +24,8 @@ export class FarmersComponent {
   xch_current_price: number = 0;
   last_block: any = null;
   leaderboard: Array<any> = new Array();
+  show_all_farmers: boolean = false;
+  farmers_points_min: number = 1;
 
   // chia fork
   chia_consensus_fork_enabled: boolean = true;
@@ -71,13 +73,18 @@ export class FarmersComponent {
       }
     })
 
+    if(localStorage.getItem('show_all_farmers') == 'true') {
+      this.show_all_farmers = true;
+      this.farmers_points_min = 0;
+    }
+
     this.dataService.getMessages().subscribe((data: any) => {
       this.pool_message = data;
     })
 
     this.dataService.getLaunchers({
       limit: this.launchersPageSize,
-      points_pplns__gt: 0
+      points_pplns__gt: this.farmers_points_min
     }).subscribe(this.handleLaunchers.bind(this));
 
     this.dataService.getBlocks({
@@ -122,8 +129,14 @@ export class FarmersComponent {
     this.dataService.getLaunchers({
       offset: (this.launchersPage - 1) * this.launchersPageSize,
       limit: this.launchersPageSize,
-      points_pplns__gt: 0
+      points_pplns__gt: this.farmers_points_min
     }).subscribe(this.handleLaunchers.bind(this));
+  }
+
+  toggleShowAllFarmers(event: any) {
+    this.farmers_points_min = event.target.checked ? 0 : 1;
+    localStorage.setItem('show_all_farmers', event.target.checked);
+    this.refreshLaunchers();
   }
 
   // blocks
