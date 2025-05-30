@@ -92,11 +92,11 @@ export class PoolStatsComponent {
     this.dataService.getPoolSize(days).subscribe((d: any) => {
       this.poolSizeDays = days;
       this.poolSizeData = [{
-        "name": "Pool Size (PiB)",
+        "name": "Pool Size (TiB)",
         "data": (<any[]>d).filter(item => item['field'] == 'global').map((item) => {
           return ({
             "x": (new Date(item['datetime']).toLocaleString()),
-            "y": item['value'] / 1024 ** 5,
+            "y": item['value'] / 1024 ** 4,
           })
         })
       }];
@@ -127,7 +127,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'datetime',
+        type: 'date',
         labels: {
           show: false
         }
@@ -136,7 +136,7 @@ export class PoolStatsComponent {
         min: 0,
         labels: {
           formatter: function (val: number) {
-            return val.toFixed(0) + " PiB";
+            return val.toFixed(0) + " TiB";
           }
         }
       },
@@ -187,7 +187,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'datetime',
+        type: 'date',
         labels: {
           show: false
         }
@@ -247,7 +247,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'datetime',
+        type: 'date',
         labels: {
           show: false
         }
@@ -309,7 +309,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'datetime',
+        type: 'date',
         labels: {
           show: false
         }
