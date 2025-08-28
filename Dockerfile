@@ -15,7 +15,7 @@ RUN npm install --legacy-peer-deps && \
 # docker final environment #
 ############################
 
-FROM caddy:2.10.0-alpine
+FROM caddy:2.10.2-alpine
 
 EXPOSE 8080
 
