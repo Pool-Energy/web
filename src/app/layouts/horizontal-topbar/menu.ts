@@ -100,7 +100,7 @@ export const MENU: MenuItem[] = [
       {
         id: 72,
         label: 'MENUITEMS.INFO.LIST.API',
-        link: 'https://pool.energy/api/v1.0/',
+        link: 'https://pool.energy/api/doc/',
         parentId: 7
       },
       {
