@@ -2,7 +2,7 @@
 # docker build environment #
 ############################
 
-FROM node:18.20.4-bookworm AS build
+FROM node:22.19.0-bookworm AS build
 
 WORKDIR /build
 
@@ -21,7 +21,7 @@ EXPOSE 8080
 
 WORKDIR /var/www/poolenergy
 
-COPY --from=build /build/dist/poolenergy .
+COPY --from=build /build/dist/poolenergy/browser .
 COPY ./docker/caddy/Caddyfile /etc/Caddyfile.tpl
 COPY ./docker/entrypoint.sh /entrypoint.sh
 
