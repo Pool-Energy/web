@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-pool-status',
-  templateUrl: './pool-status.component.html',
-  styleUrl: './pool-status.component.scss'
+    selector: 'app-pool-status',
+    templateUrl: './pool-status.component.html',
+    styleUrl: './pool-status.component.scss',
+    standalone: false
 })
 
 export class PoolStatusComponent {

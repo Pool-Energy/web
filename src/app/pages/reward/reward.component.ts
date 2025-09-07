@@ -5,9 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-reward',
-  templateUrl: './reward.component.html',
-  styleUrl: './reward.component.scss'
+    selector: 'app-reward',
+    templateUrl: './reward.component.html',
+    styleUrl: './reward.component.scss',
+    standalone: false
 })
 
 export class RewardComponent {

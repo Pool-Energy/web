@@ -7,9 +7,10 @@ import { environment } from 'src/environments/environment';
 
 
 @Component({
-  selector: 'app-join',
-  templateUrl: './join.component.html',
-  styleUrl: './join.component.scss'
+    selector: 'app-join',
+    templateUrl: './join.component.html',
+    styleUrl: './join.component.scss',
+    standalone: false
 })
 
 export class JoinComponent {

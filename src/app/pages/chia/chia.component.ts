@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-chia',
-  templateUrl: './chia.component.html',
-  styleUrl: './chia.component.scss'
+    selector: 'app-chia',
+    templateUrl: './chia.component.html',
+    styleUrl: './chia.component.scss',
+    standalone: false
 })
 
 export class ChiaComponent {

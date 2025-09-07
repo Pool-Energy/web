@@ -4,9 +4,10 @@ import { expand } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-pool-stats',
-  templateUrl: './pool-stats.component.html',
-  styleUrl: './pool-stats.component.scss'
+    selector: 'app-pool-stats',
+    templateUrl: './pool-stats.component.html',
+    styleUrl: './pool-stats.component.scss',
+    standalone: false
 })
 
 export class PoolStatsComponent {

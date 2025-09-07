@@ -5,9 +5,10 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-pool-logs',
-  templateUrl: './pool-logs.component.html',
-  styleUrl: './pool-logs.component.scss'
+    selector: 'app-pool-logs',
+    templateUrl: './pool-logs.component.html',
+    styleUrl: './pool-logs.component.scss',
+    standalone: false
 })
 
 export class PoolLogsComponent implements AfterViewInit {

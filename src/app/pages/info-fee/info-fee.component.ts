@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-info-fee',
-  templateUrl: './info-fee.component.html',
-  styleUrl: './info-fee.component.scss'
+    selector: 'app-info-fee',
+    templateUrl: './info-fee.component.html',
+    styleUrl: './info-fee.component.scss',
+    standalone: false
 })
 
 export class InfoFeeComponent {

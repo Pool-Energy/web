@@ -4,9 +4,10 @@ import { Observable, Subject } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-rewards',
-  templateUrl: './rewards.component.html',
-  styleUrl: './rewards.component.scss'
+    selector: 'app-rewards',
+    templateUrl: './rewards.component.html',
+    styleUrl: './rewards.component.scss',
+    standalone: false
 })
 
 export class RewardsComponent {
