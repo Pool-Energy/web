@@ -5701,10 +5701,10 @@ ngx-cookie-service@^17.1.0:
   dependencies:
     tslib "^2.6.2"
 
-ngx-countup@^13.1.0:
-  version "13.1.0"
-  resolved "https://registry.npmjs.org/ngx-countup/-/ngx-countup-13.1.0.tgz"
-  integrity sha512-5U1heict3J3F+MTvwhEM3w/j9JuSp4Jqm530yrIzZtQC4huOPCTyZ4ZwBhGk+ZkBkb8HOCcm1xXu90/sydt0Qg==
+ngx-countup@^13.2.0:
+  version "13.2.0"
+  resolved "https://registry.npmjs.org/ngx-countup/-/ngx-countup-13.2.0.tgz"
+  integrity sha512-8HpLinaRAg9qta8P/1BjP7IzVY8USNbn9981StlvYPNshLwZcmSmxKJIuHzE9zTL+y7ILWih2L4SDyJDfsIyVw==
   dependencies:
     countup.js "^2.3.2"
     tslib "^2.0.0"
@@ -5714,25 +5714,25 @@ ngx-csv@^0.3.2:
   resolved "https://registry.npmjs.org/ngx-csv/-/ngx-csv-0.3.2.tgz"
   integrity sha512-rtR5kUUxH1RgZegyRuFaoy3KoeRnP4oi6lHTZkNWoQ19bpVqXOwMFOkdwWjElI4RsMEFCnaFcJQ5iARFsjE86Q==
 
-ngx-drag-drop@^17.0.0:
-  version "17.0.0"
-  resolved "https://registry.npmjs.org/ngx-drag-drop/-/ngx-drag-drop-17.0.0.tgz"
-  integrity sha512-BNPzkXgkGcmR77qoN/m71bYtZWwCfbLAH7TZ5qqd6IByleWjvXbTzB8BJI4Iw/jUdEAAhjkzLuBVJ+XG2HTtLA==
+ngx-drag-drop@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.npmjs.org/ngx-drag-drop/-/ngx-drag-drop-19.0.0.tgz"
+  integrity sha512-aRlZu9rTEC9eikXYQ+gS5VasiyEwGpk1cVRaWBoo2wmOSUpQZiKiztf4Hj2bmYqR5JyHSrABHkkFT3JXDdc1sw==
   dependencies:
     tslib "^2.3.0"
 
-ngx-dropzone-wrapper@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.npmjs.org/ngx-dropzone-wrapper/-/ngx-dropzone-wrapper-16.0.0.tgz"
-  integrity sha512-URcormA4mgsgcqASnch2GQ2MK+l6JAaHMvODPJUaKwaHQHHNbSkBL+HejjG3iPzlghDOTKiswrnKbPAFqjQzAg==
+ngx-dropzone-wrapper@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.npmjs.org/ngx-dropzone-wrapper/-/ngx-dropzone-wrapper-17.0.0.tgz"
+  integrity sha512-ln8vrHrqCSDGG5EPGxDowCX5Xur0GRagI4Yai8Uq7XiLjPYDU3BE8p3Lnkk2ERDMHMUK9dF7AIXNyTLoVk5rcw==
   dependencies:
     dropzone "^5.9.0"
     tslib "^2.3.0"
 
-ngx-echarts@^17.1.0:
-  version "17.1.0"
-  resolved "https://registry.npmjs.org/ngx-echarts/-/ngx-echarts-17.1.0.tgz"
-  integrity sha512-DSNF/aKmJSxJWb9UwPUgNtY8Ma9SmViDBRacvAwpakc/5mJerunxndDgoBQkYk5JFKAjXX6bp4ZWLRKL3/5AGA==
+ngx-echarts@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.npmjs.org/ngx-echarts/-/ngx-echarts-19.0.0.tgz"
+  integrity sha512-CtW6RSNmUs5CENUDJqI9VSAVG9zqFjDLfzpJRLNn/HA35j10/D+sEuRH7RHB1/DLmojoD9rA6q0R57jlN0hqwg==
   dependencies:
     tslib "^2.3.0"
 
@@ -5743,10 +5743,10 @@ ngx-filesaver@14.0.0:
   dependencies:
     tslib "^2.3.0"
 
-ngx-filesize@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/ngx-filesize/-/ngx-filesize-3.0.3.tgz"
-  integrity sha512-qqP2p4WbbF7R+NXC9NqRQdAfWfMAYJ2Ijf4ezRCq7j3tPY6ybSP9AZ3FY1U7/95n1hmOJ2U5oY+oFb7LhHQRBw==
+ngx-filesize@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.npmjs.org/ngx-filesize/-/ngx-filesize-3.0.6.tgz"
+  integrity sha512-wIZJeE9x8ovYJDaxmCfaJvVf2T0q1q8XkiceTmSgPFj0di0MCGPVErW1z6sk/T6Wk7SH9OWs5/Wf3dZDH8T5GQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -5758,10 +5758,10 @@ ngx-lightbox@^3.0.0:
     file-saver "^2.0.5"
     ngx-filesaver "14.0.0"
 
-ngx-mask@^17.0.7:
-  version "17.0.7"
-  resolved "https://registry.npmjs.org/ngx-mask/-/ngx-mask-17.0.7.tgz"
-  integrity sha512-pmiCkAIDi5HqWwicHsOThPsJALF3fdMR21aoDJd/boJoEo1HoS34NJNUkqJ11qB2ZBVu5PX8R9KB617OCMkXXQ==
+ngx-mask@^19.0.7:
+  version "19.0.7"
+  resolved "https://registry.npmjs.org/ngx-mask/-/ngx-mask-19.0.7.tgz"
+  integrity sha512-Zkv/bVuXMTAPsm5yL9BVnj1AKQSc/FQ4jmN1f8ZAa0wL4/rzm8EgTcXahP+eqG+GGUDP4e6RcipfKqzFeBdsKQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -6348,7 +6348,7 @@ postcss@8.5.2:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-prismjs@^1.29.0:
+prismjs@^1.30.0:
   version "1.30.0"
   resolved "https://registry.npmjs.org/prismjs/-/prismjs-1.30.0.tgz"
   integrity sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==
@@ -6694,7 +6694,14 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxjs@^7.8.1, rxjs@7.8.1:
+rxjs@^7.8.2:
+  version "7.8.2"
+  resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz"
+  integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@7.8.1:
   version "7.8.1"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
