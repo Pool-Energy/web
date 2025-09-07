@@ -18,12 +18,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/poolenergy",
+            "outputPath": {
+              "base": "dist/poolenergy"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -92,8 +95,19 @@
               "core-js/modules/es.string.replace.js",
               "core-js/modules/es.weak-map.js",
               "core-js/modules/web.dom-collections.iterator.js",
-              "prismjs"
-            ]
+              "prismjs",
+              "angular-csv-ext/dist/Angular-csv",
+              "humanize-duration",
+              "filesize",
+              "@xterm/xterm",
+              "@xterm/addon-fit"
+            ],
+            "browser": "src/main.ts",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "."
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -125,9 +139,7 @@
               }
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true

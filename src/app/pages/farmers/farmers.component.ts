@@ -5,9 +5,10 @@ import { humanizer } from 'humanize-duration';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-farmers',
-  templateUrl: './farmers.component.html',
-  styleUrl: './farmers.component.scss'
+    selector: 'app-farmers',
+    templateUrl: './farmers.component.html',
+    styleUrl: './farmers.component.scss',
+    standalone: false
 })
 
 export class FarmersComponent {

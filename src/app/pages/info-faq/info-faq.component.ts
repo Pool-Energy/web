@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-info-faq',
-  templateUrl: './info-faq.component.html',
-  styleUrl: './info-faq.component.scss'
+    selector: 'app-info-faq',
+    templateUrl: './info-faq.component.html',
+    styleUrl: './info-faq.component.scss',
+    standalone: false
 })
 
 export class InfoFaqComponent {

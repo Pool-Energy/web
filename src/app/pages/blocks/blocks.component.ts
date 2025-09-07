@@ -4,9 +4,10 @@ import { Observable, Subject } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 
 @Component({
-  selector: 'app-blocks',
-  templateUrl: './blocks.component.html',
-  styleUrl: './blocks.component.scss'
+    selector: 'app-blocks',
+    templateUrl: './blocks.component.html',
+    styleUrl: './blocks.component.scss',
+    standalone: false
 })
 
 export class BlocksComponent {

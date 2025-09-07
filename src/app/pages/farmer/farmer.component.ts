@@ -11,9 +11,10 @@ import { tick } from '@angular/core/testing';
 
 
 @Component({
-  selector: 'app-farmer',
-  templateUrl: './farmer.component.html',
-  styleUrl: './farmer.component.scss'
+    selector: 'app-farmer',
+    templateUrl: './farmer.component.html',
+    styleUrl: './farmer.component.scss',
+    standalone: false
 })
 
 export class FarmerComponent implements AfterViewInit {
@@ -483,8 +484,8 @@ export class FarmerComponent implements AfterViewInit {
             ]
           }
           this.dataService.getHarvester({harvester: i['harvester']}).subscribe((h: any) => {
-            harvester['version'] = h['results'][0]['version'] ? h['results'][0]['version'] : null;
-            harvester['name'] = h['results'][0]['name'] ? h['results'][0]['name'] : null;
+            harvester['version'] = h['results'][0]['version'] ? h['results'][0]['version'] : '';
+            harvester['name'] = h['results'][0]['name'] ? h['results'][0]['name'] : '';
           });
           this.harvestersTemp.set(i['harvester'], harvester);
         }
@@ -536,7 +537,7 @@ export class FarmerComponent implements AfterViewInit {
 
   getHarvesterNameById(id: string): string {
     const harvester = this.harvestersList.results.find((h: any) => h.harvester === id);
-    return harvester ? harvester.name : null;
+    return harvester ? harvester.name : '';
   }
 
   // blocks
