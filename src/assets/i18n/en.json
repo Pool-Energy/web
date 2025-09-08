@@ -33,11 +33,18 @@
         "LOGS": "Logs"
       }
     },
+    "API": {
+      "TEXT": "API",
+      "LIST": {
+        "SWAGGER": "Swagger",
+        "REDOC": "Redoc",
+        "BROWSER": "Browser"
+      }
+    },
     "INFO": {
       "TEXT": "Info",
       "LIST": {
         "FAQ": "FAQ",
-        "API": "API",
         "FEE": "Fee",
         "TEAM": "Team",
         "GITHUB": "Github"
