@@ -112,6 +112,34 @@
     </div>
 </div>
 
+<!-- partials total -->
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Partials Total</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        *ngIf="partialsTotalChart && partialsTotalChart.series && partialsTotalChart.series.length > 0"
+                        [series]="partialsTotalChart.series"
+                        [chart]="partialsTotalChart.chart"
+                        [labels]="partialsTotalChart.labels"
+                        [legend]="partialsTotalChart.legend"
+                        [dataLabels]="partialsTotalChart.dataLabels"
+                        [colors]="partialsTotalChart.colors"
+                        [xaxis]="partialsTotalChart.xaxis"
+                        [yaxis]="partialsTotalChart.yaxis"
+                        [stroke]="partialsTotalChart.stroke"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- partials -->
 <div class="row">
     <!-- versions -->

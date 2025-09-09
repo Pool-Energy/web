@@ -38,6 +38,8 @@ export class PoolStatsComponent {
   xchPriceChartLegend: boolean = false;
 
   // partials
+  partialsTotalData: any[] = [];
+  partialsTotalChart: any = {};
   partialsVersionsData: any[] = [];
   partialsVersionsChart: any = {};
   partialsErrorsData: any[] = [];
@@ -58,6 +60,7 @@ export class PoolStatsComponent {
     this.getMempoolSize(this.mempoolSizeDays);
     this.getNetspaceSize(this.netspaceSizeDays);
     this.getXchPrice(this.xchPriceDays);
+    this.getPartialsTotal();
     this.getPartialsVersions();
     this.getPartialsErrors();
   }
@@ -282,7 +285,7 @@ export class PoolStatsComponent {
             })
           })
         }
-        ];
+      ];
       this.chartXchPrice(this.xchPriceData);
     })
   }
@@ -327,6 +330,87 @@ export class PoolStatsComponent {
         width: 2
       },
       colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+    }
+  }
+
+  // partials total
+  getPartialsTotal() {
+    this.dataService.getPartials('').subscribe((d: any) => {
+      const partialsByHour: {[hour: string]: number} = {};
+      (<any[]>d.results).forEach((item: any) => {
+        const date = new Date(item['timestamp'] * 1000);
+        const hourKey = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()).toISOString();
+        partialsByHour[hourKey] = (partialsByHour[hourKey] || 0) + 1;
+      });
+      this.partialsTotalData = [
+        {
+          "name": "Partials Total (per hour)",
+          "data": Object.entries(partialsByHour)
+            .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
+            .map(([datetime, count]) => ({
+              "x": new Date(datetime).toLocaleString(),
+              "y": count,
+            }))
+        }
+      ];
+      this.chartPartialsTotal(this.partialsTotalData);
+    });
+  }
+
+  private chartPartialsTotal(data: any) {
+    this.partialsTotalChart = {
+      series: data,
+      legend: {
+        show: this.partialsTotalChart.legend || false
+      },
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        type: 'date',
+        labels: {
+          show: false,
+        }
+      },
+      yaxis: {
+        min: 0,
+      },
+      stroke: {
+        width: 2,
+        curve: 'smooth'
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.7,
+          opacityTo: 0.3,
+        }
+      },
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          format: 'dd/MM/yyyy HH:mm'
+        },
+        y: {
+          formatter: function(val: number) {
+            return Math.round(val) + " partials";
+          }
+        }
+      }
     }
   }
 
