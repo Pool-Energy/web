@@ -54,6 +54,7 @@
       "TEXT": "Contact",
       "LIST": {
         "TELEGRAM": "Telegram",
+        "BLUESKY": "Bluesky",
         "XING": "X",
         "REDDIT": "Reddit",
         "YOUTUBE": "Youtube",

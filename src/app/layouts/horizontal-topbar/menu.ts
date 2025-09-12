@@ -156,41 +156,48 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 92,
+        label: 'MENUITEMS.CONTACT.LIST.BLUESKY',
+        icon: 'ri-bluesky-line',
+        link: 'https://bsky.app/profile/pool.energy',
+        parentId: 9
+      },
+      {
+        id: 93,
         label: 'MENUITEMS.CONTACT.LIST.XING',
         icon: 'ri-xing-line',
         link: 'https://x.com/pool_energy',
         parentId: 9
       },
       {
-        id: 93,
+        id: 94,
         label: 'MENUITEMS.CONTACT.LIST.REDDIT',
         icon: 'ri-reddit-line',
         link: 'https://www.reddit.com/r/chia/comments/thv366/new_chia_pool_poolenergy/',
         parentId: 9
       },
       {
-        id: 94,
+        id: 95,
         label: 'MENUITEMS.CONTACT.LIST.YOUTUBE',
         icon: 'ri-youtube-line',
         link: 'https://www.youtube.com/channel/UCCHIIBGO-PA-UfxJDlcz0aw',
         parentId: 9
       },
       {
-        id: 95,
+        id: 96,
         label: 'MENUITEMS.CONTACT.LIST.FACEBOOK',
         icon: 'ri-facebook-line',
         link: 'https://www.facebook.com/pool.energy/',
         parentId: 9
       },
       {
-        id: 96,
+        id: 97,
         label: 'MENUITEMS.CONTACT.LIST.DISCORD',
         icon: 'ri-discord-line',
         link: 'https://discord.gg/arZDWsY5xZ',
         parentId: 9
       },
       {
-        id: 97,
+        id: 98,
         label: 'MENUITEMS.CONTACT.LIST.GITHUB',
         icon: 'ri-github-line',
         link: 'https://github.com/Pool-Energy',

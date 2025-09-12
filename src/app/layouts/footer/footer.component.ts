@@ -12,6 +12,7 @@ export class FooterComponent implements OnInit {
 
   links = {
     "telegram": "https://t.me/chiapoolenergy",
+    "bluesky": "https://bsky.app/profile/pool.energy",
     "xing": "https://x.com/pool_energy",
     "reddit": "https://www.reddit.com/r/chia/comments/thv366/new_chia_pool_poolenergy/",
     "youtube": "https://www.youtube.com/channel/UCCHIIBGO-PA-UfxJDlcz0aw",
