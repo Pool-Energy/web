@@ -41,7 +41,7 @@
     "angular-ng-autocomplete": "^2.0.12",
     "angular-ng-stepper": "^2.0.0",
     "angular-shepherd": "^17.0.0",
-    "angularx-flatpickr": "^7.3.0",
+    "angularx-flatpickr": "^8.1.0",
     "apexcharts": "^4.7.0",
     "axios": "^1.11.0",
     "bootstrap": "5.3.8",
