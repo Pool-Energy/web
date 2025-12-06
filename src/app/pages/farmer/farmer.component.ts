@@ -25,6 +25,8 @@ export class FarmerComponent implements AfterViewInit {
   truncateRequired: boolean = false;
   warningChiaVersion: string = "2.5.1";
   criticalChiaVersion: string = "2.5.1";
+  selectedDays: number = 1;
+  daysOptions: number[] = [1, 2, 5, 7];
 
   // launcher
   launcher_id: any = null;
@@ -193,6 +195,12 @@ export class FarmerComponent implements AfterViewInit {
     return value.split(':')[0].toLowerCase();
   }
 
+  onDaysChange() {
+    this.refreshDifficultyAndPoints(this.launcher_id);
+    this.refreshPartials(this.launcher_id);
+    this.refreshHarvesters(this.launcher_id);
+  }
+
   refreshDifficultyAndPoints(launcher_id: any) {
     var successes = new Map();
     var errors = new Map();
@@ -205,7 +213,7 @@ export class FarmerComponent implements AfterViewInit {
     this.harvesters.clear();
 
     var obs = new Observable(subscriber => {
-      this.dataService.getPartials(launcher_id).subscribe((data: any) => {
+      this.dataService.getPartials(launcher_id, undefined, this.selectedDays).subscribe((data: any) => {
         this.partialsCollectionSize = data['count'];
         this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
       });
@@ -339,7 +347,7 @@ export class FarmerComponent implements AfterViewInit {
     this.harvesters.clear();
 
     var obs = new Observable(subscriber => {
-      this.dataService.getPartials(launcher_id).subscribe((data: any) => {
+      this.dataService.getPartials(launcher_id, undefined, this.selectedDays).subscribe((data: any) => {
         this.partialsCollectionSize = data['count'];
         this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
       });
@@ -468,7 +476,7 @@ export class FarmerComponent implements AfterViewInit {
   refreshHarvesters(launcher_id: any) {
     var ticks: Set<number> = new Set();
     this.harvestersTemp.clear();
-    this.dataService.getPartialTs({launcher: launcher_id}).subscribe((d: any) => {
+    this.dataService.getPartialTs({launcher: launcher_id, days: this.selectedDays}).subscribe((d: any) => {
       (<any[]>d).forEach(i => {
         var harvester: any = this.harvestersTemp.get(i['harvester']);
         if(!harvester) {

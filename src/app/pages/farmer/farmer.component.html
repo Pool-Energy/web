@@ -378,24 +378,28 @@
                                     No partial found.
                                 </div>
                             </div>
-                            <div *ngIf="partialsCollectionSize !== 0" class="card-button align-items-center d-flex">
-                                <div class="flex-shrink-0">
+                            <div *ngIf="partialsCollectionSize !== 0" class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-3">
                                     <div class="form-check form-switch form-switch-left form-switch-md">
                                         <label for="partials-failed-only" class="form-label text-muted">Show partials failed only</label>
                                         <input class="form-check-input code-switcher" type="checkbox" id="partials-failed-only"
                                             (click)="togglePartialsFailed($event)"
                                             [checked]="partialsShowFailed">
                                     </div>
-                                </div>
-                            </div>
-                            <div *ngIf="partialsCollectionSize !== 0" class="card-button align-items-center d-flex">
-                                <div class="flex-shrink-0">
                                     <div class="form-check form-switch form-switch-left form-switch-md">
                                         <label for="partials-too-late-only" class="form-label text-muted">Show partials too late only</label>
                                         <input class="form-check-input code-switcher" type="checkbox" id="partials-too-late-only"
                                             (click)="togglePartialsTooLate($event)"
                                             [checked]="partialsShowTooLate">
                                     </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <label for="daysSelect" class="form-label text-muted mb-0">Partials:</label>
+                                    <select id="daysSelect" class="form-select form-select-sm" [(ngModel)]="selectedDays" (change)="onDaysChange()" style="width: auto;">
+                                        <option *ngFor="let day of daysOptions" [value]="day">
+                                            {{ day }} day{{ day > 1 ? 's' : '' }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div *ngIf="partialsCollectionSize !== 0" class="d-flex mb-1">

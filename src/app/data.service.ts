@@ -75,21 +75,21 @@ export class DataService {
     return this.httpClient.put(this.REST_API_SERVER + '/harvester/' + id + '/', params);
   }
 
-  getPartials(launcher: any, offset?: any) {
+  getPartials(launcher: any, offset?: any, days: number = 2) {
     var params = new HttpParams();
     var timestamp = new Date().getTime();
-    timestamp = Math.floor(timestamp / 1000) - 60 * 60 * 24;
+    timestamp = Math.floor(timestamp / 1000) - 60 * 60 * 24 * days;
     params = params.set('ordering', '-timestamp');
     params = params.set('min_timestamp', timestamp.toString());
     params = params.set('launcher', launcher);
     params = params.set('offset', (offset || ''));
-    params = params.set('limit', 2000);
+    params = params.set('limit', 100000);
     return this.httpClient.get(this.REST_API_SERVER + '/partial/', { params });
   }
 
   getPartialTs(attrs?: any) {
     var params = new HttpParams();
-    params = params.set('days', '1');
+    params = params.set('days', attrs?.days || '1');
     if(attrs) {
       if(attrs.launcher) params = params.set('launcher', attrs.launcher);
     }
