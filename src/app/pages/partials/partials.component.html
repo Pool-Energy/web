@@ -42,27 +42,27 @@
                                     <span title="{{ row.sp_hash }}">{{ row.sp_hash | maxLength:32 }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-warning-subtle text-warning" *ngIf="row.to_be_validated">{{ row.to_be_validated }}</span>
+                                    <span class="badge bg-warning-subtle text-warning fs-6 px-2 py-1" *ngIf="row.to_be_validated">{{ row.to_be_validated }}</span>
                                     <span *ngIf="!row.to_be_validated">-</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-success-subtle text-success" *ngIf="row.valid">{{ row.valid }}</span>
+                                    <span class="badge bg-success-subtle text-success fs-6 px-2 py-1" *ngIf="row.valid">{{ row.valid }}</span>
                                     <span *ngIf="!row.valid">-</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-secondary-subtle text-secondary" *ngIf="row.stale">{{ row.stale }}</span>
+                                    <span class="badge bg-secondary-subtle text-secondary fs-6 px-2 py-1" *ngIf="row.stale">{{ row.stale }}</span>
                                     <span *ngIf="!row.stale">-</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-info-subtle text-info" *ngIf="row.duplicate">{{ row.duplicate }}</span>
+                                    <span class="badge bg-info-subtle text-info fs-6 px-2 py-1" *ngIf="row.duplicate">{{ row.duplicate }}</span>
                                     <span *ngIf="!row.duplicate">-</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-danger-subtle text-danger" *ngIf="row.invalid">{{ row.invalid }}</span>
+                                    <span class="badge bg-danger-subtle text-danger fs-6 px-2 py-1" *ngIf="row.invalid">{{ row.invalid }}</span>
                                     <span *ngIf="!row.invalid">-</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-primary" *ngIf="row.blocks_found" title="Best-effort match by closest timestamp">
+                                    <span class="badge bg-primary fs-6 px-2 py-1" *ngIf="row.blocks_found" title="Best-effort match by closest timestamp">
                                         <i class="ri-trophy-line align-middle"></i> {{ row.blocks_found }}
                                     </span>
                                     <span *ngIf="!row.blocks_found">-</span>
