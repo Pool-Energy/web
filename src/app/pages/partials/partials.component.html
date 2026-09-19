@@ -4,14 +4,10 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Live partials (all farmers)</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Live partials by signage point (all farmers)</h4>
                 <div class="flex-shrink-0">
-                    <span class="badge bg-info me-2">{{ totalReceived }} received</span>
-                    <div class="form-check form-switch d-inline-block me-2">
-                        <input class="form-check-input" type="checkbox" role="switch" id="showFailedOnly"
-                            [(ngModel)]="showFailedOnly">
-                        <label class="form-check-label" for="showFailedOnly">Failed only</label>
-                    </div>
+                    <span class="badge bg-info me-2">{{ totalReceived }} partials received</span>
+                    <span class="badge bg-primary me-2">{{ totalBlocks }} blocks received</span>
                     <button type="button" class="btn btn-soft-secondary btn-sm me-1" (click)="togglePause()">
                         <i class="ri-pause-line align-middle" *ngIf="!paused"></i>
                         <i class="ri-play-line align-middle" *ngIf="paused"></i>
@@ -27,33 +23,53 @@
                     <table class="table align-middle table-nowrap table-striped-columns mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Launcher</th>
-                                <th scope="col">Harvester</th>
-                                <th scope="col">Difficulty</th>
-                                <th scope="col">Chia version</th>
-                                <th scope="col">Time taken</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Signage point</th>
+                                <th scope="col" class="text-center">To be validated</th>
+                                <th scope="col" class="text-center">Valid</th>
+                                <th scope="col" class="text-center">Stale</th>
+                                <th scope="col" class="text-center">Duplicate</th>
+                                <th scope="col" class="text-center">Invalid</th>
+                                <th scope="col" class="text-center">Blocks found</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let partial of filteredPartials">
-                                <td>{{ partial.timestamp * 1000 | date:"HH:mm:ss" }}</td>
-                                <td><a [routerLink]="['/farmer', partial.launcher_id]">{{ partial.launcher_id | maxLength:16 }}</a></td>
-                                <td>{{ partial.harvester_id | maxLength:16 }}</td>
-                                <td>{{ partial.difficulty }}</td>
-                                <td>{{ partial.chia_version || '-' }}</td>
+                            <tr *ngFor="let row of orderedRows">
+                                <td>{{ row.last_timestamp * 1000 | date:"HH:mm:ss" }}</td>
                                 <td>
-                                    <span *ngIf="!partial.time_taken">-</span>
-                                    <span *ngIf="partial.time_taken">{{ partial.time_taken | number:".3-3" }} s</span>
+                                    <span class="badge bg-secondary-subtle text-secondary me-1" *ngIf="row.end_of_sub_slot">EOS</span>
+                                    <span class="badge bg-secondary-subtle text-secondary me-1" *ngIf="!row.end_of_sub_slot">SP</span>
+                                    <span title="{{ row.sp_hash }}">{{ row.sp_hash | maxLength:16 }}</span>
                                 </td>
-                                <td>
-                                    <span class="badge bg-success" *ngIf="!partial.error">OK</span>
-                                    <span class="badge bg-danger" *ngIf="partial.error" title="{{ partial.error }}">{{ partial.error }}</span>
+                                <td class="text-center">
+                                    <span class="badge bg-warning-subtle text-warning" *ngIf="row.to_be_validated">{{ row.to_be_validated }}</span>
+                                    <span *ngIf="!row.to_be_validated">-</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-success-subtle text-success" *ngIf="row.valid">{{ row.valid }}</span>
+                                    <span *ngIf="!row.valid">-</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-secondary-subtle text-secondary" *ngIf="row.stale">{{ row.stale }}</span>
+                                    <span *ngIf="!row.stale">-</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-info-subtle text-info" *ngIf="row.duplicate">{{ row.duplicate }}</span>
+                                    <span *ngIf="!row.duplicate">-</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-danger-subtle text-danger" *ngIf="row.invalid">{{ row.invalid }}</span>
+                                    <span *ngIf="!row.invalid">-</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary" *ngIf="row.blocks_found" title="Best-effort match by closest timestamp">
+                                        <i class="ri-trophy-line align-middle"></i> {{ row.blocks_found }}
+                                    </span>
+                                    <span *ngIf="!row.blocks_found">-</span>
                                 </td>
                             </tr>
-                            <tr *ngIf="filteredPartials.length === 0">
-                                <td colspan="7" class="text-center text-muted">Waiting for live partials...</td>
+                            <tr *ngIf="orderedRows.length === 0">
+                                <td colspan="8" class="text-center text-muted">Waiting for live partials...</td>
                             </tr>
                         </tbody>
                     </table>

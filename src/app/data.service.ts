@@ -333,7 +333,7 @@ export class DataService {
   }
 
   connectPartialsLive() {
-    this.partialsSocket$ = this._connectLive('partials', this._partialsLive$);
+    this.partialsSocket$ = this._connectLive('partials', this._partialsLive$, false);
   }
 
   disconnectPartialsLive() {
