@@ -1,0 +1,11 @@
+// Brief highlight flash on a table cell when its value just changed
+// (see PartialsComponent.flash()). The class is added instantly and
+// removed ~500ms later; the transition below smooths the fade back out.
+td {
+    transition: background-color 0.25s ease-out;
+}
+
+td.flash-cell {
+    background-color: rgba(255, 193, 7, 0.35);
+    transition: none;
+}

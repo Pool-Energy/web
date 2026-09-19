@@ -9,6 +9,9 @@ import { DataService } from 'src/app/data.service';
 // evicted from the live view.
 const RETENTION_MS = 10 * 60 * 1000;
 const SWEEP_INTERVAL_MS = 30 * 1000;
+const FLASH_MS = 500;
+
+type FlashField = 'to_be_validated' | 'valid' | 'stale' | 'duplicate' | 'invalid' | 'blocks_found';
 
 interface SPRow {
   sp_hash: string;
@@ -22,6 +25,7 @@ interface SPRow {
   invalid: number;
   blocks_found: number;
   blocks: Array<any>;
+  flash: { [key in FlashField]?: boolean };
 }
 
 @Component({
@@ -95,6 +99,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
         invalid: 0,
         blocks_found: 0,
         blocks: [],
+        flash: {},
       };
       this.rows.set(sp_hash, row);
     }
@@ -104,11 +109,17 @@ export class PartialsComponent implements OnInit, OnDestroy {
     return row;
   }
 
+  private flash(row: SPRow, field: FlashField) {
+    row.flash[field] = true;
+    setTimeout(() => { row.flash[field] = false; }, FLASH_MS);
+  }
+
   private handlePartial(partial: any) {
     const row = this.getOrCreateRow(partial.sp_hash, partial.end_of_sub_slot, partial.timestamp);
 
     if(partial.status === 'pending') {
       row.to_be_validated++;
+      this.flash(row, 'to_be_validated');
       this.pendingIndex.set(partial.partial_key, partial.sp_hash);
       return;
     }
@@ -122,14 +133,15 @@ export class PartialsComponent implements OnInit, OnDestroy {
       const pendingRow = this.rows.get(pendingSpHash);
       if(pendingRow && pendingRow.to_be_validated > 0) {
         pendingRow.to_be_validated--;
+        this.flash(pendingRow, 'to_be_validated');
       }
     }
 
     switch(partial.status) {
-      case 'valid': row.valid++; break;
-      case 'stale': row.stale++; break;
-      case 'duplicate': row.duplicate++; break;
-      default: row.invalid++; break;
+      case 'valid': row.valid++; this.flash(row, 'valid'); break;
+      case 'stale': row.stale++; this.flash(row, 'stale'); break;
+      case 'duplicate': row.duplicate++; this.flash(row, 'duplicate'); break;
+      default: row.invalid++; this.flash(row, 'invalid'); break;
     }
   }
 
@@ -149,6 +161,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     });
     if(closest) {
       (closest as SPRow).blocks_found++;
+      this.flash(closest as SPRow, 'blocks_found');
       (closest as SPRow).blocks.push(block);
     }
   }
