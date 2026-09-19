@@ -33,8 +33,7 @@
       "LIST": {
         "STATUS": "Status",
         "STATS": "Stats",
-        "LOGS": "Logs",
-        "PARTIALS": "Partials"
+        "LOGS": "Logs"
       }
     },
     "API": {
