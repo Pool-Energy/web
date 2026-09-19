@@ -18,6 +18,27 @@ export class DataService {
   private _log$ = new BehaviorSubject<any>({});
   private socket$ = new Subject<any>();
 
+  private _poolStatusLive$ = new Subject<any>();
+  private poolStatusSocket$?: WebSocketSubject<any>;
+
+  private _poolStatsLive$ = new Subject<any>();
+  private poolStatsSocket$?: WebSocketSubject<any>;
+
+  private _blocksLive$ = new Subject<any>();
+  private blocksSocket$?: WebSocketSubject<any>;
+
+  private _rewardsLive$ = new Subject<any>();
+  private rewardsSocket$?: WebSocketSubject<any>;
+
+  private _farmersLive$ = new Subject<any>();
+  private farmersSocket$?: WebSocketSubject<any>;
+
+  private _partialsLive$ = new Subject<any>();
+  private partialsSocket$?: WebSocketSubject<any>;
+
+  private _farmerLive$ = new Subject<any>();
+  private farmerSocket$?: WebSocketSubject<any>;
+
   constructor(
     private httpClient: HttpClient
   ) { }
@@ -217,6 +238,118 @@ export class DataService {
 
   get log$() {
     return this._log$.asObservable();
+  }
+
+  /**
+   * Builds the WebSocket URL for a given path (e.g. 'pool_status', 'farmer/<id>'),
+   * following the same prod/dev proxy convention as the log socket.
+   */
+  private _wsUrl(path: string): string {
+    var proto = (window.location.protocol == 'https:') ? 'wss://' : 'ws://';
+    var wspath = environment.production ? 'ws' : '_proxy_ws';
+    return proto + window.location.host + '/' + wspath + '/' + path + '/';
+  }
+
+  /**
+   * Opens a WebSocket connection on `path` and forwards every received
+   * message to `subject`. Every message from the backend has the shape
+   * `{kind: string, payload: any}`. When `unwrap` is true (default, for
+   * single-kind streams), only `payload` is emitted; multi-kind streams
+   * (farmers/farmer/pool_stats, which aggregate several event kinds) get
+   * the full `{kind, payload}` envelope so the component can dispatch.
+   */
+  private _connectLive(path: string, subject: Subject<any>, unwrap: boolean = true): WebSocketSubject<any> {
+    const socket$ = webSocket<any>({ url: this._wsUrl(path) });
+    socket$.subscribe({
+      next: msg => subject.next(unwrap ? msg['payload'] : msg),
+      error: err => console.error('error', err),
+      complete: () => { }
+    });
+    return socket$;
+  }
+
+  get poolStatusLive$() {
+    return this._poolStatusLive$.asObservable();
+  }
+
+  connectPoolStatus() {
+    this.poolStatusSocket$ = this._connectLive('pool_status', this._poolStatusLive$);
+  }
+
+  disconnectPoolStatus() {
+    if(this.poolStatusSocket$) { this.poolStatusSocket$.unsubscribe(); }
+  }
+
+  get poolStatsLive$() {
+    return this._poolStatsLive$.asObservable();
+  }
+
+  connectPoolStats() {
+    this.poolStatsSocket$ = this._connectLive('pool_stats', this._poolStatsLive$, false);
+  }
+
+  disconnectPoolStats() {
+    if(this.poolStatsSocket$) { this.poolStatsSocket$.unsubscribe(); }
+  }
+
+  get blocksLive$() {
+    return this._blocksLive$.asObservable();
+  }
+
+  connectBlocksLive() {
+    this.blocksSocket$ = this._connectLive('blocks', this._blocksLive$);
+  }
+
+  disconnectBlocksLive() {
+    if(this.blocksSocket$) { this.blocksSocket$.unsubscribe(); }
+  }
+
+  get rewardsLive$() {
+    return this._rewardsLive$.asObservable();
+  }
+
+  connectRewardsLive() {
+    this.rewardsSocket$ = this._connectLive('rewards', this._rewardsLive$);
+  }
+
+  disconnectRewardsLive() {
+    if(this.rewardsSocket$) { this.rewardsSocket$.unsubscribe(); }
+  }
+
+  get farmersLive$() {
+    return this._farmersLive$.asObservable();
+  }
+
+  connectFarmersLive() {
+    this.farmersSocket$ = this._connectLive('farmers', this._farmersLive$, false);
+  }
+
+  disconnectFarmersLive() {
+    if(this.farmersSocket$) { this.farmersSocket$.unsubscribe(); }
+  }
+
+  get partialsLive$() {
+    return this._partialsLive$.asObservable();
+  }
+
+  connectPartialsLive() {
+    this.partialsSocket$ = this._connectLive('partials', this._partialsLive$);
+  }
+
+  disconnectPartialsLive() {
+    if(this.partialsSocket$) { this.partialsSocket$.unsubscribe(); }
+  }
+
+  get farmerLive$() {
+    return this._farmerLive$.asObservable();
+  }
+
+  connectFarmerLive(launcherId: string) {
+    this.farmerSocket$ = this._connectLive('farmer/' + launcherId, this._farmerLive$, false);
+  }
+
+  disconnectFarmerLive() {
+    if(this.farmerSocket$) { this.farmerSocket$.unsubscribe(); }
   }
 
   connectLog(msgCallback?: any) {

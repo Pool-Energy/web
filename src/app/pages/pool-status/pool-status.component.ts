@@ -39,6 +39,19 @@ export class PoolStatusComponent {
       this.pool_wallets = data['pool_wallets'];
       this.pool_nodes = data['pool_nodes'];
     });
+
+    this.dataService.connectPoolStatus();
+    this.dataService.poolStatusLive$.subscribe((data: any) => {
+      this.blockchainHeight = data['blockchain_height'];
+      this.pool_wallets = data['wallets'];
+      this.pool_nodes = data['nodes'];
+      // blockchainShare needs `pool_space` (not part of the live payload,
+      // computed server-side in /stats); left untouched until next full reload.
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dataService.disconnectPoolStatus();
   }
 
   // blockchain

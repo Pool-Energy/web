@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { humanizer } from 'humanize-duration';
 
 import { DataService } from 'src/app/data.service';
@@ -91,6 +92,25 @@ export class FarmersComponent {
     this.dataService.getBlocks({
       limit: 1,
     }).subscribe(this.handleBlocks.bind(this));
+
+    this.dataService.connectFarmersLive();
+    this.dataService.farmersLive$.subscribe((msg: any) => {
+      if(msg['kind'] === 'block') {
+        // A new block was farmed: refresh the "last block" banner live.
+        this.dataService.getBlocks({ limit: 1 }).subscribe(this.handleBlocks.bind(this));
+      }
+    });
+    // Partials can arrive several times per second pool-wide: debounce the
+    // leaderboard (points) refresh instead of refetching on every single event.
+    this.dataService.farmersLive$.pipe(debounceTime(5000)).subscribe((msg: any) => {
+      if(msg['kind'] === 'partial' && this.launchersPage === 1) {
+        this.refreshLaunchers();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dataService.disconnectFarmersLive();
   }
 
   // common

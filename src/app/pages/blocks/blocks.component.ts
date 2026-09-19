@@ -51,6 +51,21 @@ export class BlocksComponent {
     this.dataService.getBlocks({
       limit: this.blocksPageSize
     }).subscribe(this.handleBlocks.bind(this));
+
+    this.dataService.connectBlocksLive();
+    this.dataService.blocksLive$.subscribe((block: any) => {
+      // A new block was farmed: refresh the first page (and banner) live,
+      // only if the user is currently viewing it (avoid disrupting pagination).
+      if(this.blocksPage === 1) {
+        this.dataService.getBlocks({
+          limit: this.blocksPageSize
+        }).subscribe(this.handleBlocks.bind(this));
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dataService.disconnectBlocksLive();
   }
 
   private getChartColorsArray(colors:any) {

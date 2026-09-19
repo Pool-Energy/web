@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { expand } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { DataService } from 'src/app/data.service';
 
@@ -63,6 +64,22 @@ export class PoolStatsComponent {
     this.getPartialsTotal();
     this.getPartialsVersions();
     this.getPartialsErrors();
+
+    // Live: partial throughput is event-driven pool-wide, debounce the
+    // (heavy, full re-fetch based) partials charts refresh; pool status
+    // (blockchain height/space) is not charted here yet, ignored for now.
+    this.dataService.connectPoolStats();
+    this.dataService.poolStatsLive$.pipe(debounceTime(15000)).subscribe((msg: any) => {
+      if(msg['kind'] === 'partial') {
+        this.getPartialsTotal();
+        this.getPartialsVersions();
+        this.getPartialsErrors();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dataService.disconnectPoolStats();
   }
 
   // common

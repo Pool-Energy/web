@@ -10,6 +10,7 @@ import { ChiaComponent } from './chia/chia.component';
 import { PoolStatusComponent } from './pool-status/pool-status.component';
 import { PoolStatsComponent } from './pool-stats/pool-stats.component';
 import { PoolLogsComponent } from './pool-logs/pool-logs.component';
+import { PartialsComponent } from './partials/partials.component';
 import { InfoFaqComponent } from './info-faq/info-faq.component';
 import { InfoFeeComponent } from './info-fee/info-fee.component';
 import { InfoTeamComponent } from './info-team/info-team.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'pool/status', component: PoolStatusComponent },
   { path: 'pool/stats', component: PoolStatsComponent },
   { path: 'pool/logs', component: PoolLogsComponent },
+  { path: 'partials', component: PartialsComponent },
   { path: 'info/faq', component: InfoFaqComponent },
   { path: 'info/fee', component: InfoFeeComponent },
   { path: 'info/team', component: InfoTeamComponent },

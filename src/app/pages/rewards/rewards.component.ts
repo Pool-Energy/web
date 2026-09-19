@@ -52,6 +52,29 @@ export class RewardsComponent {
     this.dataService.getRewards({
       limit: this.rewardsPageSize
     }).subscribe(this.chartRewards.bind(this));
+
+    this.dataService.connectRewardsLive();
+    this.dataService.rewardsLive$.subscribe((payout: any) => {
+      // A new payout batch was processed: refresh totals + first page/chart
+      // live, only if the user is currently viewing the first page.
+      this.dataService.getStats().subscribe((data: any) => {
+        this.rewardsTotalClaimed = data['rewards_amount'] / (10 ** 12);
+        this.rewardsTotalDistributed = (data['rewards_amount'] / (10 ** 12)) - data['fee'];
+        this.rewardsTotalFee = (data['rewards_amount'] * data['fee']) / (10 ** 12);
+      });
+      if(this.rewardsPage === 1) {
+        this.dataService.getRewards({
+          limit: this.rewardsPageSize
+        }).subscribe(this.handleRewards.bind(this));
+      }
+      this.dataService.getRewards({
+        limit: this.rewardsPageSize
+      }).subscribe(this.chartRewards.bind(this));
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dataService.disconnectRewardsLive();
   }
 
   private handleRewards(data: any) {

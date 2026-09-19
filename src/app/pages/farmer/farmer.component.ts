@@ -144,6 +144,10 @@ export class FarmerComponent implements AfterViewInit {
       this.dataService.getBlocks({launcher: this.launcher_id }).subscribe(data => {
         this.handleBlocks(data);
       });
+
+      this.dataService.disconnectFarmerLive();
+      this.dataService.connectFarmerLive(this.launcher_id);
+      this.dataService.farmerLive$.subscribe((msg: any) => this.handleLive(msg));
     });
 
     this.partialsShowFailed = (localStorage.getItem('farmer_show_failed_partials') == 'true') ? true : false;
@@ -845,6 +849,55 @@ export class FarmerComponent implements AfterViewInit {
 
   ngOnDestroy(): void {
     this.dataService.disconnectLog();
+    this.dataService.disconnectFarmerLive();
+  }
+
+  // live (websocket): dispatch events scoped to this launcher_id
+  private handleLive(msg: any) {
+    switch(msg['kind']) {
+      case 'partial':
+        this.handleLivePartial(msg['payload']);
+        break;
+      case 'block':
+        // A new block was farmed by this launcher: refresh the blocks tab
+        // live, only if the user is currently viewing the first page.
+        if(this.blocksPage === 1) {
+          this.refreshBlocks();
+        }
+        break;
+      case 'payout':
+        // A new payout was processed for this launcher: refresh the
+        // payouts tab live, only if viewing the first page of either table.
+        if(this.payoutsPage === 1) {
+          this.refreshPayouts();
+        }
+        if(this.payouttxsPage === 1) {
+          this.refreshPayoutTxs();
+        }
+        break;
+    }
+  }
+
+  private handleLivePartial(partial: any) {
+    // Lightweight live update: prepend the new partial to the partials
+    // table/counters. Charts (which are bucketed per hour over the
+    // selected day range) are left to the next manual/day-range refresh
+    // to avoid re-deriving their aggregation logic here.
+    this.partialsTable.unshift(partial);
+    this.partialsCollectionSize++;
+    if(partial.error) {
+      this.partialsFailed++;
+    } else {
+      this.partialsSuccessful++;
+      this.partialsPoints += partial.difficulty || 0;
+    }
+    if(!this.partialsShowFailed && partial.error) {
+      return;
+    }
+    if(!this.partialsShowTooLate && partial.time_taken && partial.time_taken >= 27) {
+      return;
+    }
+    this.partialsFiltered.unshift(partial);
   }
 
 }
