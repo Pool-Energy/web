@@ -15,6 +15,9 @@
     "REWARDS": {
       "TEXT": "Rewards"
     },
+    "PARTIALS": {
+      "TEXT": "Partials"
+    },
     "CHIA": {
       "TEXT": "Chia",
       "LIST": {
