@@ -4,7 +4,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Live partials by signage point (all farmers)</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Partials overview (all farmers)</h4>
                 <div class="flex-shrink-0">
                     <span class="badge bg-info me-2">{{ totalReceived }} partials received</span>
                     <span class="badge bg-primary me-2">{{ totalBlocks }} blocks received</span>
@@ -35,11 +35,11 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let row of orderedRows">
-                                <td>{{ row.last_timestamp * 1000 | date:"HH:mm:ss" }}</td>
+                                <td>{{ row.last_timestamp * 1000 | date:"MMM d, y, h:mm:ss a" }}</td>
                                 <td>
                                     <span class="badge bg-secondary-subtle text-secondary me-1" *ngIf="row.end_of_sub_slot">EOS</span>
                                     <span class="badge bg-secondary-subtle text-secondary me-1" *ngIf="!row.end_of_sub_slot">SP</span>
-                                    <span title="{{ row.sp_hash }}">{{ row.sp_hash | maxLength:16 }}</span>
+                                    <span title="{{ row.sp_hash }}">{{ row.sp_hash | maxLength:32 }}</span>
                                 </td>
                                 <td class="text-center">
                                     <span class="badge bg-warning-subtle text-warning" *ngIf="row.to_be_validated">{{ row.to_be_validated }}</span>
