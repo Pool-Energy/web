@@ -189,7 +189,19 @@
                                     </td>
                                     <td>
                                         <span *ngIf="node.available && node.synced" class="badge bg-success-subtle text-success">Synced</span>
-                                        <span *ngIf="node.available && !node.synced" class="badge bg-danger-subtle text-danger">Not synced</span>
+                                        <div *ngIf="node.available && !node.synced" style="min-width: 140px;">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="badge bg-danger-subtle text-danger mb-1">Not synced</span>
+                                                <small class="text-muted">{{ node.sync_percent }}%</small>
+                                            </div>
+                                            <div class="progress" style="height: 6px;" title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
+                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                    [style.width.%]="node.sync_percent"
+                                                    [attr.aria-valuenow]="node.sync_percent"
+                                                    aria-valuemin="0" aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
                                     </td>
                                 </tr>
