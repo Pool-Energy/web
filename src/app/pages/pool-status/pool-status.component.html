@@ -13,7 +13,7 @@
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <h2 class="mb-0">
-                                    <span class="counter-value">{{ blockchainHeight }}</span>
+                                    <span class="counter-value">{{ networkBlockchainHeight }}</span>
                                 </h2>
                             </div>
                         </div>
@@ -50,10 +50,16 @@
                         <h5 class="text-muted text-uppercase fs-13">Pool Status</h5>
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
-                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                                <i class="ri-checkbox-circle-line display-6 text-success" *ngIf="poolStatus === 'healthy'"></i>
+                                <i class="ri-error-warning-line display-6 text-warning" *ngIf="poolStatus === 'degraded'"></i>
+                                <i class="ri-close-circle-line display-6 text-danger" *ngIf="poolStatus === 'critical'"></i>
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Ok</span></h2>
+                                <h2 class="mb-0">
+                                    <span class="counter-value text-success" *ngIf="poolStatus === 'healthy'">Ok</span>
+                                    <span class="counter-value text-warning" *ngIf="poolStatus === 'degraded'">Degraded</span>
+                                    <span class="counter-value text-danger" *ngIf="poolStatus === 'critical'">Critical</span>
+                                </h2>
                             </div>
                         </div>
                     </div>
