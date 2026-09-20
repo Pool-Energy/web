@@ -1,5 +1,12 @@
 <app-breadcrumbs title="Farmers" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- dust storm -->
+<div *ngIf="blockchain_duststorm" class="alert alert-warning alert-border-left" role="alert">
+    <i class="ri-windy-line me-1"></i>
+    <strong>Dust storm detected:</strong> the Chia mempool is currently very congested (&gt;90% full).
+    Transaction fees may be temporarily required, and payout/absorb timing could be delayed.
+</div>
+
 <!-- message -->
 <div *ngFor="let message of pool_message; let i = index"
     class="alert alert-{{ message.level }} alert-border-left alert-dismissible fade show"
