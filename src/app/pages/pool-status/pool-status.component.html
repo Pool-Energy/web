@@ -205,8 +205,8 @@
                                         <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
                                     </td>
                                     <td>
-                                        <div *ngIf="node.available" class="badge-progress" [ngClass]="isNodeUpToDate(node) ? 'bg-success-subtle' : 'bg-warning-subtle'" title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
-                                            <div class="badge-progress-fill" [ngClass]="isNodeUpToDate(node) ? 'bg-success' : 'bg-warning'" [style.width.%]="node.sync_percent"></div>
+                                        <div *ngIf="node.available" class="badge-progress" title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
+                                            <div class="badge-progress-fill" [ngClass]="isNodeUpToDate(node) ? 'bg-success-subtle' : 'bg-warning-subtle'" [style.width.%]="node.sync_percent"></div>
                                             <span class="badge-progress-label" [ngClass]="isNodeUpToDate(node) ? 'text-success' : 'text-warning'">{{ node.sync_percent }}%</span>
                                         </div>
                                         <span *ngIf="!node.available">-</span>
