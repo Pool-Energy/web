@@ -14,6 +14,7 @@ export class PoolStatusComponent {
 
   // pool
   blockchainShare: number = 0;
+  blockchain_duststorm: boolean = false;
 
   // wallets
   pool_wallets: Array<any> = new Array();
@@ -34,6 +35,7 @@ export class PoolStatusComponent {
 
     this.dataService.getStats().subscribe((data: any) => {
       this.blockchainShare = this.getBlockchainShare(data);
+      this.blockchain_duststorm = !!data['blockchain_duststorm'];
       this.pool_wallets = data['pool_wallets'];
       this.pool_nodes = data['pool_nodes'];
     });
