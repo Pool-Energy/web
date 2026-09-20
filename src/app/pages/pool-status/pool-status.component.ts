@@ -91,4 +91,15 @@ export class PoolStatusComponent {
     return 'healthy';
   }
 
+  /**
+   * `node.sync_percent` can misleadingly report 100% while the node isn't
+   * really caught up (a known chia RPC quirk), so the progress bar color is
+   * instead based on whether this node's own peak height actually matches
+   * the real network height (the max across all nodes) - green only when
+   * truly caught up, yellow otherwise.
+   */
+  isNodeUpToDate(node: any): boolean {
+    return !!node.peak_height && node.peak_height === this.networkBlockchainHeight;
+  }
+
 }

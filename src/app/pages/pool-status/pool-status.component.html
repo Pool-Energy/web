@@ -204,7 +204,7 @@
                                             </div>
                                             <div class="progress" style="height: 6px;" title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
                                                 <div class="progress-bar" role="progressbar"
-                                                    [ngClass]="node.sync_percent === 100 ? 'bg-success' : 'bg-warning'"
+                                                    [ngClass]="isNodeUpToDate(node) ? 'bg-success' : 'bg-warning'"
                                                     [style.width.%]="node.sync_percent"
                                                     [attr.aria-valuenow]="node.sync_percent"
                                                     aria-valuemin="0" aria-valuemax="100">
