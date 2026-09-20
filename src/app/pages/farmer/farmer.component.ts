@@ -879,6 +879,15 @@ export class FarmerComponent implements AfterViewInit {
   }
 
   private handleLivePartial(partial: any) {
+    // The "pending" phase (accepted, awaiting phase-2 confirmation) has no
+    // equivalent row in the historical (Postgres-backed) partials table -
+    // only terminal results (valid/stale/duplicate/invalid) are ever
+    // persisted there. Skip it here too, to avoid a duplicate/incomplete row
+    // now and the real one a few minutes later once it resolves.
+    if(partial.status === 'pending') {
+      return;
+    }
+
     // Lightweight live update: prepend the new partial to the partials
     // table/counters. Charts (which are bucketed per hour over the
     // selected day range) are left to the next manual/day-range refresh
