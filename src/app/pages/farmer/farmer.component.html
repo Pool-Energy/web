@@ -421,7 +421,7 @@
                                             <td>{{ partial.timestamp * 1000 | date:"medium" }}</td>
                                             <td>{{ partial.difficulty }}</td>
                                             <td>{{ getHarvesterNameById(partial.harvester_id) || partial.harvester_id | maxLength:32 }}</td>
-                                            <td><span>plot-k{{ partial.plot_size || "??" }}-*-{{ partial.plot_id }}.plot</span></td>
+                                            <td><code class="text-body">plot-k{{ partial.plot_size || "??" }}-*-{{ partial.plot_id }}.plot</code></td>
                                             <td>
                                                 <span *ngIf="!partial.plot_size">-</span>
                                                 <span *ngIf="partial.plot_size">k{{ partial.plot_size }}</span>
