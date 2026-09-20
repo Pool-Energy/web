@@ -205,7 +205,7 @@
                                         <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
                                     </td>
                                     <td>
-                                        <span *ngIf="node.available" class="badge fs-6 px-2 py-1"
+                                        <span *ngIf="node.available" class="badge fs-6 px-2 py-1 d-inline-block" style="min-width: 120px;"
                                             [ngClass]="isNodeUpToDate(node) ? 'bg-success' : 'bg-warning'"
                                             title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
                                             {{ node.sync_percent }}%
