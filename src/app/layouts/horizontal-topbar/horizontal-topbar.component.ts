@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 import { MENU } from './menu';
@@ -25,6 +26,15 @@ export class HorizontalTopbarComponent implements OnInit {
   ngOnInit(): void {
     // Menu Items
     this.menuItems = MENU;
+
+    // Auto-close the mobile menu (toggled via the 'menu' class on <body>,
+    // see HorizontalComponent.onToggleMobileMenu()) after navigating to a
+    // page, instead of leaving it open and covering the content.
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      document.body.classList.remove('menu');
+    });
   }
 
   /***
