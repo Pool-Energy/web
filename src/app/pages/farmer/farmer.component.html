@@ -755,7 +755,7 @@
                     </li>
 
                     <!-- rewards -->
-                    <li [ngbNavItem]="5" (click)="getRewards(); refreshPayouts()">
+                    <li [ngbNavItem]="5" (click)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
                         <a ngbNavLink>Rewards</a>
                         <ng-template ngbNavContent>
                             <!-- rewards stats -->
@@ -906,7 +906,7 @@
                                 <div class="text-md-right float-md-end payouts-pagination">
                                     <ngb-pagination [collectionSize]="payoutsCollectionSize" [(page)]="payoutsPage"
                                         [pageSize]="payoutsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
-                                        (pageChange)="getRewards(); refreshPayouts()">
+                                        (pageChange)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
                                     </ngb-pagination>
                                 </div>
                             </div>
