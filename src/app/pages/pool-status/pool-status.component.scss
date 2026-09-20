@@ -23,3 +23,34 @@
     --vz-badge-font-size: 1em;
     --vz-badge-font-weight: 0;
 }
+
+.badge-progress {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--vz-dark, #343a40);
+    overflow: hidden;
+}
+
+.badge-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+}
+
+.badge-progress-label {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #fff;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
