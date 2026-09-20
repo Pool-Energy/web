@@ -81,6 +81,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
   private chartBuckets: Map<number, ChartBucket> = new Map();
   activityChart: any = {};
   activityChartLegend: boolean = true;
+  private lastChartCategoriesCount: number = -1;
 
   private sweepTimer: any;
 
@@ -313,44 +314,62 @@ export class PartialsComponent implements OnInit, OnDestroy {
       .sort((a, b) => a.time - b.time);
 
     const categories = buckets.map((b) => new Date(b.time * 1000).toLocaleString());
+    const series = [
+      { name: 'Valid', data: buckets.map((b) => b.valid) },
+      { name: 'To be validated', data: buckets.map((b) => b.pending) },
+      { name: 'Invalid / reverted', data: buckets.map((b) => b.red) },
+      { name: 'Duplicate', data: buckets.map((b) => b.duplicate) },
+    ];
 
-    this.activityChart = {
-      series: [
-        { name: 'Valid', data: buckets.map((b) => b.valid) },
-        { name: 'To be validated', data: buckets.map((b) => b.pending) },
-        { name: 'Invalid / reverted', data: buckets.map((b) => b.red) },
-        { name: 'Duplicate', data: buckets.map((b) => b.duplicate) },
-      ],
-      chart: {
-        height: 300,
-        type: 'bar',
-        stacked: true,
-        toolbar: { show: false },
-      },
-      plotOptions: {
-        bar: { horizontal: false },
-      },
-      legend: {
-        show: this.activityChartLegend,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      noData: {
-        text: 'Loading...',
-      },
-      xaxis: {
-        categories: categories,
-        labels: { show: false },
-      },
-      yaxis: {
-        min: 0,
-      },
-      colors: this.getChartColorsArray('["--vz-success","--vz-warning","--vz-danger","--vz-secondary"]'),
-      tooltip: {
-        x: { show: true },
-      },
-    };
+    // Only rebuild the full chart config (chart/xaxis/colors/...) when the
+    // number of bars actually changes (a new 15-min bucket appears, or the
+    // very first render) or when nothing has been rendered yet: reassigning
+    // those nested objects forces ng-apexcharts to tear down and recreate
+    // the whole chart. On every other update (the common case: values
+    // changing within already-existing bars), only `series` is reassigned
+    // (new array reference, everything else keeps the same object
+    // reference) - ng-apexcharts detects that only `series` changed and
+    // calls ApexCharts' native `updateSeries()` internally, which updates
+    // just the changed bars instead of a full redraw.
+    const structuralChange = categories.length !== this.lastChartCategoriesCount;
+    this.lastChartCategoriesCount = categories.length;
+
+    if(structuralChange || !this.activityChart.chart) {
+      this.activityChart = {
+        series: series,
+        chart: {
+          height: 300,
+          type: 'bar',
+          stacked: true,
+          toolbar: { show: false },
+        },
+        plotOptions: {
+          bar: { horizontal: false },
+        },
+        legend: {
+          show: this.activityChartLegend,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        noData: {
+          text: 'Loading...',
+        },
+        xaxis: {
+          categories: categories,
+          labels: { show: false },
+        },
+        yaxis: {
+          min: 0,
+        },
+        colors: this.getChartColorsArray('["--vz-success","--vz-warning","--vz-danger","--vz-secondary"]'),
+        tooltip: {
+          x: { show: true },
+        },
+      };
+    } else {
+      this.activityChart.series = series;
+    }
   }
 
   get orderedRows(): SPRow[] {
