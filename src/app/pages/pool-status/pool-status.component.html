@@ -40,14 +40,14 @@
                                 <i class="ri-checkbox-circle-line display-6 text-muted"></i>
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Ok</span></h2>
+                                <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col col-lg border-end">
                     <div class="py-4 px-3">
-                        <h5 class="text-muted text-uppercase fs-13">Pool Status</h5>
+                        <h5 class="text-muted text-uppercase fs-13">Nodes Status</h5>
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
                                 <i class="ri-checkbox-circle-line display-6 text-success" *ngIf="poolStatus === 'healthy'"></i>
@@ -56,9 +56,9 @@
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <h2 class="mb-0">
-                                    <span class="counter-value text-success" *ngIf="poolStatus === 'healthy'">Ok</span>
-                                    <span class="counter-value text-warning" *ngIf="poolStatus === 'degraded'">Degraded</span>
-                                    <span class="counter-value text-danger" *ngIf="poolStatus === 'critical'">Critical</span>
+                                    <span class="counter-value" *ngIf="poolStatus === 'healthy'">Ok</span>
+                                    <span class="counter-value" *ngIf="poolStatus === 'degraded'">Degraded</span>
+                                    <span class="counter-value" *ngIf="poolStatus === 'critical'">Critical</span>
                                 </h2>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                                     <td>{{ wallet.name || 'unknown' }}</td>
                                     <td>
                                         <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
-                                            {{ wallet.address }}
+                                            <code>{{ wallet.address }}</code>
                                         </a>
                                     </td>
                                     <td>{{ wallet.balance.fingerprint }}</td>
