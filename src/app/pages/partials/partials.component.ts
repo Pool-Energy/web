@@ -11,8 +11,18 @@ const RETENTION_MS = 10 * 60 * 1000;
 const SWEEP_INTERVAL_MS = 30 * 1000;
 const FLASH_MS = 500;
 
+// Live activity chart: bucket partial events into 15-minute bars, kept for
+// at least 12 hours. Only `valid`/`red` (stale+invalid)/`duplicate` can be
+// backfilled from history (via the Postgres-backed REST API, which only
+// ever stores *resolved* partials); `pending` ("to be validated") has no
+// historical persistence anywhere (it's a transient live-only state), so
+// its bars only start filling in from the moment this page connects.
+const CHART_BUCKET_SECONDS = 15 * 60;
+const CHART_HISTORY_HOURS = 12;
+
 type FlashField = 'to_be_validated' | 'valid' | 'stale' | 'duplicate' | 'invalid' | 'blocks_found';
 type TerminalStatus = 'valid' | 'stale' | 'duplicate' | 'invalid';
+type ChartCategory = 'valid' | 'pending' | 'red' | 'duplicate';
 
 interface SPRow {
   sp_hash: string;
@@ -27,6 +37,14 @@ interface SPRow {
   blocks_found: number;
   blocks: Array<any>;
   flash: { [key in FlashField]?: boolean };
+}
+
+interface ChartBucket {
+  time: number;
+  valid: number;
+  pending: number;
+  red: number;
+  duplicate: number;
 }
 
 @Component({
@@ -59,6 +77,11 @@ export class PartialsComponent implements OnInit, OnDestroy {
   totalReceived: number = 0;
   totalBlocks: number = 0;
 
+  // Live activity chart (see ChartBucket/CHART_* above).
+  private chartBuckets: Map<number, ChartBucket> = new Map();
+  activityChart: any = {};
+  activityChartLegend: boolean = true;
+
   private sweepTimer: any;
 
   constructor(
@@ -89,7 +112,18 @@ export class PartialsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.sweepTimer = setInterval(() => this.sweep(), SWEEP_INTERVAL_MS);
+    // Backfill the activity chart with resolved (valid/stale/duplicate/invalid)
+    // partials from the last `CHART_HISTORY_HOURS` hours. "Pending" bars are
+    // not backfillable (no historical persistence for that transient state)
+    // and only start accumulating live from here on.
+    this.dataService.getPartials('', undefined, CHART_HISTORY_HOURS / 24).subscribe((data: any) => {
+      (data['results'] as Array<any>).forEach((partial: any) => {
+        this.addToChart(partial.timestamp, this.classifyChartCategory(partial.error));
+      });
+      this.rebuildChart();
+    });
+
+    this.sweepTimer = setInterval(() => { this.sweep(); this.rebuildChart(); }, SWEEP_INTERVAL_MS);
   }
 
   ngOnDestroy(): void {
@@ -141,6 +175,8 @@ export class PartialsComponent implements OnInit, OnDestroy {
       row.to_be_validated++;
       this.flash(row, 'to_be_validated');
       this.pendingIndex.set(partial.partial_key, partial.sp_hash);
+      this.addToChart(partial.timestamp, 'pending');
+      this.rebuildChart();
       return;
     }
 
@@ -179,6 +215,8 @@ export class PartialsComponent implements OnInit, OnDestroy {
     this.resolvedIndex.set(partial.partial_key, { sp_hash: partial.sp_hash, status });
     row[status]++;
     this.flash(row, status);
+    this.addToChart(partial.timestamp, status === 'duplicate' ? 'duplicate' : (status === 'valid' ? 'valid' : 'red'));
+    this.rebuildChart();
   }
 
   private handleBlock(block: any) {
@@ -219,6 +257,100 @@ export class PartialsComponent implements OnInit, OnDestroy {
         }
       });
     }
+
+    const cutoff = now - CHART_HISTORY_HOURS * 3600;
+    this.chartBuckets.forEach((bucket, time) => {
+      if(time < cutoff) {
+        this.chartBuckets.delete(time);
+      }
+    });
+  }
+
+  // activity chart
+  private classifyChartCategory(error: string | null): ChartCategory {
+    if(!error) { return 'valid'; }
+    if(error === 'DOUBLE_SIGNAGE_POINT') { return 'duplicate'; }
+    return 'red';
+  }
+
+  private addToChart(timestamp: number, category: ChartCategory) {
+    const bucketTime = Math.floor(timestamp / CHART_BUCKET_SECONDS) * CHART_BUCKET_SECONDS;
+    var bucket = this.chartBuckets.get(bucketTime);
+    if(!bucket) {
+      bucket = { time: bucketTime, valid: 0, pending: 0, red: 0, duplicate: 0 };
+      this.chartBuckets.set(bucketTime, bucket);
+    }
+    bucket[category]++;
+  }
+
+  private getChartColorsArray(colors: any) {
+    colors = JSON.parse(colors);
+    return colors.map(function (value: any) {
+      var newValue = value.replace(" ", "");
+      if(newValue.indexOf(",") === -1) {
+        var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+        if(color) {
+          return color.replace(" ", "");
+        } else {
+          return newValue;
+        }
+      } else {
+        var val = value.split(',');
+        if(val.length == 2) {
+          var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+          return "rgba(" + rgbaColor + "," + val[1] + ")";
+        } else {
+          return newValue;
+        }
+      }
+    });
+  }
+
+  private rebuildChart() {
+    const cutoff = (Date.now() / 1000) - CHART_HISTORY_HOURS * 3600;
+    const buckets = Array.from(this.chartBuckets.values())
+      .filter((b) => b.time >= cutoff)
+      .sort((a, b) => a.time - b.time);
+
+    const categories = buckets.map((b) => new Date(b.time * 1000).toLocaleString());
+
+    this.activityChart = {
+      series: [
+        { name: 'Valid', data: buckets.map((b) => b.valid) },
+        { name: 'To be validated', data: buckets.map((b) => b.pending) },
+        { name: 'Invalid / reverted', data: buckets.map((b) => b.red) },
+        { name: 'Duplicate', data: buckets.map((b) => b.duplicate) },
+      ],
+      chart: {
+        height: 300,
+        type: 'bar',
+        stacked: true,
+        toolbar: { show: false },
+      },
+      plotOptions: {
+        bar: { horizontal: false },
+      },
+      legend: {
+        show: this.activityChartLegend,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      noData: {
+        text: 'Loading...',
+      },
+      xaxis: {
+        categories: categories,
+        labels: { show: false },
+      },
+      yaxis: {
+        min: 0,
+      },
+      colors: this.getChartColorsArray('["--vz-success","--vz-warning","--vz-danger","--vz-secondary"]'),
+      tooltip: {
+        x: { show: true },
+      },
+    };
   }
 
   get orderedRows(): SPRow[] {

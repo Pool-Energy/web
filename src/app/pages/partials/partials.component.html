@@ -1,5 +1,34 @@
 <app-breadcrumbs title="Partials" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<!-- activity chart -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Live activity (last {{ 12 }}h)</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        *ngIf="activityChart && activityChart.series && activityChart.series.length > 0"
+                        [series]="activityChart.series"
+                        [chart]="activityChart.chart"
+                        [plotOptions]="activityChart.plotOptions"
+                        [legend]="activityChart.legend"
+                        [dataLabels]="activityChart.dataLabels"
+                        [colors]="activityChart.colors"
+                        [xaxis]="activityChart.xaxis"
+                        [yaxis]="activityChart.yaxis"
+                        [tooltip]="activityChart.tooltip"
+                        [noData]="activityChart.noData"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
