@@ -12,6 +12,7 @@ const SWEEP_INTERVAL_MS = 30 * 1000;
 const FLASH_MS = 500;
 
 type FlashField = 'to_be_validated' | 'valid' | 'stale' | 'duplicate' | 'invalid' | 'blocks_found';
+type TerminalStatus = 'valid' | 'stale' | 'duplicate' | 'invalid';
 
 interface SPRow {
   sp_hash: string;
@@ -45,6 +46,14 @@ export class PartialsComponent implements OnInit, OnDestroy {
   // out of the `to_be_validated` bucket on the correct row without double
   // counting, instead of just incrementing counters independently.
   private pendingIndex: Map<string, string> = new Map();
+  // Tracks the final status already recorded for a resolved partial
+  // (partial_key -> {sp_hash, status}). This guards against a partial being
+  // counted twice if, for any reason (e.g. a backend safety-net force-
+  // resolving a partial that was actually still legitimately in-flight), two
+  // resolution events arrive for the same partial: instead of incrementing
+  // both buckets, the earlier one is corrected (decremented) in favor of the
+  // latest, most authoritative status.
+  private resolvedIndex: Map<string, { sp_hash: string, status: TerminalStatus }> = new Map();
 
   paused: boolean = false;
   totalReceived: number = 0;
@@ -120,6 +129,11 @@ export class PartialsComponent implements OnInit, OnDestroy {
     setTimeout(() => { row.flash[field] = false; }, FLASH_MS);
   }
 
+  private terminalStatus(status: string): TerminalStatus {
+    if(status === 'valid' || status === 'stale' || status === 'duplicate') { return status; }
+    return 'invalid';
+  }
+
   private handlePartial(partial: any) {
     const row = this.getOrCreateRow(partial.sp_hash, partial.end_of_sub_slot, partial.timestamp);
 
@@ -143,12 +157,28 @@ export class PartialsComponent implements OnInit, OnDestroy {
       }
     }
 
-    switch(partial.status) {
-      case 'valid': row.valid++; this.flash(row, 'valid'); break;
-      case 'stale': row.stale++; this.flash(row, 'stale'); break;
-      case 'duplicate': row.duplicate++; this.flash(row, 'duplicate'); break;
-      default: row.invalid++; this.flash(row, 'invalid'); break;
+    const status = this.terminalStatus(partial.status);
+    const previous = this.resolvedIndex.get(partial.partial_key);
+    if(previous) {
+      // Already resolved once (e.g. force-resolved as stale by the pool's
+      // watchdog, and now the real, authoritative resolution arrives a bit
+      // late): correct the earlier bucket instead of counting it twice.
+      if(previous.status !== status) {
+        const previousRow = this.rows.get(previous.sp_hash);
+        if(previousRow && previousRow[previous.status] > 0) {
+          previousRow[previous.status]--;
+          this.flash(previousRow, previous.status);
+        }
+        row[status]++;
+        this.flash(row, status);
+        this.resolvedIndex.set(partial.partial_key, { sp_hash: partial.sp_hash, status });
+      }
+      return;
     }
+
+    this.resolvedIndex.set(partial.partial_key, { sp_hash: partial.sp_hash, status });
+    row[status]++;
+    this.flash(row, status);
   }
 
   private handleBlock(block: any) {
@@ -174,12 +204,21 @@ export class PartialsComponent implements OnInit, OnDestroy {
 
   private sweep() {
     const now = Date.now() / 1000;
+    const evicted = new Set<string>();
     this.rows.forEach((row, sp_hash) => {
       if(row.to_be_validated > 0) { return; }
       if((now - row.last_timestamp) * 1000 > RETENTION_MS) {
         this.rows.delete(sp_hash);
+        evicted.add(sp_hash);
       }
     });
+    if(evicted.size > 0) {
+      this.resolvedIndex.forEach((entry, partial_key) => {
+        if(evicted.has(entry.sp_hash)) {
+          this.resolvedIndex.delete(partial_key);
+        }
+      });
+    }
   }
 
   get orderedRows(): SPRow[] {
@@ -193,6 +232,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
   clear() {
     this.rows.clear();
     this.pendingIndex.clear();
+    this.resolvedIndex.clear();
     this.totalReceived = 0;
     this.totalBlocks = 0;
   }
