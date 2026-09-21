@@ -98,9 +98,13 @@ export class PartialsComponent implements OnInit, OnDestroy {
     this.dataService.connectPartialsLive();
     this.dataService.partialsLive$.subscribe((msg: any) => {
       if(msg['kind'] === 'partial_snapshot') {
-        // Initial backfill of partials already "to be validated" when this
-        // page connected (sent once, right after connecting).
-        (msg['payload'] as Array<any>).forEach((partial: any) => this.handlePartial(partial));
+        // Backfill of the last 15 minutes of partial activity (both
+        // "to be validated" and already-resolved events, oldest first),
+        // replayed in order so the SP rows/counters end up in the exact
+        // same state as if this page had been connected the whole time.
+        const events = msg['payload'] as Array<any>;
+        this.totalReceived += events.length;
+        events.forEach((partial: any) => this.handlePartial(partial));
         return;
       }
       if(this.paused) { return; }
