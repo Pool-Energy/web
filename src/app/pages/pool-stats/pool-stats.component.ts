@@ -45,6 +45,8 @@ export class PoolStatsComponent {
   partialsVersionsChart: any = {};
   partialsErrorsData: any[] = [];
   partialsErrorsChart: any = {};
+  partialsHostsData: any[] = [];
+  partialsHostsChart: any = {};
 
   constructor(
     private dataService: DataService
@@ -61,9 +63,7 @@ export class PoolStatsComponent {
     this.getMempoolSize(this.mempoolSizeDays);
     this.getNetspaceSize(this.netspaceSizeDays);
     this.getXchPrice(this.xchPriceDays);
-    this.getPartialsTotal();
-    this.getPartialsVersions();
-    this.getPartialsErrors();
+    this.getPartialsStats();
 
     // Live: partial throughput is event-driven pool-wide, debounce the
     // (heavy, full re-fetch based) partials charts refresh; pool status
@@ -71,9 +71,7 @@ export class PoolStatsComponent {
     this.dataService.connectPoolStats();
     this.dataService.poolStatsLive$.pipe(debounceTime(15000)).subscribe((msg: any) => {
       if(msg['kind'] === 'partial') {
-        this.getPartialsTotal();
-        this.getPartialsVersions();
-        this.getPartialsErrors();
+        this.getPartialsStats();
       }
     });
   }
@@ -350,15 +348,36 @@ export class PoolStatsComponent {
     }
   }
 
-  // partials total
-  getPartialsTotal() {
+  // partials total / versions / errors / hosts - derived from a single
+  // shared HTTP call instead of one (identical) call per chart.
+  getPartialsStats() {
     this.dataService.getPartials('').subscribe((d: any) => {
+      const results = <any[]>d.results;
+
+      // total per hour
       const partialsByHour: {[hour: string]: number} = {};
-      (<any[]>d.results).forEach((item: any) => {
+      // versions
+      const versionCounts: { [version: string]: number } = {};
+      // errors
+      const errorCounts: { [error: string]: number } = {};
+      // hosts
+      const hostCounts: { [host: string]: number } = {};
+
+      results.forEach((item: any) => {
         const date = new Date(item['timestamp'] * 1000);
         const hourKey = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()).toISOString();
         partialsByHour[hourKey] = (partialsByHour[hourKey] || 0) + 1;
+
+        const version = item['chia_version'];
+        versionCounts[version] = (versionCounts[version] || 0) + 1;
+
+        const error = item['error'] == null ? "Ok" : item['error'];
+        errorCounts[error] = (errorCounts[error] || 0) + 1;
+
+        const host = item['pool_host'] || "Unknown";
+        hostCounts[host] = (hostCounts[host] || 0) + 1;
       });
+
       this.partialsTotalData = [
         {
           "name": "Partials Total (per hour)",
@@ -371,6 +390,18 @@ export class PoolStatsComponent {
         }
       ];
       this.chartPartialsTotal(this.partialsTotalData);
+
+      this.chartPartialsVersions(
+        Object.entries(versionCounts).map(([version, count]) => ({ version, count }))
+      );
+
+      this.chartPartialsError(
+        Object.entries(errorCounts).map(([error, count]) => ({ error, count }))
+      );
+
+      this.chartPartialsHosts(
+        Object.entries(hostCounts).map(([host, count]) => ({ host, count }))
+      );
     });
   }
 
@@ -432,25 +463,6 @@ export class PoolStatsComponent {
   }
 
   // partials versions
-  getPartialsVersions() {
-    this.dataService.getPartials('').subscribe((d: any) => {
-      let versionCounts: { [version: string]: number } = {};
-      d.results.forEach((item: any) => {
-        const version = item['chia_version'];
-        if (versionCounts[version]) {
-          versionCounts[version] += 1;
-        } else {
-          versionCounts[version] = 1;
-        }
-      });
-      const data = Object.entries(versionCounts).map(([version, count]) => ({
-        version: version,
-        count: count
-      }));
-      this.chartPartialsVersions(data);
-    });
-  }
-
   private chartPartialsVersions(data: any) {
     this.partialsVersionsChart = {
       series: data.map((item: any) => item.count),
@@ -509,32 +521,68 @@ export class PoolStatsComponent {
   }
 
   // partials errors
-  getPartialsErrors() {
-    this.dataService.getPartials('').subscribe((d: any) => {
-      let errorCounts: { [error: string]: number } = {};
-      d.results.forEach((item: any) => {
-        if (item['error'] == null) {
-          item['error'] = "Ok";
-        }
-        const error = item['error'];
-        if (errorCounts[error]) {
-          errorCounts[error] += 1;
-        } else {
-          errorCounts[error] = 1;
-        }
-      });
-      const data = Object.entries(errorCounts).map(([error, count]) => ({
-        error: error,
-        count: count
-      }));
-      this.chartPartialsError(data);
-    });
-  }
-
   private chartPartialsError(data: any) {
     this.partialsErrorsChart = {
       series: data.map((item: any) => item.count),
       labels: data.map((item: any) => item.error),
+      legend: {
+        show: true
+      },
+      chart: {
+        height: 350,
+        type: "donut",
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        position: 'outside',
+        dropShadow: {
+          enabled: true
+        }
+      },
+      noData: {
+        text: "Loading..."
+      },
+      xaxis: {
+        labels: {
+          show: true
+        }
+      },
+      yaxis: {
+        min: 0,
+        labels: {
+          formatter: function (val: number) {
+            return val + " partial(s)";
+          }
+        }
+      },
+      stroke: {
+        width: 2
+      },
+      colors: [
+        "#a6e6c5","#F3B415","#F27036","#663F59","#6A6E94","#4E88B4","#00A7C6","#18D8D8",
+        "#A9D794","#46AF78","#A93F55","#8C5E58","#2176FF","#33A1FD","#7A918D","#BAFF29"
+      ],
+      plotOptions: {
+        pie: {
+          pie: {
+            expandOnClick: true
+          }
+        }
+      }
+    }
+  }
+
+  // partials hosts
+  private chartPartialsHosts(data: any) {
+    this.partialsHostsChart = {
+      series: data.map((item: any) => item.count),
+      labels: data.map((item: any) => item.host),
       legend: {
         show: true
       },

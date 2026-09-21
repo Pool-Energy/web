@@ -143,7 +143,7 @@
 <!-- partials -->
 <div class="row">
     <!-- versions -->
-    <div class="col-xxl-6">
+    <div class="col-xxl-4">
         <div class="card">
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Versions</h4>
@@ -169,7 +169,7 @@
     </div>
 
     <!-- errors -->
-    <div class="col-xxl-6">
+    <div class="col-xxl-4">
         <div class="card">
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Errors</h4>
@@ -187,6 +187,32 @@
                         [xaxis]="partialsErrorsChart.xaxis"
                         [yaxis]="partialsErrorsChart.yaxis"
                         [stroke]="partialsErrorsChart.stroke"
+                        dir="ltr">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- hosts -->
+    <div class="col-xxl-4">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Hosts</h4>
+            </div>
+            <div class="card-body">
+                <div class="live-preview">
+                    <apx-chart
+                        *ngIf="partialsHostsChart && partialsHostsChart.series && partialsHostsChart.series.length > 0"
+                        [series]="partialsHostsChart.series"
+                        [chart]="partialsHostsChart.chart"
+                        [labels]="partialsHostsChart.labels"
+                        [legend]="partialsHostsChart.legend"
+                        [dataLabels]="partialsHostsChart.dataLabels"
+                        [colors]="partialsHostsChart.colors"
+                        [xaxis]="partialsHostsChart.xaxis"
+                        [yaxis]="partialsHostsChart.yaxis"
+                        [stroke]="partialsHostsChart.stroke"
                         dir="ltr">
                     </apx-chart>
                 </div>
