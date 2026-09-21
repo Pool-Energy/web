@@ -18,7 +18,7 @@ const FLASH_MS = 500;
 // historical persistence anywhere (it's a transient live-only state), so
 // its bars only start filling in from the moment this page connects.
 const CHART_BUCKET_SECONDS = 15 * 60;
-const CHART_HISTORY_HOURS = 12;
+const CHART_HISTORY_HOURS = 24;
 
 type FlashField = 'to_be_validated' | 'valid' | 'stale' | 'duplicate' | 'invalid' | 'blocks_found';
 type TerminalStatus = 'valid' | 'stale' | 'duplicate' | 'invalid';
