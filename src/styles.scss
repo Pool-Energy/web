@@ -1,4 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+
+// --- Sticky footer fix ---
+// The theme's default footer is `position: absolute; bottom: 0`, sized
+// against `.main-content`'s own `min-height: 100vh`. That doesn't account
+// for the topbar/nav's own height stacking above it, so on mobile (where
+// the nav can take proportionally more vertical space, or wrap onto more
+// lines) this left a visible white gap between the page content and the
+// footer instead of the footer sticking to the actual bottom of the page.
+// Replaced with a standard, robust flexbox sticky-footer layout, scoped to
+// the horizontal layout (the only one this project uses).
+html[data-layout="horizontal"] {
+    app-root,
+    app-layout,
+    app-horizontal {
+        display: contents;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    #layout-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+        min-height: 100vh;
+    }
+
+    app-topbar,
+    app-horizontal-topbar,
+    app-footer {
+        display: block;
+        flex: 0 0 auto;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+        min-height: 0 !important;
+    }
+
+    .page-content {
+        flex: 1 0 auto;
+    }
+
+    .footer {
+        position: static !important;
+        left: auto !important;
+        width: 100% !important;
+    }
+}
+
 // Swiper
 .coverflowslide .slide {
     position: relative;
