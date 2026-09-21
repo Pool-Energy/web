@@ -19,6 +19,11 @@ const FLASH_MS = 500;
 // its bars only start filling in from the moment this page connects.
 const CHART_BUCKET_SECONDS = 15 * 60;
 const CHART_HISTORY_HOURS = 24;
+// Live events can arrive several times per second pool-wide; rebuilding the
+// (up to ~96 bars) chart on every single one is expensive (category label
+// formatting, ApexCharts update) and made the chart feel sluggish. Coalesce
+// bursts of updates into at most one rebuild per this interval instead.
+const CHART_REBUILD_THROTTLE_MS = 2000;
 
 type FlashField = 'to_be_validated' | 'valid' | 'stale' | 'duplicate' | 'invalid' | 'blocks_found';
 type TerminalStatus = 'valid' | 'stale' | 'duplicate' | 'invalid';
@@ -41,6 +46,7 @@ interface SPRow {
 
 interface ChartBucket {
   time: number;
+  label: string;
   valid: number;
   pending: number;
   red: number;
@@ -82,6 +88,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
   activityChart: any = {};
   activityChartLegend: boolean = true;
   private lastChartCategoriesCount: number = -1;
+  private chartRebuildScheduled: boolean = false;
 
   private sweepTimer: any;
 
@@ -125,10 +132,10 @@ export class PartialsComponent implements OnInit, OnDestroy {
       (data['results'] as Array<any>).forEach((partial: any) => {
         this.addToChart(partial.timestamp, this.classifyChartCategory(partial.error));
       });
-      this.rebuildChart();
+      this.performChartRebuild();
     });
 
-    this.sweepTimer = setInterval(() => { this.sweep(); this.rebuildChart(); }, SWEEP_INTERVAL_MS);
+    this.sweepTimer = setInterval(() => { this.sweep(); this.performChartRebuild(); }, SWEEP_INTERVAL_MS);
   }
 
   ngOnDestroy(): void {
@@ -181,7 +188,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
       this.flash(row, 'to_be_validated');
       this.pendingIndex.set(partial.partial_key, partial.sp_hash);
       this.addToChart(partial.timestamp, 'pending');
-      this.rebuildChart();
+      this.scheduleChartRebuild();
       return;
     }
 
@@ -221,7 +228,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     row[status]++;
     this.flash(row, status);
     this.addToChart(partial.timestamp, status === 'duplicate' ? 'duplicate' : (status === 'valid' ? 'valid' : 'red'));
-    this.rebuildChart();
+    this.scheduleChartRebuild();
   }
 
   private handleBlock(block: any) {
@@ -282,7 +289,11 @@ export class PartialsComponent implements OnInit, OnDestroy {
     const bucketTime = Math.floor(timestamp / CHART_BUCKET_SECONDS) * CHART_BUCKET_SECONDS;
     var bucket = this.chartBuckets.get(bucketTime);
     if(!bucket) {
-      bucket = { time: bucketTime, valid: 0, pending: 0, red: 0, duplicate: 0 };
+      bucket = {
+        time: bucketTime,
+        label: new Date(bucketTime * 1000).toLocaleString(),
+        valid: 0, pending: 0, red: 0, duplicate: 0,
+      };
       this.chartBuckets.set(bucketTime, bucket);
     }
     bucket[category]++;
@@ -311,13 +322,25 @@ export class PartialsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private rebuildChart() {
+  // Coalesces bursts of live events into at most one chart rebuild per
+  // `CHART_REBUILD_THROTTLE_MS` (see constant above), instead of rebuilding
+  // (category label formatting + ApexCharts update) on every single event.
+  private scheduleChartRebuild() {
+    if(this.chartRebuildScheduled) { return; }
+    this.chartRebuildScheduled = true;
+    setTimeout(() => {
+      this.chartRebuildScheduled = false;
+      this.performChartRebuild();
+    }, CHART_REBUILD_THROTTLE_MS);
+  }
+
+  private performChartRebuild() {
     const cutoff = (Date.now() / 1000) - CHART_HISTORY_HOURS * 3600;
     const buckets = Array.from(this.chartBuckets.values())
       .filter((b) => b.time >= cutoff)
       .sort((a, b) => a.time - b.time);
 
-    const categories = buckets.map((b) => new Date(b.time * 1000).toLocaleString());
+    const categories = buckets.map((b) => b.label);
     const series = [
       { name: 'Valid', data: buckets.map((b) => b.valid) },
       { name: 'To be validated', data: buckets.map((b) => b.pending) },
