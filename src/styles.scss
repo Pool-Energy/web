@@ -9,49 +9,65 @@
 // footer instead of the footer sticking to the actual bottom of the page.
 // Replaced with a standard, robust flexbox sticky-footer layout, scoped to
 // the horizontal layout (the only one this project uses).
+//
+// NOTE: `src/styles.scss` is loaded *before* the theme's own `app.scss` in
+// angular.json, so every property below needs `!important` - otherwise the
+// theme's later-loaded (equal-specificity) rules for the same selectors
+// would silently win the cascade and undo this fix.
 html[data-layout="horizontal"] {
     app-root,
     app-layout,
     app-horizontal {
-        display: contents;
+        display: contents !important;
     }
 
     body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 100vh !important;
     }
 
     #layout-wrapper {
-        display: flex;
-        flex-direction: column;
-        flex: 1 0 auto;
-        min-height: 100vh;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 0 auto !important;
+        min-height: 100vh !important;
     }
 
     app-topbar,
     app-horizontal-topbar,
     app-footer {
-        display: block;
-        flex: 0 0 auto;
+        display: block !important;
+        flex: 0 0 auto !important;
     }
 
     .main-content {
-        display: flex;
-        flex-direction: column;
-        flex: 1 0 auto;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 0 auto !important;
         min-height: 0 !important;
+        height: auto !important;
     }
 
     .page-content {
-        flex: 1 0 auto;
+        flex: 1 0 auto !important;
         padding-bottom: 0 !important;
     }
 
     .footer {
         position: static !important;
         left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
         width: 100% !important;
+        // The theme sets a *fixed* `height` (not `min-height`) here, so on
+        // narrow mobile viewports where the footer's content (social icons
+        // row) wraps onto 2 lines, it overflows below the fixed-height
+        // colored box - appearing as a plain white gap below the footer,
+        // roughly its own height, since the overflow isn't covered by the
+        // footer's background anymore. Let it grow to fit its content.
+        height: auto !important;
+        min-height: 60px;
     }
 }
 
