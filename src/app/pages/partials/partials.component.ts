@@ -18,7 +18,7 @@ const FLASH_MS = 500;
 // historical persistence anywhere (it's a transient live-only state), so
 // its bars only start filling in from the moment this page connects.
 const CHART_BUCKET_SECONDS = 15 * 60;
-const CHART_HISTORY_HOURS = 24;
+const CHART_HISTORY_HOURS = 12;
 // Live events can arrive several times per second pool-wide; rebuilding the
 // (up to ~96 bars) chart on every single one is expensive (category label
 // formatting, ApexCharts update) and made the chart feel sluggish. Coalesce
