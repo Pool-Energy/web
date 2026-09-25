@@ -1,6 +1,6 @@
 export const environment = {
-  production: false,
+  production: true,
   pools: [
-    { name: 'Global', url: 'dev.pool.energy', region: 'eu-west-rbx', latency: 0 }
+    { name: 'Global', url: 'chia.pool.energy', region: 'fr-par', latency: 0 }
   ]
 };
