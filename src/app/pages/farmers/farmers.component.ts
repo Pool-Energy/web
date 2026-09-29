@@ -18,6 +18,7 @@ export class FarmersComponent {
   pool_space: number = 0;
   pool_message: Array<any> = new Array();
   blockchain_duststorm: boolean = false;
+  blockchain_duststorm_pct: number = 0;
   current_effort: number = 0;
   average_effort: number = 0;
   total_farmers: any = 0;
@@ -65,6 +66,7 @@ export class FarmersComponent {
     this.dataService.getStats().subscribe((data: any) => {
       this.pool_space = data['pool_space'];
       this.blockchain_duststorm = !!data['blockchain_duststorm'];
+      this.blockchain_duststorm_pct = data['blockchain_duststorm_pct'] || 0;
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
       this.average_effort = data['average_effort'];
       this.total_farmers = data['farmers'];
