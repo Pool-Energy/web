@@ -5,7 +5,7 @@ import { DataService } from 'src/app/data.service';
 @Component({
     selector: 'app-pool-status',
     templateUrl: './pool-status.component.html',
-    styleUrl: './pool-status.component.scss',
+    styleUrls: ['./pool-status.component.scss'],
     standalone: false
 })
 
@@ -15,7 +15,7 @@ export class PoolStatusComponent {
   // pool
   blockchainShare: number = 0;
   blockchain_duststorm: boolean = false;
-  blockchain_duststorm_pct: number = 0;
+  blockchain_mempool_full_pct: number = 0;
 
   // wallets
   pool_wallets: Array<any> = new Array();
@@ -37,7 +37,7 @@ export class PoolStatusComponent {
     this.dataService.getStats().subscribe((data: any) => {
       this.blockchainShare = this.getBlockchainShare(data);
       this.blockchain_duststorm = !!data['blockchain_duststorm'];
-      this.blockchain_duststorm_pct = data['blockchain_duststorm_pct'] || 0;
+      this.blockchain_mempool_full_pct = data['blockchain_mempool_full_pct'] || 0;
       this.pool_wallets = data['pool_wallets'];
       this.pool_nodes = data['pool_nodes'];
     });
