@@ -9,7 +9,7 @@ import { NgPipesModule } from 'ngx-pipes';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { defineElement } from '@lordicon/element';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { NgbAccordionModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbNavModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTerminalModule } from 'ng-terminal';
 import lottie from 'lottie-web';
 
@@ -68,6 +68,7 @@ import { JoinComponent } from './join/join.component';
     NgApexchartsModule,
     NgbAccordionModule,
     NgbNavModule,
+    NgbCollapseModule,
     NgTerminalModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

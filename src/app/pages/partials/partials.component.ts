@@ -25,9 +25,36 @@ const CHART_HISTORY_HOURS = 12;
 // bursts of updates into at most one rebuild per this interval instead.
 const CHART_REBUILD_THROTTLE_MS = 2000;
 
+// A found block is attached to whichever SP row is within this many seconds
+// of it (closest match wins). Beyond this window there is no reasonably
+// reliable link between the block and any currently-visible SP row, so it's
+// left unattached (still counted in the page-wide `totalBlocks` counter)
+// rather than shown against a misleading/unrelated row.
+const BLOCK_MATCH_MAX_DELTA_SECONDS = 120;
+
+// Per-row cap on retained partial detail entries (protects memory/render
+// perf on a very active signage point, e.g. right after a long sub-slot
+// with many farmers submitting at once). Oldest entries are evicted first.
+const MAX_PARTIALS_PER_ROW = 200;
+
 type FlashField = 'to_be_validated' | 'valid' | 'stale' | 'duplicate' | 'invalid' | 'blocks_found';
 type TerminalStatus = 'valid' | 'stale' | 'duplicate' | 'invalid';
 type ChartCategory = 'valid' | 'pending' | 'red' | 'duplicate';
+
+interface PartialDetail {
+  partial_key: string;
+  launcher_id: string;
+  harvester_id: string;
+  status: 'pending' | TerminalStatus;
+  error: string | null;
+  difficulty: number;
+  time_taken: number | null;
+  plot_id: string | null;
+  plot_size: number | null;
+  chia_version: string | null;
+  timestamp: number;
+  flash: boolean;
+}
 
 interface SPRow {
   sp_hash: string;
@@ -42,6 +69,8 @@ interface SPRow {
   blocks_found: number;
   blocks: Array<any>;
   flash: { [key in FlashField]?: boolean };
+  // Detail view (dropdown): partial_key -> detail entry, in first-seen order.
+  partials: Map<string, PartialDetail>;
 }
 
 interface ChartBucket {
@@ -82,6 +111,9 @@ export class PartialsComponent implements OnInit, OnDestroy {
   paused: boolean = false;
   totalReceived: number = 0;
   totalBlocks: number = 0;
+
+  // Accordion behavior: only one SP row's detail dropdown open at a time.
+  expandedSpHash: string | null = null;
 
   // Live activity chart (see ChartBucket/CHART_* above).
   private chartBuckets: Map<number, ChartBucket> = new Map();
@@ -161,6 +193,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
         blocks_found: 0,
         blocks: [],
         flash: {},
+        partials: new Map(),
       };
       this.rows.set(sp_hash, row);
     }
@@ -175,6 +208,48 @@ export class PartialsComponent implements OnInit, OnDestroy {
     setTimeout(() => { row.flash[field] = false; }, FLASH_MS);
   }
 
+  private flashDetail(detail: PartialDetail) {
+    detail.flash = true;
+    setTimeout(() => { detail.flash = false; }, FLASH_MS);
+  }
+
+  // Upserts the detail entry for this partial on its row (creating it on
+  // first sight as "pending", then updating the same entry in place once it
+  // resolves, so the object reference stays stable and the row-level flash
+  // and the individual detail-row flash can both be triggered independently).
+  // Enforces MAX_PARTIALS_PER_ROW by evicting the oldest (first-inserted)
+  // entry once the cap is exceeded.
+  private upsertDetail(row: SPRow, partial: any): PartialDetail {
+    var detail = row.partials.get(partial.partial_key);
+    if(!detail) {
+      if(row.partials.size >= MAX_PARTIALS_PER_ROW) {
+        const oldestKey = row.partials.keys().next().value;
+        if(oldestKey !== undefined) { row.partials.delete(oldestKey); }
+      }
+      detail = {
+        partial_key: partial.partial_key,
+        launcher_id: partial.launcher_id,
+        harvester_id: partial.harvester_id,
+        status: partial.status,
+        error: partial.error ?? null,
+        difficulty: partial.difficulty,
+        time_taken: partial.time_taken ?? null,
+        plot_id: partial.plot_id ?? null,
+        plot_size: partial.plot_size ?? null,
+        chia_version: partial.chia_version ?? null,
+        timestamp: partial.timestamp,
+        flash: false,
+      };
+      row.partials.set(partial.partial_key, detail);
+    } else {
+      detail.status = partial.status;
+      detail.error = partial.error ?? null;
+      detail.time_taken = partial.time_taken ?? null;
+    }
+    this.flashDetail(detail);
+    return detail;
+  }
+
   private terminalStatus(status: string): TerminalStatus {
     if(status === 'valid' || status === 'stale' || status === 'duplicate') { return status; }
     return 'invalid';
@@ -187,6 +262,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
       row.to_be_validated++;
       this.flash(row, 'to_be_validated');
       this.pendingIndex.set(partial.partial_key, partial.sp_hash);
+      this.upsertDetail(row, partial);
       this.addToChart(partial.timestamp, 'pending');
       this.scheduleChartRebuild();
       return;
@@ -220,6 +296,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
         row[status]++;
         this.flash(row, status);
         this.resolvedIndex.set(partial.partial_key, { sp_hash: partial.sp_hash, status });
+        this.upsertDetail(row, partial);
       }
       return;
     }
@@ -227,14 +304,19 @@ export class PartialsComponent implements OnInit, OnDestroy {
     this.resolvedIndex.set(partial.partial_key, { sp_hash: partial.sp_hash, status });
     row[status]++;
     this.flash(row, status);
+    this.upsertDetail(row, partial);
     this.addToChart(partial.timestamp, status === 'duplicate' ? 'duplicate' : (status === 'valid' ? 'valid' : 'red'));
     this.scheduleChartRebuild();
   }
 
   private handleBlock(block: any) {
-    // Best-effort correlation: attach the block to the signage point row
-    // whose timestamp is closest (no strict time window - there is no
-    // direct technical link between a found block and a signage point today).
+    // Attach the block to the signage point row whose timestamp is closest,
+    // but only within BLOCK_MATCH_MAX_DELTA_SECONDS: beyond that there is no
+    // reasonably reliable link between the block and any currently-visible
+    // SP row (there is no direct technical link between a found block and a
+    // signage point today), so it's left unattached rather than shown
+    // against a misleading/unrelated row. It's still counted in the
+    // page-wide `totalBlocks` counter regardless.
     if(this.rows.size === 0) { return; }
     var closest: SPRow | null = null;
     var closestDelta = Infinity;
@@ -245,7 +327,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
         closest = row;
       }
     });
-    if(closest) {
+    if(closest && closestDelta <= BLOCK_MATCH_MAX_DELTA_SECONDS) {
       (closest as SPRow).blocks_found++;
       this.flash(closest as SPRow, 'blocks_found');
       (closest as SPRow).blocks.push(block);
@@ -257,6 +339,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     const evicted = new Set<string>();
     this.rows.forEach((row, sp_hash) => {
       if(row.to_be_validated > 0) { return; }
+      if(sp_hash === this.expandedSpHash) { return; } // keep whatever the user is currently inspecting
       if((now - row.last_timestamp) * 1000 > RETENTION_MS) {
         this.rows.delete(sp_hash);
         evicted.add(sp_hash);
@@ -403,6 +486,15 @@ export class PartialsComponent implements OnInit, OnDestroy {
     return Array.from(this.rows.values()).sort((a, b) => b.last_timestamp - a.last_timestamp);
   }
 
+  // Chronological (submission order) detail list for a row's dropdown.
+  orderedPartials(row: SPRow): PartialDetail[] {
+    return Array.from(row.partials.values()).sort((a, b) => a.timestamp - b.timestamp);
+  }
+
+  toggleExpand(sp_hash: string) {
+    this.expandedSpHash = (this.expandedSpHash === sp_hash) ? null : sp_hash;
+  }
+
   togglePause() {
     this.paused = !this.paused;
   }
@@ -413,6 +505,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     this.resolvedIndex.clear();
     this.totalReceived = 0;
     this.totalBlocks = 0;
+    this.expandedSpHash = null;
   }
 
 }

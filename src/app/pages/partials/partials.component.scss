@@ -9,3 +9,18 @@ td.flash-cell {
     background-color: rgba(255, 193, 7, 0.35);
     transition: none;
 }
+
+// SP row expand/collapse chevron (rotates to point down when expanded).
+.sp-toggle-icon {
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+}
+
+.sp-toggle-icon-expanded {
+    transform: rotate(90deg);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+

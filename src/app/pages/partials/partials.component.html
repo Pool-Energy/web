@@ -60,6 +60,7 @@
                     <table class="table align-middle table-nowrap table-striped-columns mb-0">
                         <thead class="table-light">
                             <tr>
+                                <th scope="col"></th>
                                 <th scope="col">Time</th>
                                 <th scope="col">Signage point</th>
                                 <th scope="col" class="text-center">To be validated</th>
@@ -71,12 +72,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let row of orderedRows">
+                            <ng-container *ngFor="let row of orderedRows">
+                            <tr class="cursor-pointer" (click)="toggleExpand(row.sp_hash)">
+                                <td class="text-center">
+                                    <i class="ri-arrow-right-s-line align-middle fs-5 sp-toggle-icon" [class.sp-toggle-icon-expanded]="expandedSpHash === row.sp_hash"></i>
+                                </td>
                                 <td>{{ row.last_timestamp * 1000 | date:"MMM d, y, h:mm:ss a" }}</td>
                                 <td>
                                     <span class="badge bg-secondary-subtle text-secondary me-1" *ngIf="row.end_of_sub_slot">EOS</span>
                                     <span class="badge bg-secondary-subtle text-secondary me-1" *ngIf="!row.end_of_sub_slot">SP</span>
                                     <code title="{{ row.sp_hash }}" class="text-body">{{ row.sp_hash | maxLength:10 }}</code>
+                                    <span class="text-muted small ms-1">({{ row.partials.size }} partial{{ row.partials.size === 1 ? '' : 's' }})</span>
                                 </td>
                                 <td class="text-center" [class.flash-cell]="row.flash.to_be_validated">
                                     <span class="badge bg-warning-subtle text-warning fs-6 px-2 py-1" *ngIf="row.to_be_validated">{{ row.to_be_validated }}</span>
@@ -91,7 +97,7 @@
                                     <span *ngIf="!row.stale">-</span>
                                 </td>
                                 <td class="text-center" [class.flash-cell]="row.flash.duplicate">
-                                    <span class="badge bg-info-subtle text-info fs-6 px-2 py-1" *ngIf="row.duplicate">{{ row.duplicate }}</span>
+                                    <span class="badge bg-secondary-subtle text-secondary fs-6 px-2 py-1" *ngIf="row.duplicate">{{ row.duplicate }}</span>
                                     <span *ngIf="!row.duplicate">-</span>
                                 </td>
                                 <td class="text-center" [class.flash-cell]="row.flash.invalid">
@@ -99,16 +105,77 @@
                                     <span *ngIf="!row.invalid">-</span>
                                 </td>
                                 <td class="text-center" [class.flash-cell]="row.flash.blocks_found">
-                                    <span class="badge bg-primary fs-6 px-2 py-1" *ngIf="row.blocks_found" title="Best-effort match by closest timestamp">
+                                    <span class="badge bg-primary fs-6 px-2 py-1" *ngIf="row.blocks_found" title="Matched by closest timestamp, within 2 minutes">
                                         <i class="ri-trophy-line align-middle"></i> {{ row.blocks_found }}
                                     </span>
                                     <span *ngIf="!row.blocks_found">-</span>
                                 </td>
                             </tr>
+                            <tr *ngIf="expandedSpHash === row.sp_hash">
+                                <td [attr.colspan]="9" class="p-0 border-0">
+                                    <div [ngbCollapse]="expandedSpHash !== row.sp_hash">
+                                        <div class="p-3 bg-body-secondary bg-opacity-25">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm align-middle table-nowrap mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Farmer</th>
+                                                            <th scope="col">Harvester</th>
+                                                            <th scope="col">Plot ID</th>
+                                                            <th scope="col">Size</th>
+                                                            <th scope="col">Chia version</th>
+                                                            <th scope="col" class="text-center">Points</th>
+                                                            <th scope="col" class="text-center">Status</th>
+                                                            <th scope="col" class="text-center">Resolved in</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let detail of orderedPartials(row)" [class.flash-cell]="detail.flash">
+                                                            <td>{{ detail.timestamp * 1000 | date:"h:mm:ss a" }}</td>
+                                                            <td>
+                                                                <a [routerLink]="['/farmer', detail.launcher_id]" title="{{ detail.launcher_id }}">
+                                                                    {{ detail.launcher_id | maxLength:10 }}
+                                                                </a>
+                                                            </td>
+                                                            <td><code title="{{ detail.harvester_id }}" class="text-body">{{ detail.harvester_id | maxLength:10 }}</code></td>
+                                                            <td>
+                                                                <code *ngIf="detail.plot_id" title="{{ detail.plot_id }}" class="text-body">{{ detail.plot_id | maxLength:10 }}</code>
+                                                                <span *ngIf="!detail.plot_id">-</span>
+                                                            </td>
+                                                            <td>{{ detail.plot_size ? 'k' + detail.plot_size : '-' }}</td>
+                                                            <td>{{ detail.chia_version || '-' }}</td>
+                                                            <td class="text-center" [class.text-muted]="detail.status !== 'valid'">
+                                                                {{ detail.status === 'valid' ? detail.difficulty : 0 }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <span class="badge bg-warning-subtle text-warning" *ngIf="detail.status === 'pending'">To be validated</span>
+                                                                <span class="badge bg-success-subtle text-success" *ngIf="detail.status === 'valid'">Valid</span>
+                                                                <span class="badge bg-secondary-subtle text-secondary" *ngIf="detail.status === 'stale'">Stale</span>
+                                                                <span class="badge bg-secondary-subtle text-secondary" *ngIf="detail.status === 'duplicate'">Duplicate</span>
+                                                                <span class="badge bg-danger-subtle text-danger" *ngIf="detail.status === 'invalid'" title="{{ detail.error }}">Invalid</span>
+                                                            </td>
+                                                            <td class="text-center">{{ detail.time_taken ? (detail.time_taken | number:'1.2-2') + 's' : '-' }}</td>
+                                                        </tr>
+                                                        <tr *ngIf="row.partials.size === 0">
+                                                            <td colspan="9" class="text-center text-muted">No partial retained for this signage point.</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="text-muted small mt-2" *ngIf="row.partials.size >= 200">
+                                                    Showing the most recent 200 partials for this signage point &mdash; older ones have been dropped from this live view.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </ng-container>
                             <tr *ngIf="orderedRows.length === 0">
-                                <td colspan="8" class="text-center text-muted">Waiting for live partials...</td>
+                                <td colspan="9" class="text-center text-muted">Waiting for live partials...</td>
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>
