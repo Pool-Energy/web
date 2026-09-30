@@ -119,7 +119,6 @@
                                                 <table class="table table-sm align-middle table-nowrap mb-0">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">Time</th>
                                                             <th scope="col">Farmer</th>
                                                             <th scope="col">Harvester</th>
                                                             <th scope="col">Plot ID</th>
@@ -132,7 +131,6 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let detail of orderedPartials(row)" [class.flash-cell]="detail.flash">
-                                                            <td>{{ detail.timestamp * 1000 | date:"h:mm:ss a" }}</td>
                                                             <td>
                                                                 <a [routerLink]="['/farmer', detail.launcher_id]" title="{{ detail.launcher_id }}">
                                                                     {{ detail.launcher_id | maxLength:10 }}
@@ -158,7 +156,7 @@
                                                             <td class="text-center">{{ detail.time_taken ? (detail.time_taken | number:'1.2-2') + 's' : '-' }}</td>
                                                         </tr>
                                                         <tr *ngIf="row.partials.size === 0">
-                                                            <td colspan="9" class="text-center text-muted">No partial retained for this signage point.</td>
+                                                            <td colspan="8" class="text-center text-muted">No partial retained for this signage point.</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

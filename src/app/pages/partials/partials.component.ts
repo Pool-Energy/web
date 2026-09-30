@@ -259,8 +259,18 @@ export class PartialsComponent implements OnInit, OnDestroy {
     const row = this.getOrCreateRow(partial.sp_hash, partial.end_of_sub_slot, partial.timestamp);
 
     if(partial.status === 'pending') {
-      row.to_be_validated++;
-      this.flash(row, 'to_be_validated');
+      // `partial_key` is only second-precision (see pool.py), so two
+      // distinct partials submitted for the same launcher/harvester/SP
+      // within the same second collide onto the same key. Guard the
+      // counter against this the same way `upsertDetail` (Map keyed by
+      // partial_key) naturally dedups the detail list, otherwise
+      // `to_be_validated` can drift ahead of the actual number of
+      // retained detail rows (e.g. "3 to be validated" but only 2 rows
+      // shown in the dropdown).
+      if(!this.pendingIndex.has(partial.partial_key)) {
+        row.to_be_validated++;
+        this.flash(row, 'to_be_validated');
+      }
       this.pendingIndex.set(partial.partial_key, partial.sp_hash);
       this.upsertDetail(row, partial);
       this.addToChart(partial.timestamp, 'pending');
