@@ -149,7 +149,7 @@
                                                             <td class="text-center">
                                                                 <span class="badge bg-warning-subtle text-warning" *ngIf="detail.status === 'pending'">To be validated</span>
                                                                 <span class="badge bg-success-subtle text-success" *ngIf="detail.status === 'valid'">Valid</span>
-                                                                <span class="badge bg-secondary-subtle text-secondary" *ngIf="detail.status === 'stale'">Stale</span>
+                                                                <span class="badge bg-danger-subtle text-danger" *ngIf="detail.status === 'stale'" title="{{ detail.error }}">{{ detail.error || 'Stale' }}</span>
                                                                 <span class="badge bg-secondary-subtle text-secondary" *ngIf="detail.status === 'duplicate'">Duplicate</span>
                                                                 <span class="badge bg-danger-subtle text-danger" *ngIf="detail.status === 'invalid'" title="{{ detail.error }}">Invalid</span>
                                                             </td>
