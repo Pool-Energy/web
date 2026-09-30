@@ -99,6 +99,16 @@ export class PartialsComponent implements OnInit, OnDestroy {
   // out of the `to_be_validated` bucket on the correct row without double
   // counting, instead of just incrementing counters independently.
   private pendingIndex: Map<string, string> = new Map();
+  // Tracks which chart bucket (15-min bar) a partial's "pending" event was
+  // added to (partial_key -> bucketTime), so that when it later resolves,
+  // the same bucket's `pending` count can be decremented in favor of its
+  // final category. Without this, the chart's "To be validated" bar only
+  // ever grows (every pending event adds to it, nothing ever removes from
+  // it once resolved) while the resolved category is added *on top* of it
+  // instead of replacing it - causing the chart to substantially overcount
+  // and drift from the live per-SP-row "to be validated" number shown in
+  // the table (which correctly decrements on resolution).
+  private pendingChartBucket: Map<string, number> = new Map();
   // Tracks the final status already recorded for a resolved partial
   // (partial_key -> {sp_hash, status}). This guards against a partial being
   // counted twice if, for any reason (e.g. a backend safety-net force-
@@ -270,11 +280,12 @@ export class PartialsComponent implements OnInit, OnDestroy {
       if(!this.pendingIndex.has(partial.partial_key)) {
         row.to_be_validated++;
         this.flash(row, 'to_be_validated');
+        const bucketTime = this.addToChart(partial.timestamp, 'pending');
+        this.pendingChartBucket.set(partial.partial_key, bucketTime);
+        this.scheduleChartRebuild();
       }
       this.pendingIndex.set(partial.partial_key, partial.sp_hash);
       this.upsertDetail(row, partial);
-      this.addToChart(partial.timestamp, 'pending');
-      this.scheduleChartRebuild();
       return;
     }
 
@@ -289,6 +300,12 @@ export class PartialsComponent implements OnInit, OnDestroy {
         pendingRow.to_be_validated--;
         this.flash(pendingRow, 'to_be_validated');
       }
+    }
+    const pendingBucketTime = this.pendingChartBucket.get(partial.partial_key);
+    if(pendingBucketTime !== undefined) {
+      this.pendingChartBucket.delete(partial.partial_key);
+      this.removeFromChartPending(pendingBucketTime);
+      this.scheduleChartRebuild();
     }
 
     const status = this.terminalStatus(partial.status);
@@ -378,7 +395,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     return 'red';
   }
 
-  private addToChart(timestamp: number, category: ChartCategory) {
+  private addToChart(timestamp: number, category: ChartCategory): number {
     const bucketTime = Math.floor(timestamp / CHART_BUCKET_SECONDS) * CHART_BUCKET_SECONDS;
     var bucket = this.chartBuckets.get(bucketTime);
     if(!bucket) {
@@ -390,6 +407,17 @@ export class PartialsComponent implements OnInit, OnDestroy {
       this.chartBuckets.set(bucketTime, bucket);
     }
     bucket[category]++;
+    return bucketTime;
+  }
+
+  // Undoes a previous `addToChart(timestamp, 'pending')` for a partial that
+  // has since resolved, so the bucket's `pending` count reflects partials
+  // still actually outstanding rather than growing forever.
+  private removeFromChartPending(bucketTime: number) {
+    const bucket = this.chartBuckets.get(bucketTime);
+    if(bucket && bucket.pending > 0) {
+      bucket.pending--;
+    }
   }
 
   private getChartColorsArray(colors: any) {
@@ -513,6 +541,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     this.rows.clear();
     this.pendingIndex.clear();
     this.resolvedIndex.clear();
+    this.pendingChartBucket.clear();
     this.totalReceived = 0;
     this.totalBlocks = 0;
     this.expandedSpHash = null;
