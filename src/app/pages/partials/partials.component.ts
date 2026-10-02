@@ -11,6 +11,13 @@ const RETENTION_MS = 10 * 60 * 1000;
 const SWEEP_INTERVAL_MS = 30 * 1000;
 const FLASH_MS = 500;
 
+// This page keeps a live WebSocket connection open and accumulates state
+// (rows, chart buckets, maps) indefinitely. Over a very long time this has
+// been observed to degrade/crash the tab (memory growth, stale WS state).
+// As a safety net, force a full hard reload periodically so the page always
+// comes back to a clean state, independently of any in-app cleanup logic.
+const HARD_REFRESH_MS = 60 * 60 * 1000;
+
 // Live activity chart: bucket partial events into 15-minute bars, kept for
 // at least 12 hours. Only `valid`/`red` (stale+invalid)/`duplicate` can be
 // backfilled from history (via the Postgres-backed REST API, which only
@@ -133,6 +140,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
   private chartRebuildScheduled: boolean = false;
 
   private sweepTimer: any;
+  private hardRefreshTimer: any;
 
   constructor(
     private dataService: DataService
@@ -178,12 +186,19 @@ export class PartialsComponent implements OnInit, OnDestroy {
     });
 
     this.sweepTimer = setInterval(() => { this.sweep(); this.performChartRebuild(); }, SWEEP_INTERVAL_MS);
+
+    // Safety net against long-running tab degradation/crashes (see
+    // HARD_REFRESH_MS comment above): force a full page reload.
+    this.hardRefreshTimer = setTimeout(() => { window.location.reload(); }, HARD_REFRESH_MS);
   }
 
   ngOnDestroy(): void {
     this.dataService.disconnectPartialsLive();
     if(this.sweepTimer) {
       clearInterval(this.sweepTimer);
+    }
+    if(this.hardRefreshTimer) {
+      clearTimeout(this.hardRefreshTimer);
     }
   }
 
