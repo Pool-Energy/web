@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { CountUpDirective } from 'ngx-countup';
 import { RouterModule } from '@angular/router';
 
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
@@ -15,7 +14,6 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     NgbNavModule,
     NgbAccordionModule,
     NgbDropdownModule,
-    CountUpDirective,
     RouterModule,
   ],
   exports: [
