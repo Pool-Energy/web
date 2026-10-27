@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PoolLogsComponent } from './pool-logs.component';
 
@@ -8,7 +11,9 @@ describe('PoolStatsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PoolLogsComponent]
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [PoolLogsComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
     
