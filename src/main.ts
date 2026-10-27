@@ -8,5 +8,10 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
+// Angular 22 regression workaround (NgModule-based apps with standalone:false
+// components stop auto-updating the view after async events - zone.js never
+// enters the "angular" zone). Confirmed fix: https://github.com/angular/angular/issues/69530
+platformBrowserDynamic().bootstrapModule(AppModule, {
+  applicationProviders: [provideZoneChangeDetection({ eventCoalescing: true })],
+})
   .catch(err => console.error(err));

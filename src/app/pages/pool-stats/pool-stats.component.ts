@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { expand } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -49,7 +49,8 @@ export class PoolStatsComponent {
   partialsHostsChart: any = {};
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -120,6 +121,7 @@ export class PoolStatsComponent {
         })
       }];
       this.chartPoolSize(this.poolSizeData);
+      this.cdr.detectChanges();
     })
   }
 
@@ -180,6 +182,7 @@ export class PoolStatsComponent {
         })
       }];
       this.chartMempoolSize(this.mempoolSizeData);
+      this.cdr.detectChanges();
     })
   }
 
@@ -240,6 +243,7 @@ export class PoolStatsComponent {
         })
       }];
       this.chartNetspaceSize(this.netspaceSizeData);
+      this.cdr.detectChanges();
     })
   }
   
@@ -302,6 +306,7 @@ export class PoolStatsComponent {
         }
       ];
       this.chartXchPrice(this.xchPriceData);
+      this.cdr.detectChanges();
     })
   }
     
@@ -402,6 +407,7 @@ export class PoolStatsComponent {
       this.chartPartialsHosts(
         Object.entries(hostCounts).map(([host, count]) => ({ host, count }))
       );
+      this.cdr.detectChanges();
     });
   }
 

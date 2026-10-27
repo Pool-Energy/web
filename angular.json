@@ -151,11 +151,11 @@
           "configurations": {
             "production": {
               "buildTarget": "poolenergy:build:production",
-              "proxyConfig": "src/proxy.conf.prod.json"
+              "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
               "buildTarget": "poolenergy:build:development",
-              "proxyConfig": "src/proxy.conf.dev.json"
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "production"

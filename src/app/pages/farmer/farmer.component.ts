@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
@@ -121,6 +121,7 @@ export class FarmerComponent implements AfterViewInit {
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.blocks$ = this._blocks$.asObservable();
     this.payoutaddrs$ = this._payoutaddrs$.asObservable();
@@ -141,9 +142,11 @@ export class FarmerComponent implements AfterViewInit {
         next: (launcher) => {
           this.launcher = launcher;
           this.launcherLoaded = true;
+          this.cdr.detectChanges();
         },
         error: () => {
           this.launcherLoaded = true;
+          this.cdr.detectChanges();
         }
       });
       this.dataService.getHarvesters({launcher: this.launcher_id}).subscribe(harvesters => {
@@ -373,7 +376,7 @@ export class FarmerComponent implements AfterViewInit {
       (x) => { },
       (err) => { this.partialsLoaded = true; console.error("Something wrong occurred: " + err); },
       () => {
-        return [
+        const result = [
           this.partialsChart = {
             title: {
               text: "Partials successful & failed",
@@ -469,7 +472,9 @@ export class FarmerComponent implements AfterViewInit {
             },
             colors: this.getChartColorsArray('["--vz-info"]')
           }
-        ]
+        ];
+        this.cdr.detectChanges();
+        return result;
       }
     );
   }
