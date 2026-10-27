@@ -2,221 +2,229 @@
 
 <!-- pool size -->
 <div class="row">
-    <div class="col-xxl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Pool Space (7 days)</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart 
-                        *ngIf="poolSizeChart && poolSizeChart.series && poolSizeChart.series.length > 0"
-                        [series]="poolSizeChart.series"
-                        [chart]="poolSizeChart.chart"
-                        [labels]="poolSizeChart.labels"
-                        [legend]="poolSizeChart.legend"
-                        [dataLabels]="poolSizeChart.dataLabels"
-                        [colors]="poolSizeChart.colors"
-                        [xaxis]="poolSizeChart.xaxis"
-                        [yaxis]="poolSizeChart.yaxis"
-                        [stroke]="poolSizeChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <div class="col-xxl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Pool Space (7 days)</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (poolSizeChart && poolSizeChart.series && poolSizeChart.series.length > 0) {
+            <apx-chart
+              [series]="poolSizeChart.series"
+              [chart]="poolSizeChart.chart"
+              [labels]="poolSizeChart.labels"
+              [legend]="poolSizeChart.legend"
+              [dataLabels]="poolSizeChart.dataLabels"
+              [colors]="poolSizeChart.colors"
+              [xaxis]="poolSizeChart.xaxis"
+              [yaxis]="poolSizeChart.yaxis"
+              [stroke]="poolSizeChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- mempool size -->
 <div class="row">
-    <div class="col-xxl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Mempool Size (7 days)</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="mempoolSizeChart && mempoolSizeChart.series && mempoolSizeChart.series.length > 0"
-                        [series]="mempoolSizeChart.series"
-                        [chart]="mempoolSizeChart.chart"
-                        [labels]="mempoolSizeChart.labels"
-                        [legend]="mempoolSizeChart.legend"
-                        [dataLabels]="mempoolSizeChart.dataLabels"
-                        [colors]="mempoolSizeChart.colors"
-                        [xaxis]="mempoolSizeChart.xaxis"
-                        [yaxis]="mempoolSizeChart.yaxis"
-                        [stroke]="mempoolSizeChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <div class="col-xxl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Mempool Size (7 days)</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (mempoolSizeChart && mempoolSizeChart.series && mempoolSizeChart.series.length > 0) {
+            <apx-chart
+              [series]="mempoolSizeChart.series"
+              [chart]="mempoolSizeChart.chart"
+              [labels]="mempoolSizeChart.labels"
+              [legend]="mempoolSizeChart.legend"
+              [dataLabels]="mempoolSizeChart.dataLabels"
+              [colors]="mempoolSizeChart.colors"
+              [xaxis]="mempoolSizeChart.xaxis"
+              [yaxis]="mempoolSizeChart.yaxis"
+              [stroke]="mempoolSizeChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- netspace size -->
 <div class="row">
-    <div class="col-xxl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Netspace Size (7 days)</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="netspaceSizeChart && netspaceSizeChart.series && netspaceSizeChart.series.length > 0"
-                        [series]="netspaceSizeChart.series"
-                        [chart]="netspaceSizeChart.chart"
-                        [labels]="netspaceSizeChart.labels"
-                        [legend]="netspaceSizeChart.legend"
-                        [dataLabels]="netspaceSizeChart.dataLabels"
-                        [colors]="netspaceSizeChart.colors"
-                        [xaxis]="netspaceSizeChart.xaxis"
-                        [yaxis]="netspaceSizeChart.yaxis"
-                        [stroke]="netspaceSizeChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <div class="col-xxl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Netspace Size (7 days)</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (netspaceSizeChart && netspaceSizeChart.series && netspaceSizeChart.series.length > 0) {
+            <apx-chart
+              [series]="netspaceSizeChart.series"
+              [chart]="netspaceSizeChart.chart"
+              [labels]="netspaceSizeChart.labels"
+              [legend]="netspaceSizeChart.legend"
+              [dataLabels]="netspaceSizeChart.dataLabels"
+              [colors]="netspaceSizeChart.colors"
+              [xaxis]="netspaceSizeChart.xaxis"
+              [yaxis]="netspaceSizeChart.yaxis"
+              [stroke]="netspaceSizeChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- xch price -->
 <div class="row">
-    <div class="col-xxl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">XCH Price (7 days)</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="xchPriceChart && xchPriceChart.series && xchPriceChart.series.length > 0"
-                        [series]="xchPriceChart.series"
-                        [chart]="xchPriceChart.chart"
-                        [labels]="xchPriceChart.labels"
-                        [legend]="xchPriceChart.legend"
-                        [dataLabels]="xchPriceChart.dataLabels"
-                        [colors]="xchPriceChart.colors"
-                        [xaxis]="xchPriceChart.xaxis"
-                        [yaxis]="xchPriceChart.yaxis"
-                        [stroke]="xchPriceChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <div class="col-xxl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">XCH Price (7 days)</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (xchPriceChart && xchPriceChart.series && xchPriceChart.series.length > 0) {
+            <apx-chart
+              [series]="xchPriceChart.series"
+              [chart]="xchPriceChart.chart"
+              [labels]="xchPriceChart.labels"
+              [legend]="xchPriceChart.legend"
+              [dataLabels]="xchPriceChart.dataLabels"
+              [colors]="xchPriceChart.colors"
+              [xaxis]="xchPriceChart.xaxis"
+              [yaxis]="xchPriceChart.yaxis"
+              [stroke]="xchPriceChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- partials total -->
 <div class="row">
-    <div class="col-xxl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Partials Total</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="partialsTotalChart && partialsTotalChart.series && partialsTotalChart.series.length > 0"
-                        [series]="partialsTotalChart.series"
-                        [chart]="partialsTotalChart.chart"
-                        [labels]="partialsTotalChart.labels"
-                        [legend]="partialsTotalChart.legend"
-                        [dataLabels]="partialsTotalChart.dataLabels"
-                        [colors]="partialsTotalChart.colors"
-                        [xaxis]="partialsTotalChart.xaxis"
-                        [yaxis]="partialsTotalChart.yaxis"
-                        [stroke]="partialsTotalChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <div class="col-xxl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Partials Total</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (partialsTotalChart && partialsTotalChart.series && partialsTotalChart.series.length > 0) {
+            <apx-chart
+              [series]="partialsTotalChart.series"
+              [chart]="partialsTotalChart.chart"
+              [labels]="partialsTotalChart.labels"
+              [legend]="partialsTotalChart.legend"
+              [dataLabels]="partialsTotalChart.dataLabels"
+              [colors]="partialsTotalChart.colors"
+              [xaxis]="partialsTotalChart.xaxis"
+              [yaxis]="partialsTotalChart.yaxis"
+              [stroke]="partialsTotalChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- partials -->
 <div class="row">
-    <!-- versions -->
-    <div class="col-xxl-4">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Versions</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="partialsVersionsChart && partialsVersionsChart.series && partialsVersionsChart.series.length > 0"
-                        [series]="partialsVersionsChart.series"
-                        [chart]="partialsVersionsChart.chart"
-                        [labels]="partialsVersionsChart.labels"
-                        [legend]="partialsVersionsChart.legend"
-                        [dataLabels]="partialsVersionsChart.dataLabels"
-                        [colors]="partialsVersionsChart.colors"
-                        [xaxis]="partialsVersionsChart.xaxis"
-                        [yaxis]="partialsVersionsChart.yaxis"
-                        [stroke]="partialsVersionsChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <!-- versions -->
+  <div class="col-xxl-4">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Versions</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (partialsVersionsChart && partialsVersionsChart.series && partialsVersionsChart.series.length > 0) {
+            <apx-chart
+              [series]="partialsVersionsChart.series"
+              [chart]="partialsVersionsChart.chart"
+              [labels]="partialsVersionsChart.labels"
+              [legend]="partialsVersionsChart.legend"
+              [dataLabels]="partialsVersionsChart.dataLabels"
+              [colors]="partialsVersionsChart.colors"
+              [xaxis]="partialsVersionsChart.xaxis"
+              [yaxis]="partialsVersionsChart.yaxis"
+              [stroke]="partialsVersionsChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- errors -->
-    <div class="col-xxl-4">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Errors</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="partialsErrorsChart && partialsErrorsChart.series && partialsErrorsChart.series.length > 0"
-                        [series]="partialsErrorsChart.series"
-                        [chart]="partialsErrorsChart.chart"
-                        [labels]="partialsErrorsChart.labels"
-                        [legend]="partialsErrorsChart.legend"
-                        [dataLabels]="partialsErrorsChart.dataLabels"
-                        [colors]="partialsErrorsChart.colors"
-                        [xaxis]="partialsErrorsChart.xaxis"
-                        [yaxis]="partialsErrorsChart.yaxis"
-                        [stroke]="partialsErrorsChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <!-- errors -->
+  <div class="col-xxl-4">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Errors</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (partialsErrorsChart && partialsErrorsChart.series && partialsErrorsChart.series.length > 0) {
+            <apx-chart
+              [series]="partialsErrorsChart.series"
+              [chart]="partialsErrorsChart.chart"
+              [labels]="partialsErrorsChart.labels"
+              [legend]="partialsErrorsChart.legend"
+              [dataLabels]="partialsErrorsChart.dataLabels"
+              [colors]="partialsErrorsChart.colors"
+              [xaxis]="partialsErrorsChart.xaxis"
+              [yaxis]="partialsErrorsChart.yaxis"
+              [stroke]="partialsErrorsChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- hosts -->
-    <div class="col-xxl-4">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Hosts</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <apx-chart
-                        *ngIf="partialsHostsChart && partialsHostsChart.series && partialsHostsChart.series.length > 0"
-                        [series]="partialsHostsChart.series"
-                        [chart]="partialsHostsChart.chart"
-                        [labels]="partialsHostsChart.labels"
-                        [legend]="partialsHostsChart.legend"
-                        [dataLabels]="partialsHostsChart.dataLabels"
-                        [colors]="partialsHostsChart.colors"
-                        [xaxis]="partialsHostsChart.xaxis"
-                        [yaxis]="partialsHostsChart.yaxis"
-                        [stroke]="partialsHostsChart.stroke"
-                        dir="ltr">
-                    </apx-chart>
-                </div>
-            </div>
+  <!-- hosts -->
+  <div class="col-xxl-4">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Hosts</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          @if (partialsHostsChart && partialsHostsChart.series && partialsHostsChart.series.length > 0) {
+            <apx-chart
+              [series]="partialsHostsChart.series"
+              [chart]="partialsHostsChart.chart"
+              [labels]="partialsHostsChart.labels"
+              [legend]="partialsHostsChart.legend"
+              [dataLabels]="partialsHostsChart.dataLabels"
+              [colors]="partialsHostsChart.colors"
+              [xaxis]="partialsHostsChart.xaxis"
+              [yaxis]="partialsHostsChart.yaxis"
+              [stroke]="partialsHostsChart.stroke"
+              dir="ltr">
+            </apx-chart>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -1,222 +1,282 @@
 <app-breadcrumbs title="Status" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- dust storm -->
-<div *ngIf="blockchain_duststorm" class="alert alert-warning alert-border-left" role="alert">
+@if (blockchain_duststorm) {
+  <div class="alert alert-warning alert-border-left" role="alert">
     <i class="ri-windy-line me-1"></i>
     <strong>Dust storm detected:</strong> the Chia mempool is currently very congested ({{ blockchain_mempool_full_pct }}% full).
     Transaction fees may be temporarily required, and payout/absorb timing could be delayed.
-</div>
+  </div>
+}
 
 <div class="col-xl-12">
-    <div class="card crm-widget">
-        <div class="card-body p-0">
-            <div class="row row-cols-md-3 row-cols-1">
-                <div class="col col-lg border-end">
-                    <div class="py-4 px-3">
-                        <h5 class="text-muted text-uppercase fs-13">Blockchain Height</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-stack-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0">
-                                    <span class="counter-value">{{ networkBlockchainHeight }}</span>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg border-end">
-                    <div class="py-4 px-3">
-                        <h5 class="text-muted text-uppercase fs-13">Pool Share</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-pencil-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">{{ blockchainShare | number:".2-4" }}%</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg border-end">
-                    <div class="py-4 px-3">
-                        <h5 class="text-muted text-uppercase fs-13">API Status</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg border-end">
-                    <div class="py-4 px-3">
-                        <h5 class="text-muted text-uppercase fs-13">Nodes Status</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-checkbox-circle-line display-6 text-success" *ngIf="poolStatus === 'healthy'"></i>
-                                <i class="ri-error-warning-line display-6 text-warning" *ngIf="poolStatus === 'degraded'"></i>
-                                <i class="ri-close-circle-line display-6 text-danger" *ngIf="poolStatus === 'critical'"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0">
-                                    <span class="counter-value" *ngIf="poolStatus === 'healthy'">Ok</span>
-                                    <span class="counter-value" *ngIf="poolStatus === 'degraded'">Degraded</span>
-                                    <span class="counter-value" *ngIf="poolStatus === 'critical'">Critical</span>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg border-end">
-                    <div class="py-4 px-3">
-                        <h5 class="text-muted text-uppercase fs-13">Wallets Status</h5>
-                        <div *ngIf="!pool_wallets" class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-close-circle-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Unknown</span></h2>
-                            </div>
-                        </div>
-                        <div *ngIf="pool_wallets && pool_wallets.length != 2" class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-close-circle-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Unhealthy</span></h2>
-                            </div>
-                        </div>
-                        <div *ngIf="pool_wallets && pool_wallets.length == 2" class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="card crm-widget">
+    <div class="card-body p-0">
+      <div class="row row-cols-md-3 row-cols-1">
+        <div class="col col-lg border-end">
+          <div class="py-4 px-3">
+            <h5 class="text-muted text-uppercase fs-13">Blockchain Height</h5>
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+                <i class="ri-stack-line display-6 text-muted"></i>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h2 class="mb-0">
+                  <span class="counter-value">{{ networkBlockchainHeight }}</span>
+                </h2>
+              </div>
             </div>
+          </div>
         </div>
+        <div class="col col-lg border-end">
+          <div class="py-4 px-3">
+            <h5 class="text-muted text-uppercase fs-13">Pool Share</h5>
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+                <i class="ri-pencil-line display-6 text-muted"></i>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h2 class="mb-0"><span class="counter-value">{{ blockchainShare | number:".2-4" }}%</span></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg border-end">
+          <div class="py-4 px-3">
+            <h5 class="text-muted text-uppercase fs-13">API Status</h5>
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg border-end">
+          <div class="py-4 px-3">
+            <h5 class="text-muted text-uppercase fs-13">Nodes Status</h5>
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+                @if (poolStatus === 'healthy') {
+                  <i class="ri-checkbox-circle-line display-6 text-success"></i>
+                }
+                @if (poolStatus === 'degraded') {
+                  <i class="ri-error-warning-line display-6 text-warning"></i>
+                }
+                @if (poolStatus === 'critical') {
+                  <i class="ri-close-circle-line display-6 text-danger"></i>
+                }
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h2 class="mb-0">
+                  @if (poolStatus === 'healthy') {
+                    <span class="counter-value">Ok</span>
+                  }
+                  @if (poolStatus === 'degraded') {
+                    <span class="counter-value">Degraded</span>
+                  }
+                  @if (poolStatus === 'critical') {
+                    <span class="counter-value">Critical</span>
+                  }
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg border-end">
+          <div class="py-4 px-3">
+            <h5 class="text-muted text-uppercase fs-13">Wallets Status</h5>
+            @if (!pool_wallets) {
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-close-circle-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">Unknown</span></h2>
+                </div>
+              </div>
+            }
+            @if (pool_wallets && pool_wallets.length != 2) {
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-close-circle-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">Unhealthy</span></h2>
+                </div>
+              </div>
+            }
+            @if (pool_wallets && pool_wallets.length == 2) {
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- wallets -->
 <div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Pool wallets</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <div class="table-responsive table-card">
-                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col" style="width: 100px;">Name</th>
-                                    <th scope="col" style="width: 600px;">Address</th>
-                                    <th scope="col" style="width: 100px;">Fingerprint</th>
-                                    <th scope="col" style="width: 150px;">Amount</th>
-                                    <th scope="col" style="width: 100px;">Height</th>
-                                    <th scope="col" style="width: 100px;">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let wallet of pool_wallets">
-                                    <td>{{ wallet.name || 'unknown' }}</td>
-                                    <td>
-                                        <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
-                                            <code>{{ wallet.address }}</code>
-                                        </a>
-                                    </td>
-                                    <td>{{ wallet.balance.fingerprint }}</td>
-                                    <td>{{ wallet.balance.confirmed_wallet_balance / 1000000000000 | number:".8-8" }} XCH</td>
-                                    <td>{{ wallet.height || '-' }}</td>
-                                    <td>
-                                        <span *ngIf="wallet.synced && !wallet.syncing" class="badge bg-success-subtle text-success">Synced</span>
-                                        <span *ngIf="!wallet.synced && wallet.syncing" class="badge bg-warning-subtle text-warning">Syncing</span>
-                                        <span *ngIf="!wallet.synced && !wallet.syncing" class="badge bg-danger-subtle text-danger">Not synced</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Pool wallets</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          <div class="table-responsive table-card">
+            <table class="table align-middle table-nowrap table-striped-columns mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" style="width: 100px;">Name</th>
+                  <th scope="col" style="width: 600px;">Address</th>
+                  <th scope="col" style="width: 100px;">Fingerprint</th>
+                  <th scope="col" style="width: 150px;">Amount</th>
+                  <th scope="col" style="width: 100px;">Height</th>
+                  <th scope="col" style="width: 100px;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (wallet of pool_wallets; track wallet) {
+                  <tr>
+                    <td>{{ wallet.name || 'unknown' }}</td>
+                    <td>
+                      <a href="https://www.spacescan.io/address/{{ wallet.address }}" target="_blank">
+                        <code>{{ wallet.address }}</code>
+                      </a>
+                    </td>
+                    <td>{{ wallet.balance.fingerprint }}</td>
+                    <td>{{ wallet.balance.confirmed_wallet_balance / 1000000000000 | number:".8-8" }} XCH</td>
+                    <td>{{ wallet.height || '-' }}</td>
+                    <td>
+                      @if (wallet.synced && !wallet.syncing) {
+                        <span class="badge bg-success-subtle text-success">Synced</span>
+                      }
+                      @if (!wallet.synced && wallet.syncing) {
+                        <span class="badge bg-warning-subtle text-warning">Syncing</span>
+                      }
+                      @if (!wallet.synced && !wallet.syncing) {
+                        <span class="badge bg-danger-subtle text-danger">Not synced</span>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- nodes -->
 <div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Pool nodes</h4>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <div class="table-responsive table-card">
-                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col" style="width: 100px;">Name</th>
-                                    <th scope="col" style="width: 150px;">Location</th>
-                                    <th scope="col" style="width: 70px;">Version</th>
-                                    <th scope="col" style="width: 100px;">Height</th>
-                                    <th scope="col" style="width: 100px;">Mempool</th>
-                                    <th scope="col" style="width: 100px;">Available</th>
-                                    <th scope="col" style="width: 100px;">Role</th>
-                                    <th scope="col" style="width: 100px;">Status</th>
-                                    <th scope="col" style="width: 140px;">Progress</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let node of pool_nodes">
-                                    <td>{{ node.name }}</td>
-                                    <td>{{ node.region || '-' }} ({{ node.location || '-' }})</td>
-                                    <td>{{ node.version || '-' }}</td>
-                                    <td>
-                                        <span *ngIf="node.available">{{ node.peak_height || '-' }}</span>
-                                        <span *ngIf="!node.available">-</span>
-                                    </td>
-                                    <td>
-                                        <span *ngIf="node.available">{{ node.mempool_full_pct + '%' || '-' }}</span>
-                                        <span *ngIf="!node.available">-</span>
-                                    </td>
-                                    <td>
-                                        <span *ngIf="node.available && node.enabled" class="badge bg-success-subtle text-success">Yes</span>
-                                        <span *ngIf="node.available && !node.enabled" class="badge bg-warning-subtle text-warning">Maintenance</span>
-                                        <span *ngIf="!node.available && node.enabled" class="badge bg-danger-subtle text-danger">No</span>
-                                    </td>
-                                    <td>
-                                        <span *ngIf="node.available && node.primary" class="badge bg-success-subtle text-success">Primary</span>
-                                        <span *ngIf="node.available && !node.primary" class="badge bg-info-subtle text-info">Standby</span>
-                                        <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
-                                    </td>
-                                    <td>
-                                        <span *ngIf="node.available && node.synced" class="badge bg-success-subtle text-success">Synced</span>
-                                        <span *ngIf="node.available && !node.synced" class="badge bg-danger-subtle text-danger">Not synced</span>
-                                        <span *ngIf="!node.available" class="badge bg-danger-subtle text-danger">Unavailable</span>
-                                    </td>
-                                    <td>
-                                        <div *ngIf="node.available" class="badge-progress" title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
-                                            <div class="badge-progress-fill" [ngClass]="isNodeUpToDate(node) ? 'bg-success-subtle' : 'bg-warning-subtle'" [style.width.%]="node.sync_percent"></div>
-                                            <span class="badge-progress-label" [ngClass]="isNodeUpToDate(node) ? 'text-success' : 'text-warning'">{{ node.sync_percent }}%</span>
-                                        </div>
-                                        <span *ngIf="!node.available">-</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Pool nodes</h4>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          <div class="table-responsive table-card">
+            <table class="table align-middle table-nowrap table-striped-columns mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" style="width: 100px;">Name</th>
+                  <th scope="col" style="width: 150px;">Location</th>
+                  <th scope="col" style="width: 70px;">Version</th>
+                  <th scope="col" style="width: 100px;">Height</th>
+                  <th scope="col" style="width: 100px;">Mempool</th>
+                  <th scope="col" style="width: 100px;">Available</th>
+                  <th scope="col" style="width: 100px;">Role</th>
+                  <th scope="col" style="width: 100px;">Status</th>
+                  <th scope="col" style="width: 140px;">Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (node of pool_nodes; track node) {
+                  <tr>
+                    <td>{{ node.name }}</td>
+                    <td>{{ node.region || '-' }} ({{ node.location || '-' }})</td>
+                    <td>{{ node.version || '-' }}</td>
+                    <td>
+                      @if (node.available) {
+                        <span>{{ node.peak_height || '-' }}</span>
+                      }
+                      @if (!node.available) {
+                        <span>-</span>
+                      }
+                    </td>
+                    <td>
+                      @if (node.available) {
+                        <span>{{ node.mempool_full_pct + '%' || '-' }}</span>
+                      }
+                      @if (!node.available) {
+                        <span>-</span>
+                      }
+                    </td>
+                    <td>
+                      @if (node.available && node.enabled) {
+                        <span class="badge bg-success-subtle text-success">Yes</span>
+                      }
+                      @if (node.available && !node.enabled) {
+                        <span class="badge bg-warning-subtle text-warning">Maintenance</span>
+                      }
+                      @if (!node.available && node.enabled) {
+                        <span class="badge bg-danger-subtle text-danger">No</span>
+                      }
+                    </td>
+                    <td>
+                      @if (node.available && node.primary) {
+                        <span class="badge bg-success-subtle text-success">Primary</span>
+                      }
+                      @if (node.available && !node.primary) {
+                        <span class="badge bg-info-subtle text-info">Standby</span>
+                      }
+                      @if (!node.available) {
+                        <span class="badge bg-danger-subtle text-danger">Unavailable</span>
+                      }
+                    </td>
+                    <td>
+                      @if (node.available && node.synced) {
+                        <span class="badge bg-success-subtle text-success">Synced</span>
+                      }
+                      @if (node.available && !node.synced) {
+                        <span class="badge bg-danger-subtle text-danger">Not synced</span>
+                      }
+                      @if (!node.available) {
+                        <span class="badge bg-danger-subtle text-danger">Unavailable</span>
+                      }
+                    </td>
+                    <td>
+                      @if (node.available) {
+                        <div class="badge-progress" title="{{ node.sync_progress_height }} / {{ node.sync_tip_height }}">
+                          <div class="badge-progress-fill" [ngClass]="isNodeUpToDate(node) ? 'bg-success-subtle' : 'bg-warning-subtle'" [style.width.%]="node.sync_percent"></div>
+                          <span class="badge-progress-label" [ngClass]="isNodeUpToDate(node) ? 'text-success' : 'text-warning'">{{ node.sync_percent }}%</span>
+                        </div>
+                      }
+                      @if (!node.available) {
+                        <span>-</span>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

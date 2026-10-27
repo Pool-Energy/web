@@ -1,1064 +1,1245 @@
 <app-breadcrumbs title="Farmer" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- message -->
-<div *ngIf="launcher.message"
+@if (launcher.message) {
+  <div
     class="alert alert-warning alert-border-left alert-dismissible fade show"
     role="alert">
     <i class="ri-alarm-warning-line me-1"></i> {{ launcher.message }}
-</div>
+  </div>
+}
 
 <!-- profile background -->
 <div class="profile-foreground position-relative mx-n4">
-    <div class="profile-wid-bg profile-wid-rounded">
-        <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="profile-wid-img" />
-        <img *ngIf="!launcher.picture_url" src="assets/images/cover-pattern.png" alt="" class="profile-wid-img" />
-    </div>
+  <div class="profile-wid-bg profile-wid-rounded">
+    @if (launcher.picture_url) {
+      <img src="{{ launcher.picture_url }}" alt="" class="profile-wid-img" />
+    }
+    @if (!launcher.picture_url) {
+      <img src="assets/images/cover-pattern.png" alt="" class="profile-wid-img" />
+    }
+  </div>
 </div>
 
 <!-- profile header -->
 <div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
-    <div class="row g-4">
-        <div class="col-auto">
-            <div class="avatar-lg">
-                <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="img-thumbnail" />
-                <img *ngIf="!launcher.picture_url" src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail" />
-            </div>
-        </div>
-        <div class="col">
-            <div class="p-2">
-                <h3 class="text-white mb-1">{{ launcher.name || 'Undefined' }}</h3>
-                <p *ngIf="!truncateRequired" class="text-white text-opacity-75">{{ launcher_id }}</p>
-                <p *ngIf="truncateRequired" class="text-white text-opacity-75">{{ launcher_id | maxLength:32 }}</p>
-                <div class="hstack text-white-50 gap-1">
-                    <div *ngIf="launcher.is_pool_member">
-                        <div *ngIf="partialsCollectionSize == 0"><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (no partials)</div>
-                        <div *ngIf="partialsCollectionSize > 0"><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
-                    </div>
-                    <div *ngIf="!launcher.is_pool_member">
-                        <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (left the pool)
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-auto order-last order-lg-0">
-            <div class="row text text-white-50 text-center">
-                <div class="col-lg-6 col-4 banner-right-details">
-                    <div class="p-2">
-                        <h4 class="text-white mb-1">{{ launcher.estimated_size || 0 | filesize:{"base": 2, "standard": "iec"} }}</h4>
-                        <p class="fs-14 mb-0">Estimated Size</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-4 banner-right-details">
-                    <div class="p-2">
-                        <h4 class="text-white mb-1">{{ launcher.share_pplns * 100 | number:"2.3" }}%</h4>
-                        <p class="fs-14 mb-0">Utilization Space</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="row g-4">
+    <div class="col-auto">
+      <div class="avatar-lg">
+        @if (launcher.picture_url) {
+          <img src="{{ launcher.picture_url }}" alt="" class="img-thumbnail" />
+        }
+        @if (!launcher.picture_url) {
+          <img src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail" />
+        }
+      </div>
     </div>
+    <div class="col">
+      <div class="p-2">
+        <h3 class="text-white mb-1">{{ launcher.name || 'Undefined' }}</h3>
+        @if (!truncateRequired) {
+          <p class="text-white text-opacity-75">{{ launcher_id }}</p>
+        }
+        @if (truncateRequired) {
+          <p class="text-white text-opacity-75">{{ launcher_id | maxLength:32 }}</p>
+        }
+        <div class="hstack text-white-50 gap-1">
+          @if (launcher.is_pool_member) {
+            <div>
+              @if (partialsCollectionSize == 0) {
+                <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (no partials)</div>
+              }
+              @if (partialsCollectionSize > 0) {
+                <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+              }
+            </div>
+          }
+          @if (!launcher.is_pool_member) {
+            <div>
+              <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (left the pool)
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-auto order-last order-lg-0">
+      <div class="row text text-white-50 text-center">
+        <div class="col-lg-6 col-4 banner-right-details">
+          <div class="p-2">
+            <h4 class="text-white mb-1">{{ launcher.estimated_size || 0 | filesize:{"base": 2, "standard": "iec"} }}</h4>
+            <p class="fs-14 mb-0">Estimated Size</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-4 banner-right-details">
+          <div class="p-2">
+            <h4 class="text-white mb-1">{{ launcher.share_pplns * 100 | number:"2.3" }}%</h4>
+            <p class="fs-14 mb-0">Utilization Space</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- profile -->
 <div class="row">
-    <div class="col-xxl-12">
-        <div class="card">
-            <div class="card-body">
-                <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
+  <div class="col-xxl-12">
+    <div class="card">
+      <div class="card-body">
+        <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
 
-                    <!-- overview -->
-                    <li [ngbNavItem]="1" (click)="refreshLauncherSize(launcher.launcher_id); refreshPartials(launcher.launcher_id)">
-                        <a ngbNavLink>Overview</a>
-                        <ng-template ngbNavContent>
-                            <!-- launcher overview -->
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card crm-widget">
-                                        <div class="card-body p-0">
-                                            <div class="row row-cols-md-3 row-cols-1">
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Joined At</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-user-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.joined_at | date:"medium" }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Points (PPLNS)</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-pencil-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ launcher.points_pplns || 0 }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Difficulty</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-shield-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 *ngIf="!launcher.custom_difficulty" class="mb-0">
-                                                                    {{ launcher.difficulty }}
-                                                                    <span class="custom-difficulty">(auto)</span>
-                                                                </h2>
-                                                                <h2 *ngIf="launcher.custom_difficulty" class="mb-0">
-                                                                    {{ launcher.difficulty }}
-                                                                    <span class="custom-difficulty"
-                                                                        data-bs-toggle="tooltip"
-                                                                        data-bs-placement="top">
-                                                                        ({{ getDifficultyLowercase(launcher.custom_difficulty) }})
-                                                                    </span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Estimated Time to Win (ETW)</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span *ngIf="launcher.current_etw >= 0" class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span>
-                                                                    <span *ngIf="launcher.current_etw < 0" class="counter-value">-</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span *ngIf="launcher.current_effort >= 0" class="counter-value">{{ launcher.current_effort || 0 | number:".2-2" }}%</span>
-                                                                    <span *ngIf="launcher.current_effort < 0" class="counter-value">-</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+          <!-- overview -->
+          <li [ngbNavItem]="1" (click)="refreshLauncherSize(launcher.launcher_id); refreshPartials(launcher.launcher_id)">
+            <a ngbNavLink>Overview</a>
+            <ng-template ngbNavContent>
+              <!-- launcher overview -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card crm-widget">
+                    <div class="card-body p-0">
+                      <div class="row row-cols-md-3 row-cols-1">
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Joined At</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-user-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ launcher.joined_at | date:"medium" }}</span></h2>
+                              </div>
                             </div>
-                            <!-- launcher size chart -->
-                            <div *ngIf="partialsCollectionSize !== 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-header align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Estimated Size</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="launcherSizeChart && launcherSizeChart.series && launcherSizeChart.series.length > 0"
-                                                    [series]="launcherSizeChart.series"
-                                                    [chart]="launcherSizeChart.chart"
-                                                    [labels]="launcherSizeChart.labels"
-                                                    [legend]="launcherSizeChart.legend"
-                                                    [dataLabels]="launcherSizeChart.dataLabels"
-                                                    [colors]="launcherSizeChart.colors"
-                                                    [xaxis]="launcherSizeChart.xaxis"
-                                                    [yaxis]="launcherSizeChart.yaxis"
-                                                    [stroke]="launcherSizeChart.stroke"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Points (PPLNS)</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-pencil-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ launcher.points_pplns || 0 }}</span></h2>
+                              </div>
                             </div>
-                            <!-- difficulty and points chart -->
-                            <div *ngIf="partialsCollectionSize !== 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-header align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Difficulty & Points</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="difficultyAndPointsChart && difficultyAndPointsChart.series && difficultyAndPointsChart.series.length > 0"
-                                                    [series]="difficultyAndPointsChart.series"
-                                                    [chart]="difficultyAndPointsChart.chart"
-                                                    [labels]="difficultyAndPointsChart.labels"
-                                                    [legend]="difficultyAndPointsChart.legend"
-                                                    [dataLabels]="difficultyAndPointsChart.dataLabels"
-                                                    [colors]="difficultyAndPointsChart.colors"
-                                                    [xaxis]="difficultyAndPointsChart.xaxis"
-                                                    [yaxis]="difficultyAndPointsChart.yaxis"
-                                                    [stroke]="difficultyAndPointsChart.stroke"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Difficulty</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-shield-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                @if (!launcher.custom_difficulty) {
+                                  <h2 class="mb-0">
+                                    {{ launcher.difficulty }}
+                                    <span class="custom-difficulty">(auto)</span>
+                                  </h2>
+                                }
+                                @if (launcher.custom_difficulty) {
+                                  <h2 class="mb-0">
+                                    {{ launcher.difficulty }}
+                                    <span class="custom-difficulty"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="top">
+                                      ({{ getDifficultyLowercase(launcher.custom_difficulty) }})
+                                    </span>
+                                  </h2>
+                                }
+                              </div>
                             </div>
-                            <div *ngIf="partialsCollectionSize === 0" class="col-xxl-12">
-                                <div class="alert alert-info alert-border-left" role="alert">
-                                    No data found.
-                                </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Estimated Time to Win (ETW)</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  @if (launcher.current_etw >= 0) {
+                                    <span class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span>
+                                  }
+                                  @if (launcher.current_etw < 0) {
+                                    <span class="counter-value">-</span>
+                                  }
+                                </h2>
+                              </div>
                             </div>
-                        </ng-template>
-                    </li>
-
-                    <!-- partials -->
-                    <li [ngbNavItem]="2" (click)="refreshPartials(launcher.launcher_id)">
-                        <a ngbNavLink>Partials</a>
-                        <ng-template ngbNavContent>
-                            <!-- stats -->
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card crm-widget">
-                                        <div class="card-body p-0">
-                                            <div class="row row-cols-md-3 row-cols-1">
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Partials (24h)</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-stack-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsCollectionSize }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Points (24h)</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-pencil-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsPoints }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Harvester(s)</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-computer-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ harvesters.size }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Successful Partials</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsSuccessful }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Failed Partials</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-error-warning-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ partialsFailed }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Performance</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-line-chart-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span *ngIf="partialsFailed >= 0 && partialsSuccessful > 0" class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span>
-                                                                    <span *ngIf="partialsFailed == 0 && partialsSuccessful == 0" class="counter-value">-</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  @if (launcher.current_effort >= 0) {
+                                    <span class="counter-value">{{ launcher.current_effort || 0 | number:".2-2" }}%</span>
+                                  }
+                                  @if (launcher.current_effort < 0) {
+                                    <span class="counter-value">-</span>
+                                  }
+                                </h2>
+                              </div>
                             </div>
-                            <!-- partials chart -->
-                            <div *ngIf="partialsFailed >= 0 && partialsSuccessful > 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="partialsChart && partialsChart.series && partialsChart.series.length > 0"
-                                                    [series]="partialsChart.series"
-                                                    [chart]="partialsChart.chart"
-                                                    [labels]="partialsChart.labels"
-                                                    [legend]="partialsChart.legend"
-                                                    [dataLabels]="partialsChart.dataLabels"
-                                                    [colors]="partialsChart.colors"
-                                                    [xaxis]="partialsChart.xaxis"
-                                                    [yaxis]="partialsChart.yaxis"
-                                                    [annotations]="partialsChart.annotations"
-                                                    [title]="partialsChart.title"
-                                                    [stroke]="partialsChart.stroke"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div *ngIf="partialsTimetakenChart.series.length !== 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="partialsTimetakenChart && partialsTimetakenChart.series && partialsTimetakenChart.series.length > 0"
-                                                    [series]="partialsTimetakenChart.series"
-                                                    [chart]="partialsTimetakenChart.chart"
-                                                    [labels]="partialsTimetakenChart.labels"
-                                                    [legend]="partialsTimetakenChart.legend"
-                                                    [dataLabels]="partialsTimetakenChart.dataLabels"
-                                                    [colors]="partialsTimetakenChart.colors"
-                                                    [xaxis]="partialsTimetakenChart.xaxis"
-                                                    [yaxis]="partialsTimetakenChart.yaxis"
-                                                    [annotations]="partialsTimetakenChart.annotations"
-                                                    [title]="partialsTimetakenChart.title"
-                                                    [stroke]="partialsTimetakenChart.stroke"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- partials list -->
-                            <div *ngIf="partialsCollectionSize === 0" class="col-xxl-12">
-                                <div class="alert alert-info alert-border-left" role="alert">
-                                    No partial found.
-                                </div>
-                            </div>
-                            <div *ngIf="partialsCollectionSize !== 0" class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="form-check form-switch form-switch-left form-switch-md">
-                                        <label for="partials-failed-only" class="form-label text-muted">Show partials failed only</label>
-                                        <input class="form-check-input code-switcher" type="checkbox" id="partials-failed-only"
-                                            (click)="togglePartialsFailed($event)"
-                                            [checked]="partialsShowFailed">
-                                    </div>
-                                    <div class="form-check form-switch form-switch-left form-switch-md">
-                                        <label for="partials-too-late-only" class="form-label text-muted">Show partials too late only</label>
-                                        <input class="form-check-input code-switcher" type="checkbox" id="partials-too-late-only"
-                                            (click)="togglePartialsTooLate($event)"
-                                            [checked]="partialsShowTooLate">
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <label for="daysSelect" class="form-label text-muted mb-0">Partials:</label>
-                                    <select id="daysSelect" class="form-select form-select-sm" [(ngModel)]="selectedDays" (change)="onDaysChange()" style="width: auto;">
-                                        <option *ngFor="let day of daysOptions" [value]="day">
-                                            {{ day }} day{{ day > 1 ? 's' : '' }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div *ngIf="partialsCollectionSize !== 0" class="table-responsive table-card mt-3 mb-1">
-                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Difficulty</th>
-                                            <th scope="col">Harvester</th>
-                                            <th scope="col">Plot Filename</th>
-                                            <th scope="col" style="width: 100px;">Plot Size</th>
-                                            <th scope="col" style="width: 150px;">Chia Version</th>
-                                            <th scope="col" style="width: 100px;">Time Taken</th>
-                                            <th scope="col" style="width: 200px;">State</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="partialsTable">
-                                        <tr *ngFor="let partial of partialsFiltered | slice: (partialsPage - 1) * partialsPageSize : partialsPage * partialsPageSize">
-                                            <td>{{ partial.timestamp * 1000 | date:"medium" }}</td>
-                                            <td>{{ partial.difficulty }}</td>
-                                            <td>{{ getHarvesterNameById(partial.harvester_id) || partial.harvester_id | maxLength:32 }}</td>
-                                            <td><code class="text-body">plot-k{{ partial.plot_size || "??" }}-*-{{ partial.plot_id }}.plot</code></td>
-                                            <td>
-                                                <span *ngIf="!partial.plot_size">-</span>
-                                                <span *ngIf="partial.plot_size">k{{ partial.plot_size }}</span>
-                                            </td>
-                                            <td>{{ partial.chia_version }}</td>
-                                            <td>
-                                                <span *ngIf="!partial.time_taken">-</span>
-                                                <span *ngIf="partial.time_taken && partial.time_taken == 999.999">-</span>
-                                                <span *ngIf="partial.time_taken && partial.time_taken < 000.000">-</span>
-                                                <span *ngIf="partial.time_taken && partial.time_taken != 999.999 && partial.time_taken >= 000.000">{{ partial.time_taken | number:".3-3" }} s</span>
-                                            </td>
-                                            <td>
-                                                <span *ngIf="partial.error" class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
-                                                <span *ngIf="!partial.error" class="badge bg-success-subtle text-success">SUCCESS</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div *ngIf="partialsCollectionSize !== 0">
-                                <div class="text-md-right float-md-end partials-pagination">
-                                    <ngb-pagination [collectionSize]="partialsCollectionSize" [(page)]="partialsPage"
-                                        [pageSize]="partialsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
-                                        (pageChange)="refreshPartials(launcher.launcher_id)">
-                                    </ngb-pagination>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </li>
-
-                    <!-- harvesters -->
-                    <li [ngbNavItem]="3" (click)="refreshHarvesters(launcher.launcher_id)">
-                        <a ngbNavLink>Harvesters</a>
-                        <ng-template ngbNavContent>
-                            <!-- harvesters stats -->
-                            <div *ngIf="harvestersData.length === 0" class="col-xxl-12">
-                                <div class="alert alert-info alert-border-left" role="alert">
-                                    No harvester found.
-                                </div>
-                            </div>
-                            <div *ngFor="let harvester of harvestersData; let i = index" class="row">
-                                <div class="col-xl-12">
-                                    <div class="card crm-widget">
-                                        <div class="card-body p-0">
-                                            <div class="row row-cols-md-3 row-cols-1">
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Harvester</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-stack-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 *ngIf="harvester[1].name" class="mb-0">
-                                                                    <span class="counter-value">{{ harvester[1].name | maxLength:24 }}</span>
-                                                                </h2>
-                                                                <h2 *ngIf="!harvester[1].name" class="mb-0">
-                                                                    <span *ngIf="!truncateRequired" class="counter-value">{{ harvester[0] | maxLength:24 }}</span>
-                                                                    <span *ngIf="truncateRequired" class="counter-value">{{ harvester[0] | maxLength:12 }}</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Total Points</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-pencil-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1].points_total }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Partials Successful</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1].partials_success }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Partials Failed</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-error-warning-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1].partials_failed }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Chia Version</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-bubble-chart-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ harvester[1]?.version || "Unknown" }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- harvesters extra -->
-                                <div class="col-xxl-12">
-                                    <div *ngIf="supportHarvesterVersion(harvester[1]?.version) == 'critical'"
-                                        class="alert alert-danger alert-border-left alert-dismissible fade show" role="alert">
-                                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Critical:</strong>
-                                        Version {{ harvester[1]?.version }} is not supported by pool. Please upgrade your harvester to the latest version.
-                                        Minimum version {{ criticalChiaVersion }} is required, currently your partials will not be accepted.
-                                    </div>
-                                    <div *ngIf="supportHarvesterVersion(harvester[1]?.version) == 'warning'"
-                                        class="alert alert-warning alert-border-left alert-dismissible fade show" role="alert">
-                                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Warning:</strong>
-                                        Version {{ harvester[1]?.version }} is supported by pool but upgrade your harvester to the latest version if possible.
-                                    </div>
-                                </div>
-                                
-                                <!-- harvesters chart -->
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    [series]="harvester[1].data"
-                                                    [chart]="harvestersChart.chart"
-                                                    [labels]="harvestersChart.labels"
-                                                    [legend]="harvestersChart.legend"
-                                                    [dataLabels]="harvestersChart.dataLabels"
-                                                    [colors]="harvestersChart.colors"
-                                                    [xaxis]="harvestersChart.xaxis"
-                                                    [yaxis]="harvestersChart.yaxis"
-                                                    [stroke]="harvestersChart.stroke"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- harvesters separator -->
-                                <hr *ngIf="i != harvestersData.length - 1" />
-                            </div>
-                        </ng-template>
-                    </li>
-
-                    <!-- blocks -->
-                    <li [ngbNavItem]="4" (click)="refreshBlocks()">
-                        <a ngbNavLink>Blocks</a>
-                        <ng-template ngbNavContent>
-                            <!-- blocks stats -->
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card crm-widget">
-                                        <div class="card-body p-0">
-                                            <div class="row row-cols-md-3 row-cols-1">
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Total Blocks</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-trophy-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0"><span class="counter-value">{{ blocksCollectionSize }}</span></h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Average Effort</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-scales-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span *ngIf="blocksEffortAverage" class="counter-value">{{ blocksEffortAverage | number:".2-2" }}%</span>
-                                                                    <span *ngIf="!blocksEffortAverage" class="counter-value">-</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-scales-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span *ngIf="launcher.current_effort >= 0" class="counter-value">{{ launcher.current_effort | number:".2-2" }}%</span>
-                                                                    <span *ngIf="launcher.current_effort < 0" class="counter-value">-</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Est. time per block</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-time-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span *ngIf="launcher.current_etw >= 0" class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span>
-                                                                    <span *ngIf="launcher.current_etw < 0" class="counter-value">-</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- blocks chart -->
-                            <div *ngIf="blocksCollectionSize != 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="blocksPerDayChart && blocksPerDayChart.series && blocksPerDayChart.series.length > 0"
-                                                    [series]="blocksPerDayChart.series"
-                                                    [chart]="blocksPerDayChart.chart"
-                                                    [labels]="blocksPerDayChart.labels"
-                                                    [legend]="blocksPerDayChart.legend"
-                                                    [dataLabels]="blocksPerDayChart.dataLabels"
-                                                    [colors]="blocksPerDayChart.colors"
-                                                    [xaxis]="blocksPerDayChart.xaxis"
-                                                    [yaxis]="blocksPerDayChart.yaxis"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- blocks list -->
-                            <div *ngIf="blocksCollectionSize == 0" class="col-xxl-12">
-                                <div class="alert alert-info alert-border-left" role="alert">
-                                    No block found.
-                                </div>
-                            </div>
-                            <div *ngIf="blocksCollectionSize != 0" class="table-responsive table-card mb-1">
-                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col" style="width: 150px;">Height</th>
-                                            <th scope="col" style="width: 250px;">Date</th>
-                                            <th scope="col" style="width: 30px;"></th>
-                                            <th scope="col" style="width: 300px;">Singleton</th>
-                                            <th scope="col" style="width: 100px;">Price</th>
-                                            <th scope="col" style="width: 150px;">Pool Reward</th>
-                                            <th scope="col" style="width: 150px;">Pool size</th>
-                                            <th scope="col" style="width: 100px;">Pool effort</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="(blocks$ | async) as blocks;">
-                                        <tr *ngFor="let block of blocks; let i = index">
-                                            <td>
-                                                <a href="https://www.spacescan.io/block/{{ block.farmed_height }}" target="_blank">
-                                                    {{ block.farmed_height }}
-                                                </a>
-                                            </td>
-                                            <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
-                                            <td class="td-center">
-                                                <span *ngIf="!block.gigahorse_fee"></span>
-                                                <span *ngIf="block.gigahorse_fee"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"
-                                                    title="This reward has been taken as a fee by Gigahorse">
-                                                    <i class="mdi mdi-horse mdi-horse-color"></i>
-                                                </span>
-                                            </td>
-                                            <td>{{ block.singleton | maxLength:32 }}</td>
-                                            <td>${{ block.xch_price.usd }}</td>
-                                            <td>{{ block.amount / 1000000000000 }} XCH</td>
-                                            <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
-                                            <td>
-                                                <span *ngIf="block.luck == -1" class="badge bg-warning-subtle text-warning">Unknown</span>
-                                                <span *ngIf="block.luck < 100" class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
-                                                <span *ngIf="block.luck >= 100 && block.luck <= 200" class="badge bg-warning-subtle text-warning" nbgToolTip="Average">{{ block.luck }}%</span>
-                                                <span *ngIf="block.luck > 200" class="badge bg-danger-subtle text-danger" nbgToolTip="Unlucky">{{ block.luck }}%</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div *ngIf="blocksCollectionSize !== 0">
-                                <div *ngIf="(blocks$ | async) as blocks"
-                                    class="download-button-div">
-                                    <button *ngIf="blocks.length >= 1"
-                                        (click)="csvDownloadBlocks()"
-                                        class="btn btn-primary download-button">
-                                        Download CSV
-                                    </button>
-                                </div>
-                                <div class="text-md-right float-md-end blocks-pagination">
-                                    <ngb-pagination [collectionSize]="blocksCollectionSize" [(page)]="blocksPage"
-                                        [pageSize]="blocksPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
-                                        (pageChange)="refreshBlocks()">
-                                    </ngb-pagination>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </li>
-
-                    <!-- rewards -->
-                    <li [ngbNavItem]="5" (click)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
-                        <a ngbNavLink>Rewards</a>
-                        <ng-template ngbNavContent>
-                            <!-- rewards stats -->
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card crm-widget">
-                                        <div class="card-body p-0">
-                                            <div class="row row-cols-md-3 row-cols-1">
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Last 24 hours</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.rewards.last_24h / 1000000000000 }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Today</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.rewards.today / 1000000000000 }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Yesterday</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.rewards.yesterday / 1000000000000 }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Last 7 days</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.rewards.last_7d / 1000000000000 }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Last 30 days</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.rewards.last_30d / 1000000000000 }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- payouts chart (amount per day)-->
-                            <div *ngIf="payoutsCollectionSize != 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="payoutsPerDayChart && payoutsPerDayChart.series && payoutsPerDayChart.series.length > 0"
-                                                    [series]="payoutsPerDayChart.series"
-                                                    [chart]="payoutsPerDayChart.chart"
-                                                    [labels]="payoutsPerDayChart.labels"
-                                                    [legend]="payoutsPerDayChart.legend"
-                                                    [dataLabels]="payoutsPerDayChart.dataLabels"
-                                                    [colors]="payoutsPerDayChart.colors"
-                                                    [xaxis]="payoutsPerDayChart.xaxis"
-                                                    [yaxis]="payoutsPerDayChart.yaxis"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- rewards list -->
-                            <div *ngIf="payoutsCollectionSize == 0" class="col-xxl-12">
-                                <div class="alert alert-info alert-border-left" role="alert">
-                                    No reward found.
-                                </div>
-                            </div>
-                            <div *ngIf="payoutsCollectionSize != 0" class="table-responsive table-card mb-1">
-                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col" style="width: 50px;">Reward ID</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Block(s)</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col" style="width: 150px;">Paid</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="(payoutaddrs$ | async) as payoutaddrs;">
-                                        <tr *ngFor="let payoutaddr of payoutaddrs; let i = index">
-                                            <td><a [routerLink]="['/reward', payoutaddr.payout.id]">{{ payoutaddr.payout.id }}</a></td>
-                                            <td>{{ payoutaddr.payout.datetime | date:"medium" }}</td>
-                                            <td><span *ngFor="let block of payoutaddr.payout.blocks">#{{ block.farmed_height}} </span></td>
-                                            <td>{{ payoutaddr.amount / 1000000000000 }} XCH</td>
-                                            <td>
-                                                <span *ngIf="payoutaddr.transaction && payoutaddr.transaction?.confirmed_block_index"
-                                                    class="badge bg-success-subtle text-success">Confirmed</span>
-                                                <span *ngIf="payoutaddr.transaction && !payoutaddr.transaction?.confirmed_block_index"
-                                                    class="badge bg-warning-subtle text-warning">Progress</span>
-                                                <span *ngIf="!payoutaddr.transaction"
-                                                    class="badge bg-warning-subtle text-warning">Pending</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div *ngIf="payoutsCollectionSize != 0">
-                                <div class="text-md-right float-md-end payouts-pagination">
-                                    <ngb-pagination [collectionSize]="payoutsCollectionSize" [(page)]="payoutsPage"
-                                        [pageSize]="payoutsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
-                                        (pageChange)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
-                                    </ngb-pagination>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </li>
-
-                    <!-- payouts -->
-                    <li [ngbNavItem]="6" (click)="refreshPayoutTxs()">
-                        <a ngbNavLink>Payouts</a>
-                        <ng-template ngbNavContent>
-                            <!-- payouts stats -->
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card crm-widget">
-                                        <div class="card-body p-0">
-                                            <div class="row row-cols-md-3 row-cols-1">
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Total Transaction(s)</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-swap-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ payouttxsCollectionSize }}</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Total Paid</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-3-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.payout.total_paid / 1000000000000 | number:".1-6" }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-lg border-end">
-                                                    <div class="py-4 px-3">
-                                                        <h5 class="text-muted text-uppercase fs-13">Total Unpaid</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-shrink-0">
-                                                                <i class="ri-wallet-line display-6 text-muted"></i>
-                                                            </div>
-                                                            <div class="flex-grow-1 ms-3">
-                                                                <h2 class="mb-0">
-                                                                    <span class="counter-value">{{ launcher.payout.total_unpaid / 1000000000000 | number:".1-6" }} XCH</span>
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- payouts chart (amount per day)-->
-                            <div *ngIf="payouttxsCollectionSize != 0" class="row">
-                                <div class="col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <apx-chart
-                                                    *ngIf="payoutsPerDayChart && payoutsPerDayChart.series && payoutsPerDayChart.series.length > 0"
-                                                    [series]="payoutsPerDayChart.series"
-                                                    [chart]="payoutsPerDayChart.chart"
-                                                    [labels]="payoutsPerDayChart.labels"
-                                                    [legend]="payoutsPerDayChart.legend"
-                                                    [dataLabels]="payoutsPerDayChart.dataLabels"
-                                                    [colors]="payoutsPerDayChart.colors"
-                                                    [xaxis]="payoutsPerDayChart.xaxis"
-                                                    [yaxis]="payoutsPerDayChart.yaxis"
-                                                    dir="ltr">
-                                                </apx-chart>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- payouttxs list -->
-                            <div *ngIf="payouttxsCollectionSize == 0" class="col-xxl-12">
-                                <div class="alert alert-info alert-border-left" role="alert">
-                                    No payout found.
-                                </div>
-                            </div>
-                            <div *ngIf="payouttxsCollectionSize != 0" class="table-responsive table-card mb-1">
-                                <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Transaction</th>
-                                            <th scope="col">Confirmed Block</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col">Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="(payouttxs$ | async) as payouttxs;">
-                                        <tr *ngFor="let payouttx of payouttxs; let i = index">
-                                            <td>{{ payouttx.created_at_time | date:"medium" }}</td>
-                                            <td>{{ payouttx.transaction_name }}</td>
-                                            <td>{{ payouttx.confirmed_block_index || "-" }}</td>
-                                            <td>{{ payouttx.amount / 1000000000000 }} XCH</td>
-                                            <td *ngIf="payouttx.xch_price">{{ payouttx.xch_price?.usd * (payouttx.amount / 1000000000000) | number }} USD</td>
-                                            <td *ngIf="!payouttx.xch_price">Unknown</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div *ngIf="payouttxsCollectionSize != 0">
-                                <div *ngIf="(payouttxs$ | async) as payouttxs"
-                                    class="download-button-div">
-                                    <button *ngIf="payouttxs.length >= 1"
-                                        (click)="csvDownloadPayouts()"
-                                        class="btn btn-primary download-button">
-                                        Download CSV
-                                    </button>
-                                </div>
-                                <div class="text-md-right float-md-end payouts-pagination">
-                                    <ngb-pagination [collectionSize]="payouttxsCollectionSize" [(page)]="payouttxsPage"
-                                        [pageSize]="payouttxsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
-                                        (pageChange)="refreshPayoutTxs()">
-                                    </ngb-pagination>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </li>
-
-                    <!-- logs -->
-                    <li [ngbNavItem]="7" (click)="viewLogs()">
-                        <a ngbNavLink>Logs</a>
-                        <ng-template ngbNavContent>
-                            <div class="row col-lg-12" style="height: 720px;">
-                                <ng-terminal #term [draggable]="false"></ng-terminal>
-                            </div>
-                        </ng-template>
-                    </li>
-
-                </ul>
-                <div class="tab-content text-muted">
-                    <div [ngbNavOutlet]="Light"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+              <!-- launcher size chart -->
+              @if (partialsCollectionSize !== 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Estimated Size</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (launcherSizeChart && launcherSizeChart.series && launcherSizeChart.series.length > 0) {
+                            <apx-chart
+                              [series]="launcherSizeChart.series"
+                              [chart]="launcherSizeChart.chart"
+                              [labels]="launcherSizeChart.labels"
+                              [legend]="launcherSizeChart.legend"
+                              [dataLabels]="launcherSizeChart.dataLabels"
+                              [colors]="launcherSizeChart.colors"
+                              [xaxis]="launcherSizeChart.xaxis"
+                              [yaxis]="launcherSizeChart.yaxis"
+                              [stroke]="launcherSizeChart.stroke"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              <!-- difficulty and points chart -->
+              @if (partialsCollectionSize !== 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Difficulty & Points</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (difficultyAndPointsChart && difficultyAndPointsChart.series && difficultyAndPointsChart.series.length > 0) {
+                            <apx-chart
+                              [series]="difficultyAndPointsChart.series"
+                              [chart]="difficultyAndPointsChart.chart"
+                              [labels]="difficultyAndPointsChart.labels"
+                              [legend]="difficultyAndPointsChart.legend"
+                              [dataLabels]="difficultyAndPointsChart.dataLabels"
+                              [colors]="difficultyAndPointsChart.colors"
+                              [xaxis]="difficultyAndPointsChart.xaxis"
+                              [yaxis]="difficultyAndPointsChart.yaxis"
+                              [stroke]="difficultyAndPointsChart.stroke"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              @if (partialsCollectionSize === 0) {
+                <div class="col-xxl-12">
+                  <div class="alert alert-info alert-border-left" role="alert">
+                    No data found.
+                  </div>
+                </div>
+              }
+            </ng-template>
+          </li>
+
+          <!-- partials -->
+          <li [ngbNavItem]="2" (click)="refreshPartials(launcher.launcher_id)">
+            <a ngbNavLink>Partials</a>
+            <ng-template ngbNavContent>
+              <!-- stats -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card crm-widget">
+                    <div class="card-body p-0">
+                      <div class="row row-cols-md-3 row-cols-1">
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Partials (24h)</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-stack-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ partialsCollectionSize }}</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Points (24h)</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-pencil-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ partialsPoints }}</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Harvester(s)</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-computer-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ harvesters.size }}</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Successful Partials</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ partialsSuccessful }}</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Failed Partials</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-error-warning-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ partialsFailed }}</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Performance</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-line-chart-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  @if (partialsFailed >= 0 && partialsSuccessful > 0) {
+                                    <span class="counter-value">{{ 100 - (partialsFailed * 100 / partialsSuccessful) | number:'2.1-1' }}%</span>
+                                  }
+                                  @if (partialsFailed == 0 && partialsSuccessful == 0) {
+                                    <span class="counter-value">-</span>
+                                  }
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- partials chart -->
+              @if (partialsFailed >= 0 && partialsSuccessful > 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (partialsChart && partialsChart.series && partialsChart.series.length > 0) {
+                            <apx-chart
+                              [series]="partialsChart.series"
+                              [chart]="partialsChart.chart"
+                              [labels]="partialsChart.labels"
+                              [legend]="partialsChart.legend"
+                              [dataLabels]="partialsChart.dataLabels"
+                              [colors]="partialsChart.colors"
+                              [xaxis]="partialsChart.xaxis"
+                              [yaxis]="partialsChart.yaxis"
+                              [annotations]="partialsChart.annotations"
+                              [title]="partialsChart.title"
+                              [stroke]="partialsChart.stroke"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              @if (partialsTimetakenChart.series.length !== 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (partialsTimetakenChart && partialsTimetakenChart.series && partialsTimetakenChart.series.length > 0) {
+                            <apx-chart
+                              [series]="partialsTimetakenChart.series"
+                              [chart]="partialsTimetakenChart.chart"
+                              [labels]="partialsTimetakenChart.labels"
+                              [legend]="partialsTimetakenChart.legend"
+                              [dataLabels]="partialsTimetakenChart.dataLabels"
+                              [colors]="partialsTimetakenChart.colors"
+                              [xaxis]="partialsTimetakenChart.xaxis"
+                              [yaxis]="partialsTimetakenChart.yaxis"
+                              [annotations]="partialsTimetakenChart.annotations"
+                              [title]="partialsTimetakenChart.title"
+                              [stroke]="partialsTimetakenChart.stroke"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              <!-- partials list -->
+              @if (partialsCollectionSize === 0) {
+                <div class="col-xxl-12">
+                  <div class="alert alert-info alert-border-left" role="alert">
+                    No partial found.
+                  </div>
+                </div>
+              }
+              @if (partialsCollectionSize !== 0) {
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="form-check form-switch form-switch-left form-switch-md">
+                      <label for="partials-failed-only" class="form-label text-muted">Show partials failed only</label>
+                      <input class="form-check-input code-switcher" type="checkbox" id="partials-failed-only"
+                        (click)="togglePartialsFailed($event)"
+                        [checked]="partialsShowFailed">
+                    </div>
+                    <div class="form-check form-switch form-switch-left form-switch-md">
+                      <label for="partials-too-late-only" class="form-label text-muted">Show partials too late only</label>
+                      <input class="form-check-input code-switcher" type="checkbox" id="partials-too-late-only"
+                        (click)="togglePartialsTooLate($event)"
+                        [checked]="partialsShowTooLate">
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <label for="daysSelect" class="form-label text-muted mb-0">Partials:</label>
+                    <select id="daysSelect" class="form-select form-select-sm" [(ngModel)]="selectedDays" (change)="onDaysChange()" style="width: auto;">
+                      @for (day of daysOptions; track day) {
+                        <option [value]="day">
+                          {{ day }} day{{ day > 1 ? 's' : '' }}
+                        </option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              }
+              @if (partialsCollectionSize !== 0) {
+                <div class="table-responsive table-card mt-3 mb-1">
+                  <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Difficulty</th>
+                        <th scope="col">Harvester</th>
+                        <th scope="col">Plot Filename</th>
+                        <th scope="col" style="width: 100px;">Plot Size</th>
+                        <th scope="col" style="width: 150px;">Chia Version</th>
+                        <th scope="col" style="width: 100px;">Time Taken</th>
+                        <th scope="col" style="width: 200px;">State</th>
+                      </tr>
+                    </thead>
+                    @if (partialsTable) {
+                      <tbody>
+                        @for (partial of partialsFiltered | slice: (partialsPage - 1) * partialsPageSize : partialsPage * partialsPageSize; track partial) {
+                          <tr>
+                            <td>{{ partial.timestamp * 1000 | date:"medium" }}</td>
+                            <td>{{ partial.difficulty }}</td>
+                            <td>{{ getHarvesterNameById(partial.harvester_id) || partial.harvester_id | maxLength:32 }}</td>
+                            <td><code class="text-body">plot-k{{ partial.plot_size || "??" }}-*-{{ partial.plot_id }}.plot</code></td>
+                            <td>
+                              @if (!partial.plot_size) {
+                                <span>-</span>
+                              }
+                              @if (partial.plot_size) {
+                                <span>k{{ partial.plot_size }}</span>
+                              }
+                            </td>
+                            <td>{{ partial.chia_version }}</td>
+                            <td>
+                              @if (!partial.time_taken) {
+                                <span>-</span>
+                              }
+                              @if (partial.time_taken && partial.time_taken == 999.999) {
+                                <span>-</span>
+                              }
+                              @if (partial.time_taken && partial.time_taken < 000.000) {
+                                <span>-</span>
+                              }
+                              @if (partial.time_taken && partial.time_taken != 999.999 && partial.time_taken >= 000.000) {
+                                <span>{{ partial.time_taken | number:".3-3" }} s</span>
+                              }
+                            </td>
+                            <td>
+                              @if (partial.error) {
+                                <span class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
+                              }
+                              @if (!partial.error) {
+                                <span class="badge bg-success-subtle text-success">SUCCESS</span>
+                              }
+                            </td>
+                          </tr>
+                        }
+                      </tbody>
+                    }
+                  </table>
+                </div>
+              }
+              @if (partialsCollectionSize !== 0) {
+                <div>
+                  <div class="text-md-right float-md-end partials-pagination">
+                    <ngb-pagination [collectionSize]="partialsCollectionSize" [(page)]="partialsPage"
+                      [pageSize]="partialsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
+                      (pageChange)="refreshPartials(launcher.launcher_id)">
+                    </ngb-pagination>
+                  </div>
+                </div>
+              }
+            </ng-template>
+          </li>
+
+          <!-- harvesters -->
+          <li [ngbNavItem]="3" (click)="refreshHarvesters(launcher.launcher_id)">
+            <a ngbNavLink>Harvesters</a>
+            <ng-template ngbNavContent>
+              <!-- harvesters stats -->
+              @if (harvestersData.length === 0) {
+                <div class="col-xxl-12">
+                  <div class="alert alert-info alert-border-left" role="alert">
+                    No harvester found.
+                  </div>
+                </div>
+              }
+              @for (harvester of harvestersData; track harvester; let i = $index) {
+                <div class="row">
+                  <div class="col-xl-12">
+                    <div class="card crm-widget">
+                      <div class="card-body p-0">
+                        <div class="row row-cols-md-3 row-cols-1">
+                          <div class="col col-lg border-end">
+                            <div class="py-4 px-3">
+                              <h5 class="text-muted text-uppercase fs-13">Harvester</h5>
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                  <i class="ri-stack-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                  @if (harvester[1].name) {
+                                    <h2 class="mb-0">
+                                      <span class="counter-value">{{ harvester[1].name | maxLength:24 }}</span>
+                                    </h2>
+                                  }
+                                  @if (!harvester[1].name) {
+                                    <h2 class="mb-0">
+                                      @if (!truncateRequired) {
+                                        <span class="counter-value">{{ harvester[0] | maxLength:24 }}</span>
+                                      }
+                                      @if (truncateRequired) {
+                                        <span class="counter-value">{{ harvester[0] | maxLength:12 }}</span>
+                                      }
+                                    </h2>
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col col-lg border-end">
+                            <div class="py-4 px-3">
+                              <h5 class="text-muted text-uppercase fs-13">Total Points</h5>
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                  <i class="ri-pencil-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                  <h2 class="mb-0"><span class="counter-value">{{ harvester[1].points_total }}</span></h2>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col col-lg border-end">
+                            <div class="py-4 px-3">
+                              <h5 class="text-muted text-uppercase fs-13">Partials Successful</h5>
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                  <i class="ri-checkbox-circle-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                  <h2 class="mb-0"><span class="counter-value">{{ harvester[1].partials_success }}</span></h2>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col col-lg border-end">
+                            <div class="py-4 px-3">
+                              <h5 class="text-muted text-uppercase fs-13">Partials Failed</h5>
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                  <i class="ri-error-warning-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                  <h2 class="mb-0"><span class="counter-value">{{ harvester[1].partials_failed }}</span></h2>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col col-lg border-end">
+                            <div class="py-4 px-3">
+                              <h5 class="text-muted text-uppercase fs-13">Chia Version</h5>
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                  <i class="ri-bubble-chart-line display-6 text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                  <h2 class="mb-0"><span class="counter-value">{{ harvester[1]?.version || "Unknown" }}</span></h2>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- harvesters extra -->
+                  <div class="col-xxl-12">
+                    @if (supportHarvesterVersion(harvester[1]?.version) == 'critical') {
+                      <div
+                        class="alert alert-danger alert-border-left alert-dismissible fade show" role="alert">
+                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Critical:</strong>
+                        Version {{ harvester[1]?.version }} is not supported by pool. Please upgrade your harvester to the latest version.
+                        Minimum version {{ criticalChiaVersion }} is required, currently your partials will not be accepted.
+                      </div>
+                    }
+                    @if (supportHarvesterVersion(harvester[1]?.version) == 'warning') {
+                      <div
+                        class="alert alert-warning alert-border-left alert-dismissible fade show" role="alert">
+                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Warning:</strong>
+                        Version {{ harvester[1]?.version }} is supported by pool but upgrade your harvester to the latest version if possible.
+                      </div>
+                    }
+                  </div>
+                  <!-- harvesters chart -->
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="live-preview">
+                          <apx-chart
+                            [series]="harvester[1].data"
+                            [chart]="harvestersChart.chart"
+                            [labels]="harvestersChart.labels"
+                            [legend]="harvestersChart.legend"
+                            [dataLabels]="harvestersChart.dataLabels"
+                            [colors]="harvestersChart.colors"
+                            [xaxis]="harvestersChart.xaxis"
+                            [yaxis]="harvestersChart.yaxis"
+                            [stroke]="harvestersChart.stroke"
+                            dir="ltr">
+                          </apx-chart>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- harvesters separator -->
+                  @if (i != harvestersData.length - 1) {
+                    <hr />
+                  }
+                </div>
+              }
+            </ng-template>
+          </li>
+
+          <!-- blocks -->
+          <li [ngbNavItem]="4" (click)="refreshBlocks()">
+            <a ngbNavLink>Blocks</a>
+            <ng-template ngbNavContent>
+              <!-- blocks stats -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card crm-widget">
+                    <div class="card-body p-0">
+                      <div class="row row-cols-md-3 row-cols-1">
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Total Blocks</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-trophy-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0"><span class="counter-value">{{ blocksCollectionSize }}</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Average Effort</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-scales-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  @if (blocksEffortAverage) {
+                                    <span class="counter-value">{{ blocksEffortAverage | number:".2-2" }}%</span>
+                                  }
+                                  @if (!blocksEffortAverage) {
+                                    <span class="counter-value">-</span>
+                                  }
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-scales-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  @if (launcher.current_effort >= 0) {
+                                    <span class="counter-value">{{ launcher.current_effort | number:".2-2" }}%</span>
+                                  }
+                                  @if (launcher.current_effort < 0) {
+                                    <span class="counter-value">-</span>
+                                  }
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Est. time per block</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-time-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  @if (launcher.current_etw >= 0) {
+                                    <span class="counter-value">{{ humanize(launcher.current_etw * 1000) }}</span>
+                                  }
+                                  @if (launcher.current_etw < 0) {
+                                    <span class="counter-value">-</span>
+                                  }
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- blocks chart -->
+              @if (blocksCollectionSize != 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (blocksPerDayChart && blocksPerDayChart.series && blocksPerDayChart.series.length > 0) {
+                            <apx-chart
+                              [series]="blocksPerDayChart.series"
+                              [chart]="blocksPerDayChart.chart"
+                              [labels]="blocksPerDayChart.labels"
+                              [legend]="blocksPerDayChart.legend"
+                              [dataLabels]="blocksPerDayChart.dataLabels"
+                              [colors]="blocksPerDayChart.colors"
+                              [xaxis]="blocksPerDayChart.xaxis"
+                              [yaxis]="blocksPerDayChart.yaxis"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              <!-- blocks list -->
+              @if (blocksCollectionSize == 0) {
+                <div class="col-xxl-12">
+                  <div class="alert alert-info alert-border-left" role="alert">
+                    No block found.
+                  </div>
+                </div>
+              }
+              @if (blocksCollectionSize != 0) {
+                <div class="table-responsive table-card mb-1">
+                  <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col" style="width: 150px;">Height</th>
+                        <th scope="col" style="width: 250px;">Date</th>
+                        <th scope="col" style="width: 30px;"></th>
+                        <th scope="col" style="width: 300px;">Singleton</th>
+                        <th scope="col" style="width: 100px;">Price</th>
+                        <th scope="col" style="width: 150px;">Pool Reward</th>
+                        <th scope="col" style="width: 150px;">Pool size</th>
+                        <th scope="col" style="width: 100px;">Pool effort</th>
+                      </tr>
+                    </thead>
+                    @if ((blocks$ | async); as blocks;) {
+                      <tbody>
+                        @for (block of blocks; track block; let i = $index) {
+                          <tr>
+                            <td>
+                              <a href="https://www.spacescan.io/block/{{ block.farmed_height }}" target="_blank">
+                                {{ block.farmed_height }}
+                              </a>
+                            </td>
+                            <td>{{ block.timestamp * 1000 | date:"medium" }}</td>
+                            <td class="td-center">
+                              @if (!block.gigahorse_fee) {
+                                <span></span>
+                              }
+                              @if (block.gigahorse_fee) {
+                                <span
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  title="This reward has been taken as a fee by Gigahorse">
+                                  <i class="mdi mdi-horse mdi-horse-color"></i>
+                                </span>
+                              }
+                            </td>
+                            <td>{{ block.singleton | maxLength:32 }}</td>
+                            <td>${{ block.xch_price.usd }}</td>
+                            <td>{{ block.amount / 1000000000000 }} XCH</td>
+                            <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
+                            <td>
+                              @if (block.luck == -1) {
+                                <span class="badge bg-warning-subtle text-warning">Unknown</span>
+                              }
+                              @if (block.luck < 100) {
+                                <span class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
+                              }
+                              @if (block.luck >= 100 && block.luck <= 200) {
+                                <span class="badge bg-warning-subtle text-warning" nbgToolTip="Average">{{ block.luck }}%</span>
+                              }
+                              @if (block.luck > 200) {
+                                <span class="badge bg-danger-subtle text-danger" nbgToolTip="Unlucky">{{ block.luck }}%</span>
+                              }
+                            </td>
+                          </tr>
+                        }
+                      </tbody>
+                    }
+                  </table>
+                </div>
+              }
+              @if (blocksCollectionSize !== 0) {
+                <div>
+                  @if ((blocks$ | async); as blocks) {
+                    <div
+                      class="download-button-div">
+                      @if (blocks.length >= 1) {
+                        <button
+                          (click)="csvDownloadBlocks()"
+                          class="btn btn-primary download-button">
+                          Download CSV
+                        </button>
+                      }
+                    </div>
+                  }
+                  <div class="text-md-right float-md-end blocks-pagination">
+                    <ngb-pagination [collectionSize]="blocksCollectionSize" [(page)]="blocksPage"
+                      [pageSize]="blocksPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
+                      (pageChange)="refreshBlocks()">
+                    </ngb-pagination>
+                  </div>
+                </div>
+              }
+            </ng-template>
+          </li>
+
+          <!-- rewards -->
+          <li [ngbNavItem]="5" (click)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
+            <a ngbNavLink>Rewards</a>
+            <ng-template ngbNavContent>
+              <!-- rewards stats -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card crm-widget">
+                    <div class="card-body p-0">
+                      <div class="row row-cols-md-3 row-cols-1">
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Last 24 hours</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.rewards.last_24h / 1000000000000 }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Today</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.rewards.today / 1000000000000 }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Yesterday</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.rewards.yesterday / 1000000000000 }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Last 7 days</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.rewards.last_7d / 1000000000000 }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Last 30 days</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.rewards.last_30d / 1000000000000 }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- payouts chart (amount per day)-->
+              @if (payoutsCollectionSize != 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (payoutsPerDayChart && payoutsPerDayChart.series && payoutsPerDayChart.series.length > 0) {
+                            <apx-chart
+                              [series]="payoutsPerDayChart.series"
+                              [chart]="payoutsPerDayChart.chart"
+                              [labels]="payoutsPerDayChart.labels"
+                              [legend]="payoutsPerDayChart.legend"
+                              [dataLabels]="payoutsPerDayChart.dataLabels"
+                              [colors]="payoutsPerDayChart.colors"
+                              [xaxis]="payoutsPerDayChart.xaxis"
+                              [yaxis]="payoutsPerDayChart.yaxis"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              <!-- rewards list -->
+              @if (payoutsCollectionSize == 0) {
+                <div class="col-xxl-12">
+                  <div class="alert alert-info alert-border-left" role="alert">
+                    No reward found.
+                  </div>
+                </div>
+              }
+              @if (payoutsCollectionSize != 0) {
+                <div class="table-responsive table-card mb-1">
+                  <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col" style="width: 50px;">Reward ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Block(s)</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col" style="width: 150px;">Paid</th>
+                      </tr>
+                    </thead>
+                    @if ((payoutaddrs$ | async); as payoutaddrs;) {
+                      <tbody>
+                        @for (payoutaddr of payoutaddrs; track payoutaddr; let i = $index) {
+                          <tr>
+                            <td><a [routerLink]="['/reward', payoutaddr.payout.id]">{{ payoutaddr.payout.id }}</a></td>
+                            <td>{{ payoutaddr.payout.datetime | date:"medium" }}</td>
+                            <td>@for (block of payoutaddr.payout.blocks; track block) {
+                              <span>#{{ block.farmed_height}} </span>
+                            }</td>
+                            <td>{{ payoutaddr.amount / 1000000000000 }} XCH</td>
+                            <td>
+                              @if (payoutaddr.transaction && payoutaddr.transaction?.confirmed_block_index) {
+                                <span
+                                class="badge bg-success-subtle text-success">Confirmed</span>
+                              }
+                              @if (payoutaddr.transaction && !payoutaddr.transaction?.confirmed_block_index) {
+                                <span
+                                class="badge bg-warning-subtle text-warning">Progress</span>
+                              }
+                              @if (!payoutaddr.transaction) {
+                                <span
+                                class="badge bg-warning-subtle text-warning">Pending</span>
+                              }
+                            </td>
+                          </tr>
+                        }
+                      </tbody>
+                    }
+                  </table>
+                </div>
+              }
+              @if (payoutsCollectionSize != 0) {
+                <div>
+                  <div class="text-md-right float-md-end payouts-pagination">
+                    <ngb-pagination [collectionSize]="payoutsCollectionSize" [(page)]="payoutsPage"
+                      [pageSize]="payoutsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
+                      (pageChange)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
+                    </ngb-pagination>
+                  </div>
+                </div>
+              }
+            </ng-template>
+          </li>
+
+          <!-- payouts -->
+          <li [ngbNavItem]="6" (click)="refreshPayoutTxs()">
+            <a ngbNavLink>Payouts</a>
+            <ng-template ngbNavContent>
+              <!-- payouts stats -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card crm-widget">
+                    <div class="card-body p-0">
+                      <div class="row row-cols-md-3 row-cols-1">
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Total Transaction(s)</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-swap-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ payouttxsCollectionSize }}</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Total Paid</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-3-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.payout.total_paid / 1000000000000 | number:".1-6" }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-lg border-end">
+                          <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Total Unpaid</h5>
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <i class="ri-wallet-line display-6 text-muted"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <h2 class="mb-0">
+                                  <span class="counter-value">{{ launcher.payout.total_unpaid / 1000000000000 | number:".1-6" }} XCH</span>
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- payouts chart (amount per day)-->
+              @if (payouttxsCollectionSize != 0) {
+                <div class="row">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="live-preview">
+                          @if (payoutsPerDayChart && payoutsPerDayChart.series && payoutsPerDayChart.series.length > 0) {
+                            <apx-chart
+                              [series]="payoutsPerDayChart.series"
+                              [chart]="payoutsPerDayChart.chart"
+                              [labels]="payoutsPerDayChart.labels"
+                              [legend]="payoutsPerDayChart.legend"
+                              [dataLabels]="payoutsPerDayChart.dataLabels"
+                              [colors]="payoutsPerDayChart.colors"
+                              [xaxis]="payoutsPerDayChart.xaxis"
+                              [yaxis]="payoutsPerDayChart.yaxis"
+                              dir="ltr">
+                            </apx-chart>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              <!-- payouttxs list -->
+              @if (payouttxsCollectionSize == 0) {
+                <div class="col-xxl-12">
+                  <div class="alert alert-info alert-border-left" role="alert">
+                    No payout found.
+                  </div>
+                </div>
+              }
+              @if (payouttxsCollectionSize != 0) {
+                <div class="table-responsive table-card mb-1">
+                  <table class="table align-middle table-nowrap table-striped-columns mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Transaction</th>
+                        <th scope="col">Confirmed Block</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                    </thead>
+                    @if ((payouttxs$ | async); as payouttxs;) {
+                      <tbody>
+                        @for (payouttx of payouttxs; track payouttx; let i = $index) {
+                          <tr>
+                            <td>{{ payouttx.created_at_time | date:"medium" }}</td>
+                            <td>{{ payouttx.transaction_name }}</td>
+                            <td>{{ payouttx.confirmed_block_index || "-" }}</td>
+                            <td>{{ payouttx.amount / 1000000000000 }} XCH</td>
+                            @if (payouttx.xch_price) {
+                              <td>{{ payouttx.xch_price?.usd * (payouttx.amount / 1000000000000) | number }} USD</td>
+                            }
+                            @if (!payouttx.xch_price) {
+                              <td>Unknown</td>
+                            }
+                          </tr>
+                        }
+                      </tbody>
+                    }
+                  </table>
+                </div>
+              }
+              @if (payouttxsCollectionSize != 0) {
+                <div>
+                  @if ((payouttxs$ | async); as payouttxs) {
+                    <div
+                      class="download-button-div">
+                      @if (payouttxs.length >= 1) {
+                        <button
+                          (click)="csvDownloadPayouts()"
+                          class="btn btn-primary download-button">
+                          Download CSV
+                        </button>
+                      }
+                    </div>
+                  }
+                  <div class="text-md-right float-md-end payouts-pagination">
+                    <ngb-pagination [collectionSize]="payouttxsCollectionSize" [(page)]="payouttxsPage"
+                      [pageSize]="payouttxsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
+                      (pageChange)="refreshPayoutTxs()">
+                    </ngb-pagination>
+                  </div>
+                </div>
+              }
+            </ng-template>
+          </li>
+
+          <!-- logs -->
+          <li [ngbNavItem]="7" (click)="viewLogs()">
+            <a ngbNavLink>Logs</a>
+            <ng-template ngbNavContent>
+              <div class="row col-lg-12" style="height: 720px;">
+                <ng-terminal #term [draggable]="false"></ng-terminal>
+              </div>
+            </ng-template>
+          </li>
+
+        </ul>
+        <div class="tab-content text-muted">
+          <div [ngbNavOutlet]="Light"></div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

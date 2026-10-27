@@ -1,212 +1,232 @@
 <app-breadcrumbs title="Farmers" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- dust storm -->
-<div *ngIf="blockchain_duststorm" class="alert alert-warning alert-border-left" role="alert">
+@if (blockchain_duststorm) {
+  <div class="alert alert-warning alert-border-left" role="alert">
     <i class="ri-windy-line me-1"></i>
     <strong>Dust storm detected:</strong> the Chia mempool is currently very congested ({{ blockchain_mempool_full_pct }}% full).
     Transaction fees may be temporarily required, and payout/absorb timing could be delayed.
-</div>
+  </div>
+}
 
 <!-- message -->
-<div *ngFor="let message of pool_message; let i = index"
+@for (message of pool_message; track message; let i = $index) {
+  <div
     class="alert alert-{{ message.level }} alert-border-left alert-dismissible fade show"
     role="alert">
     <i class="ri-alarm-warning-line me-1"></i> {{ message.name }} ({{ message.datetime | date }}): {{ message.message }}
-    <button *ngIf="message.closing" type="button" class="btn-close" (click)="closeMessage(i)" aria-label="Close"></button>
-</div>
+    @if (message.closing) {
+      <button type="button" class="btn-close" (click)="closeMessage(i)" aria-label="Close"></button>
+    }
+  </div>
+}
 
 <!-- stats -->
 <div class="row">
-    <div class="col-xl-12">
-        <div class="card crm-widget">
-            <div class="card-body p-0">
-                <div class="row row-cols-md-3 row-cols-1">
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Pool Space</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-earth-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ pool_space || 0 | filesize:{"base": 2, "standard": "iec"} }}</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Active / Total farmers</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-group-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ total_active_farmers }} / {{ total_farmers }}</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Effort current / average</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-scales-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ current_effort | number:".0-0" }}% / {{ average_effort | number:".0-0" }}%</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Estimate To Win</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-heart-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ humanize(estimate_win * 1000) }}</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Current fee</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-coin-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ current_fee | number:".2-2" }}%</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">XCH Price</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-price-tag-line display-6 text-muted"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">${{ xch_current_price | number }}</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="col-xl-12">
+    <div class="card crm-widget">
+      <div class="card-body p-0">
+        <div class="row row-cols-md-3 row-cols-1">
+          <div class="col col-lg border-end">
+            <div class="py-4 px-3">
+              <h5 class="text-muted text-uppercase fs-13">Pool Space</h5>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-earth-line display-6 text-muted"></i>
                 </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">{{ pool_space || 0 | filesize:{"base": 2, "standard": "iec"} }}</span></h2>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col col-lg border-end">
+            <div class="py-4 px-3">
+              <h5 class="text-muted text-uppercase fs-13">Active / Total farmers</h5>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-group-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">{{ total_active_farmers }} / {{ total_farmers }}</span></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg border-end">
+            <div class="py-4 px-3">
+              <h5 class="text-muted text-uppercase fs-13">Effort current / average</h5>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-scales-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">{{ current_effort | number:".0-0" }}% / {{ average_effort | number:".0-0" }}%</span></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg border-end">
+            <div class="py-4 px-3">
+              <h5 class="text-muted text-uppercase fs-13">Estimate To Win</h5>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-heart-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">{{ humanize(estimate_win * 1000) }}</span></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg border-end">
+            <div class="py-4 px-3">
+              <h5 class="text-muted text-uppercase fs-13">Current fee</h5>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-coin-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">{{ current_fee | number:".2-2" }}%</span></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg border-end">
+            <div class="py-4 px-3">
+              <h5 class="text-muted text-uppercase fs-13">XCH Price</h5>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="ri-price-tag-line display-6 text-muted"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h2 class="mb-0"><span class="counter-value">${{ xch_current_price | number }}</span></h2>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- block reward halving -->
 
 <!-- chia consensus fork -->
-<div *ngIf="chia_consensus_fork_enabled && chia_consensus_fork_percent >= 98.5 && chia_consensus_fork_percent <= 100.0"
+@if (chia_consensus_fork_enabled && chia_consensus_fork_percent >= 98.5 && chia_consensus_fork_percent <= 100.0) {
+  <div
     class="alert alert-{{ chia_consensus_fork_class }} alert-border-left alert-dismissible fade show" role="alert">
     <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
     Current block: {{ chia_consensus_fork_current_block }}. Next halving block: {{ chia_consensus_fork_block }}.
     Progression: <strong>{{ chia_consensus_fork_percent | number:".2-2" }}%</strong>.
     For more details, please visit <a href="https://docs.chia.net/consensus-forks/" target="_blank">Chia Blockchain documentation</a>.
-</div>
+  </div>
+}
 
 <!-- leaderboard -->
 <div class="row">
-    <div class="col-xl-12">
-        <div class="card crm-widget">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Leaderboard</h4>
-            </div>
-            <div class="card-body p-0">
-                <div class="row row-cols-md-3 row-cols-1">
-                    <div *ngFor="let launcher of leaderboard; let i = index" class="col col-lg border-end">
-                        <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">{{ launcher.name || launcher.launcher_id | maxLength:32 }}</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <i class="ri-trophy-line display-6 text-muted leaderboard-{{ i + 1 }}"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span class="counter-value">{{ launcher.estimated_size | filesize:{"base": 2, "standard": "iec"} }}, {{ launcher.points_pplns }} pts</span></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="col-xl-12">
+    <div class="card crm-widget">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Leaderboard</h4>
+      </div>
+      <div class="card-body p-0">
+        <div class="row row-cols-md-3 row-cols-1">
+          @for (launcher of leaderboard; track launcher; let i = $index) {
+            <div class="col col-lg border-end">
+              <div class="py-4 px-3">
+                <h5 class="text-muted text-uppercase fs-13">{{ launcher.name || launcher.launcher_id | maxLength:32 }}</h5>
+                <div class="d-flex align-items-center">
+                  <div class="flex-shrink-0">
+                    <i class="ri-trophy-line display-6 text-muted leaderboard-{{ i + 1 }}"></i>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h2 class="mb-0"><span class="counter-value">{{ launcher.estimated_size | filesize:{"base": 2, "standard": "iec"} }}, {{ launcher.points_pplns }} pts</span></h2>
+                  </div>
                 </div>
+              </div>
             </div>
+          }
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- list -->
 <div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="show_all_farmers"
-                        (change)="toggleShowAllFarmers($event)" [checked]="show_all_farmers">
-                    <label class="form-check-label" for="show_all_farmers">All farmers</label>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="live-preview">
-                    <div class="table-responsive table-card">
-                        <table class="table align-middle table-nowrap table-striped-columns mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col" style="width: 10px;">#</th>
-                                    <th scope="col" style="width: 30px;"></th>
-                                    <th scope="col" style="width: 400px;">Launcher ID</th>
-                                    <th scope="col" style="width: 300px;">Singleton Puzzle Hash</th>
-                                    <th scope="col" style="width: 100px;">Points (24 hours)</th>
-                                    <th scope="col" style="width: 100px;">Difficulty</th>
-                                    <th scope="col" style="width: 150px;">Utilization Space</th>
-                                    <th scope="col" style="width: 150px;">Estimated Space</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let launcher of launchers$ | async; let i = index">
-                                    <td scope="row">
-                                        <span *ngIf="last_block?.farmed_by.launcher_id == launcher.launcher_id"
-                                            ngbTooltip="Won the last block">
-                                            <i class="ri-trophy-fill trophy-style"></i> 
-                                        </span>
-                                        <span *ngIf="last_block?.farmed_by.launcher_id != launcher.launcher_id">
-                                            {{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}
-                                        </span>
-                                    </td>
-                                    <td class="td-center">
-                                        <img *ngIf="launcher.picture_url" src="{{ launcher.picture_url }}" alt="" class="img-thumbnail-farmer" />
-                                        <img *ngIf="!launcher.picture_url" src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail-farmer" />
-                                    </td>
-                                    <td><a [routerLink]="['/farmer', launcher.launcher_id]">{{ launcher.name || launcher.launcher_id }}</a></td>
-                                    <td><code class="text-body">{{ launcher.p2_singleton_puzzle_hash }}</code></td>
-                                    <td>{{ launcher.points_pplns }}</td>
-                                    <td>{{ launcher.difficulty }}</td>
-                                    <td>{{ launcher.share_pplns * 100 | number:'2.2' }}%</td>
-                                    <td>{{ launcher.estimated_size | filesize:{"base": 2, "standard": "iec"} }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                        <div class="text-md-right float-md-end launchers-pagination">
-                            <ngb-pagination [collectionSize]="launchersCollectionSize" [(page)]="launchersPage"
-                                [pageSize]="launchersPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
-                                (pageChange)="refreshLaunchers()">
-                            </ngb-pagination>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="show_all_farmers"
+            (change)="toggleShowAllFarmers($event)" [checked]="show_all_farmers">
+          <label class="form-check-label" for="show_all_farmers">All farmers</label>
         </div>
+      </div>
+      <div class="card-body">
+        <div class="live-preview">
+          <div class="table-responsive table-card">
+            <table class="table align-middle table-nowrap table-striped-columns mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" style="width: 10px;">#</th>
+                  <th scope="col" style="width: 30px;"></th>
+                  <th scope="col" style="width: 400px;">Launcher ID</th>
+                  <th scope="col" style="width: 300px;">Singleton Puzzle Hash</th>
+                  <th scope="col" style="width: 100px;">Points (24 hours)</th>
+                  <th scope="col" style="width: 100px;">Difficulty</th>
+                  <th scope="col" style="width: 150px;">Utilization Space</th>
+                  <th scope="col" style="width: 150px;">Estimated Space</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (launcher of launchers$ | async; track launcher; let i = $index) {
+                  <tr>
+                    <td scope="row">
+                      @if (last_block?.farmed_by.launcher_id == launcher.launcher_id) {
+                        <span
+                          ngbTooltip="Won the last block">
+                          <i class="ri-trophy-fill trophy-style"></i>
+                        </span>
+                      }
+                      @if (last_block?.farmed_by.launcher_id != launcher.launcher_id) {
+                        <span>
+                          {{ i + 1 + (launchersPageSize * (launchersPage - 1)) }}
+                        </span>
+                      }
+                    </td>
+                    <td class="td-center">
+                      @if (launcher.picture_url) {
+                        <img src="{{ launcher.picture_url }}" alt="" class="img-thumbnail-farmer" />
+                      }
+                      @if (!launcher.picture_url) {
+                        <img src="assets/images/users/user-dummy-img.jpg" alt="" class="img-thumbnail-farmer" />
+                      }
+                    </td>
+                    <td><a [routerLink]="['/farmer', launcher.launcher_id]">{{ launcher.name || launcher.launcher_id }}</a></td>
+                    <td><code class="text-body">{{ launcher.p2_singleton_puzzle_hash }}</code></td>
+                    <td>{{ launcher.points_pplns }}</td>
+                    <td>{{ launcher.difficulty }}</td>
+                    <td>{{ launcher.share_pplns * 100 | number:'2.2' }}%</td>
+                    <td>{{ launcher.estimated_size | filesize:{"base": 2, "standard": "iec"} }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="text-md-right float-md-end launchers-pagination">
+              <ngb-pagination [collectionSize]="launchersCollectionSize" [(page)]="launchersPage"
+                [pageSize]="launchersPageSize" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                (pageChange)="refreshLaunchers()">
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
