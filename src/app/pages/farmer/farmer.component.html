@@ -36,7 +36,13 @@
     </div>
     <div class="col">
       <div class="p-2">
-        <h3 class="text-white mb-1">{{ launcher.name || 'Undefined' }}</h3>
+        <h3 class="text-white mb-1">
+          @if (launcherLoaded) {
+            {{ launcher.name || 'Undefined' }}
+          } @else {
+            <span class="placeholder-glow"><span class="placeholder col-6"></span></span>
+          }
+        </h3>
         @if (!truncateRequired) {
           <p class="text-white text-opacity-75">{{ launcher_id }}</p>
         }
@@ -44,20 +50,24 @@
           <p class="text-white text-opacity-75">{{ launcher_id | maxLength:32 }}</p>
         }
         <div class="hstack text-white-50 gap-1">
-          @if (launcher.is_pool_member) {
-            <div>
-              @if (partialsCollectionSize == 0) {
-                <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (no partials)</div>
-              }
-              @if (partialsCollectionSize > 0) {
-                <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
-              }
-            </div>
-          }
-          @if (!launcher.is_pool_member) {
-            <div>
-              <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (left the pool)
-            </div>
+          @if (!launcherLoaded || !partialsLoaded) {
+            <div class="placeholder-glow"><span class="placeholder col-8"></span></div>
+          } @else {
+            @if (launcher.is_pool_member) {
+              <div>
+                @if (partialsCollectionSize == 0) {
+                  <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (no partials)</div>
+                }
+                @if (partialsCollectionSize > 0) {
+                  <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+                }
+              </div>
+            }
+            @if (!launcher.is_pool_member) {
+              <div>
+                <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (left the pool)
+              </div>
+            }
           }
         </div>
       </div>
@@ -89,7 +99,7 @@
         <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
 
           <!-- overview -->
-          <li [ngbNavItem]="1" (click)="refreshLauncherSize(launcher.launcher_id); refreshPartials(launcher.launcher_id)">
+          <li [ngbNavItem]="1" (click)="refreshLauncherSize(launcher_id); refreshPartials(launcher_id)">
             <a ngbNavLink>Overview</a>
             <ng-template ngbNavContent>
               <!-- launcher overview -->
@@ -268,7 +278,7 @@
           </li>
 
           <!-- partials -->
-          <li [ngbNavItem]="2" (click)="refreshPartials(launcher.launcher_id)">
+          <li [ngbNavItem]="2" (click)="refreshPartials(launcher_id)">
             <a ngbNavLink>Partials</a>
             <ng-template ngbNavContent>
               <!-- stats -->
@@ -526,7 +536,7 @@
                   <div class="text-md-right float-md-end partials-pagination">
                     <ngb-pagination [collectionSize]="partialsCollectionSize" [(page)]="partialsPage"
                       [pageSize]="partialsPageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"
-                      (pageChange)="refreshPartials(launcher.launcher_id)">
+                      (pageChange)="refreshPartials(launcher_id)">
                     </ngb-pagination>
                   </div>
                 </div>
@@ -535,7 +545,7 @@
           </li>
 
           <!-- harvesters -->
-          <li [ngbNavItem]="3" (click)="refreshHarvesters(launcher.launcher_id)">
+          <li [ngbNavItem]="3" (click)="refreshHarvesters(launcher_id)">
             <a ngbNavLink>Harvesters</a>
             <ng-template ngbNavContent>
               <!-- harvesters stats -->

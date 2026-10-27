@@ -31,6 +31,7 @@ export class FarmerComponent implements AfterViewInit {
   // launcher
   launcher_id: any = null;
   launcher: any = {};
+  launcherLoaded: boolean = false;
 
   // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();
@@ -55,6 +56,7 @@ export class FarmerComponent implements AfterViewInit {
   partialsTable: any[] = [];
   partialsFiltered: any[] = [];
   partialsCollectionSize: number = 0;
+  partialsLoaded: boolean = false;
   partialsPage: number = 1;
   partialsPageSize: number = 100;
   partialsSuccessful: number = 0;
@@ -135,8 +137,14 @@ export class FarmerComponent implements AfterViewInit {
 
     this.route.paramMap.subscribe(data => {
       this.launcher_id = data.get('id');
-      this.dataService.getLauncher(this.launcher_id).subscribe(launcher => {
-        this.launcher = launcher;
+      this.dataService.getLauncher(this.launcher_id).subscribe({
+        next: (launcher) => {
+          this.launcher = launcher;
+          this.launcherLoaded = true;
+        },
+        error: () => {
+          this.launcherLoaded = true;
+        }
       });
       this.dataService.getHarvesters({launcher: this.launcher_id}).subscribe(harvesters => {
         this.harvestersList = harvesters;
@@ -351,15 +359,19 @@ export class FarmerComponent implements AfterViewInit {
     this.harvesters.clear();
 
     var obs = new Observable(subscriber => {
-      this.dataService.getPartials(launcher_id, undefined, this.selectedDays).subscribe((data: any) => {
-        this.partialsCollectionSize = data['count'];
-        this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
+      this.dataService.getPartials(launcher_id, undefined, this.selectedDays).subscribe({
+        next: (data: any) => {
+          this.partialsCollectionSize = data['count'];
+          this.partialsLoaded = true;
+          this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
+        },
+        error: (err) => subscriber.error(err)
       });
     });
 
     obs.subscribe(
       (x) => { },
-      (err) => { console.error("Something wrong occurred: " + err); },
+      (err) => { this.partialsLoaded = true; console.error("Something wrong occurred: " + err); },
       () => {
         return [
           this.partialsChart = {
