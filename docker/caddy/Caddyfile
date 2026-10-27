@@ -19,6 +19,18 @@
 
     rewrite @default_path index.html
 
+    handle /api/* {
+        reverse_proxy %%API_UPSTREAM%% {
+            header_up Host {upstream_hostport}
+        }
+    }
+
+    handle /ws/* {
+        reverse_proxy %%API_UPSTREAM%% {
+            header_up Host {upstream_hostport}
+        }
+    }
+
     file_server
 
     log {
