@@ -15,9 +15,6 @@ import { FooterComponent } from './footer/footer.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
 import { HorizontalTopbarComponent } from './horizontal-topbar/horizontal-topbar.component';
 
-import { defineElement } from '@lordicon/element';
-import lottie from 'lottie-web';
-
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -41,8 +38,4 @@ import lottie from 'lottie-web';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
-export class LayoutsModule {
-  constructor() {
-    defineElement(lottie.loadAnimation);
-  }
-}
+export class LayoutsModule {}

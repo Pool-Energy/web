@@ -2,13 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BreadcrumbsComponent } from './breadcrumbs.component';
 
+import { SharedModule } from '../shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
   let fixture: ComponentFixture<BreadcrumbsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BreadcrumbsComponent ]
+      imports: [
+        RouterTestingModule,
+        SharedModule,
+      ],
     })
     .compileComponents();
   });

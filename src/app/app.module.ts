@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { SharedModule } from "./shared/shared.module";
 import { LayoutsModule } from './layouts/layouts.module';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { CdKickInterceptor } from './core/interceptors/cd-kick.interceptor';
@@ -28,10 +27,9 @@ export function createTranslateLoader(http: HttpClient): any {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule,
-    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     CommonModule,
     SharedModule,
     LayoutsModule,

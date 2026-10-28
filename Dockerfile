@@ -8,7 +8,7 @@ WORKDIR /build
 
 COPY . .
 
-RUN npm install --legacy-peer-deps && \
+RUN npm ci && \
     npm run build
 
 ############################
