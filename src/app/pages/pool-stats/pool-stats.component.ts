@@ -148,7 +148,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -214,7 +214,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -280,7 +280,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -348,7 +348,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -454,7 +454,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false,
         }

@@ -150,6 +150,7 @@
         background: rgba(var(--#{$prefix}secondary-bg-rgb), .96) !important;
 
         .apexcharts-tooltip-title {
+            color: var(--#{$prefix}body-color) !important;
             background: var(--#{$prefix}secondary-bg) !important;
             border-bottom: 1px solid var(--#{$prefix}border-color) !important;
         }
