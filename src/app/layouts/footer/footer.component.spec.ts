@@ -2,13 +2,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
 
+import { LayoutsModule } from '../layouts.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        LayoutsModule,
+      ],
     })
     .compileComponents();
   });

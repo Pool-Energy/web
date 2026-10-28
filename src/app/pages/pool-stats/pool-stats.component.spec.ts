@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { PoolStatsComponent } from './pool-stats.component';
+
+import { PagesModule } from '../pages.module';
 
 describe('PoolStatsComponent', () => {
   let component: PoolStatsComponent;
@@ -11,9 +12,11 @@ describe('PoolStatsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [PoolStatsComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      imports: [
+        PagesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
     

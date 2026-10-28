@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { HorizontalTopbarComponent } from './horizontal-topbar.component';
+
+import { LayoutsModule } from '../layouts.module';
 
 describe('HorizontalTopbarComponent', () => {
   let component: HorizontalTopbarComponent;
@@ -11,9 +12,11 @@ describe('HorizontalTopbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
-      declarations: [ HorizontalTopbarComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        LayoutsModule,
+      ],
     })
     .compileComponents();
   });
