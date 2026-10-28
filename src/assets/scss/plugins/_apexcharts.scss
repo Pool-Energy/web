@@ -118,6 +118,13 @@
 }
 
 .apexcharts-tooltip {
+    // apexcharts 8 ships its own injected stylesheet setting
+    // `color: var(--apx-tt-color)` on this same selector (equal
+    // specificity), which isn't themed for our dark mode and resolves to
+    // a near-black text color - on the dark themed background below that
+    // makes tooltips essentially illegible. Force our own themed color
+    // regardless of stylesheet insertion order.
+    color: var(--#{$prefix}body-color) !important;
     border-radius: 5px;
     box-shadow: $box-shadow !important;
     cursor: default;

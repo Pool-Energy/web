@@ -164,7 +164,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success"]')
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          format: 'dd/MM/yyyy HH:mm'
+        }
+      }
     }
   }
 
@@ -225,7 +230,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success"]')
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          format: 'dd/MM/yyyy HH:mm'
+        }
+      }
     }
   }
 
@@ -286,7 +296,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success"]')
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          format: 'dd/MM/yyyy HH:mm'
+        }
+      }
     }
   }
 
@@ -349,7 +364,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+      colors: this.getChartColorsArray('["--vz-success","--vz-danger"]'),
+      tooltip: {
+        x: {
+          format: 'dd/MM/yyyy HH:mm'
+        }
+      }
     }
   }
 
