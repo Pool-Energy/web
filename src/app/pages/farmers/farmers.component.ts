@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { humanizer } from 'humanize-duration';
@@ -51,7 +51,8 @@ export class FarmersComponent {
   blocks$: Observable<any[]>;
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.launchers$ = this._launchers$.asObservable();
     this.blocks$ = this._blocks$.asObservable();
@@ -77,6 +78,7 @@ export class FarmersComponent {
       if(this.chia_consensus_fork_enabled) {
         this.handleChiaConsensusFork(data['blockchain_height']);
       }
+      this.cdr.detectChanges();
     })
 
     if(localStorage.getItem('show_all_farmers') == 'true') {
@@ -86,6 +88,7 @@ export class FarmersComponent {
 
     this.dataService.getMessages().subscribe((data: any) => {
       this.pool_message = data;
+      this.cdr.detectChanges();
     })
 
     this.dataService.getLaunchers({
@@ -148,6 +151,7 @@ export class FarmersComponent {
     }
     this.launchersCollectionSize = data['count'];
     this._launchers$.next(data['results']);
+    this.cdr.detectChanges();
   }
 
   refreshLaunchers() {
@@ -168,6 +172,7 @@ export class FarmersComponent {
   private handleBlocks(data: any) {
     this.last_block = data['results'][0];
     this._blocks$.next(data['results']);
+    this.cdr.detectChanges();
   }
 
   // message

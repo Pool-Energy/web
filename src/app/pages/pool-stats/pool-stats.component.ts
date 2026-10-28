@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { expand } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { DataService } from 'src/app/data.service';
+import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 
 @Component({
     selector: 'app-pool-stats',
@@ -49,7 +50,8 @@ export class PoolStatsComponent {
   partialsHostsChart: any = {};
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -114,12 +116,13 @@ export class PoolStatsComponent {
         "name": "Pool Size (TiB)",
         "data": (<any[]>d).filter(item => item['field'] == 'global').map((item) => {
           return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
+            "x": (new Date(item['datetime']).getTime()),
             "y": item['value'] / 1024 ** 4,
           })
         })
       }];
       this.chartPoolSize(this.poolSizeData);
+      this.cdr.detectChanges();
     })
   }
 
@@ -146,7 +149,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -162,7 +165,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success"]')
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          formatter: (val: number) => formatChartTooltipDate(val)
+        }
+      }
     }
   }
 
@@ -174,12 +182,13 @@ export class PoolStatsComponent {
         "name": "Full Percentage (%)",
         "data": (<any[]>d).filter(item => item['field'] == 'full_pct').map((item) => {
           return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
+            "x": (new Date(item['datetime']).getTime()),
             "y": item['value'],
           })
         })
       }];
       this.chartMempoolSize(this.mempoolSizeData);
+      this.cdr.detectChanges();
     })
   }
 
@@ -206,7 +215,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -222,7 +231,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success"]')
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          formatter: (val: number) => formatChartTooltipDate(val)
+        }
+      }
     }
   }
 
@@ -234,12 +248,13 @@ export class PoolStatsComponent {
         "name": "Netspace Size (EiB)",
         "data": (<any[]>d).filter(item => item['field'] == 'size').map((item) => {
           return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
+            "x": (new Date(item['datetime']).getTime()),
             "y": item['value'] / 1024 ** 4,
           })
         })
       }];
       this.chartNetspaceSize(this.netspaceSizeData);
+      this.cdr.detectChanges();
     })
   }
   
@@ -266,7 +281,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -282,7 +297,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success"]')
+      colors: this.getChartColorsArray('["--vz-success"]'),
+      tooltip: {
+        x: {
+          formatter: (val: number) => formatChartTooltipDate(val)
+        }
+      }
     }
   }
 
@@ -295,13 +315,14 @@ export class PoolStatsComponent {
           "name": "XCH Price ($)",
           "data": (<any[]>d).filter(item => item['field'] == 'usd').map((item) => {
             return ({
-              "x": (new Date(item['datetime']).toLocaleString()),
+              "x": (new Date(item['datetime']).getTime()),
               "y": item['value'],
             })
           })
         }
       ];
       this.chartXchPrice(this.xchPriceData);
+      this.cdr.detectChanges();
     })
   }
     
@@ -328,7 +349,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false
         }
@@ -344,7 +365,12 @@ export class PoolStatsComponent {
       stroke: {
         width: 2
       },
-      colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+      colors: this.getChartColorsArray('["--vz-success","--vz-danger"]'),
+      tooltip: {
+        x: {
+          formatter: (val: number) => formatChartTooltipDate(val)
+        }
+      }
     }
   }
 
@@ -384,7 +410,7 @@ export class PoolStatsComponent {
           "data": Object.entries(partialsByHour)
             .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
             .map(([datetime, count]) => ({
-              "x": new Date(datetime).toLocaleString(),
+              "x": new Date(datetime).getTime(),
               "y": count,
             }))
         }
@@ -402,6 +428,7 @@ export class PoolStatsComponent {
       this.chartPartialsHosts(
         Object.entries(hostCounts).map(([host, count]) => ({ host, count }))
       );
+      this.cdr.detectChanges();
     });
   }
 
@@ -428,7 +455,7 @@ export class PoolStatsComponent {
         text: "Loading..."
       },
       xaxis: {
-        type: 'date',
+        type: 'datetime',
         labels: {
           show: false,
         }
@@ -451,7 +478,7 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success"]'),
       tooltip: {
         x: {
-          format: 'dd/MM/yyyy HH:mm'
+          formatter: (val: number) => formatChartTooltipDate(val)
         },
         y: {
           formatter: function(val: number) {

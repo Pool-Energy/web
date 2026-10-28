@@ -2,13 +2,13 @@
 # docker build environment #
 ############################
 
-FROM node:22.19.0-bookworm AS build
+FROM node:26.12.1-bookworm AS build
 
 WORKDIR /build
 
 COPY . .
 
-RUN npm install --legacy-peer-deps && \
+RUN npm ci && \
     npm run build
 
 ############################

@@ -2,13 +2,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HorizontalComponent } from './horizontal.component';
 
+import { LayoutsModule } from '../layouts.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('HorizontalComponent', () => {
   let component: HorizontalComponent;
   let fixture: ComponentFixture<HorizontalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HorizontalComponent ]
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        LayoutsModule,
+      ],
     })
     .compileComponents();
   });

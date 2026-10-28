@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { InfoTeamComponent } from './info-team.component';
+
+import { PagesModule } from '../pages.module';
 
 describe('InfoTeamComponent', () => {
   let component: InfoTeamComponent;
@@ -8,7 +12,11 @@ describe('InfoTeamComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InfoTeamComponent]
+      imports: [
+        PagesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
     

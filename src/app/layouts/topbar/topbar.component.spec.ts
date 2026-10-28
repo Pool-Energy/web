@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { TopbarComponent } from './topbar.component';
+
+import { LayoutsModule } from '../layouts.module';
 
 describe('TopbarComponent', () => {
   let component: TopbarComponent;
@@ -8,7 +12,11 @@ describe('TopbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TopbarComponent ]
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        LayoutsModule,
+      ],
     })
     .compileComponents();
   });

@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ChiaComponent } from './chia.component';
+
+import { PagesModule } from '../pages.module';
 
 describe('ChiaComponent', () => {
   let component: ChiaComponent;
@@ -8,7 +12,11 @@ describe('ChiaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChiaComponent]
+      imports: [
+        PagesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
     

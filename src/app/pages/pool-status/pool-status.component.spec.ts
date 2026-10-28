@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PoolStatusComponent } from './pool-status.component';
+
+import { PagesModule } from '../pages.module';
 
 describe('PoolStatusComponent', () => {
   let component: PoolStatusComponent;
@@ -8,7 +12,11 @@ describe('PoolStatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PoolStatusComponent]
+      imports: [
+        PagesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
     

@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { BlocksComponent } from './blocks.component';
+
+import { PagesModule } from '../pages.module';
 
 describe('BlocksComponent', () => {
   let component: BlocksComponent;
@@ -8,7 +12,11 @@ describe('BlocksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BlocksComponent]
+      imports: [
+        PagesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
     

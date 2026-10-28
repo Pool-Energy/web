@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { DataService } from 'src/app/data.service';
@@ -32,7 +32,8 @@ export class BlocksComponent {
   blocksPerEffortChartData: any[] = [];
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.blocks$ = this._blocks$.asObservable();
   }
@@ -46,6 +47,7 @@ export class BlocksComponent {
     this.dataService.getStats().subscribe((data: any) => {
       this.estimate_win = this.secondsToHuman(data['estimate_win'] * 60);
       this.current_effort = (data['time_since_last_win'] / (data['estimate_win'] * 60)) * 180;
+      this.cdr.detectChanges();
     })
 
     this.dataService.getBlocks({
@@ -166,6 +168,7 @@ export class BlocksComponent {
     this._blocks$.next(data['results']);
     this.lastBlock = data['results'][0];
     this.chartBlocks(data);
+    this.cdr.detectChanges();
   }
 
   refreshBlocks() {

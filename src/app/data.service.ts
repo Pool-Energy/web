@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
@@ -40,7 +40,8 @@ export class DataService {
   private farmerSocket$?: WebSocketSubject<any>;
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private appRef: ApplicationRef,
   ) { }
 
   getStats() {
@@ -261,7 +262,12 @@ export class DataService {
   private _connectLive(path: string, subject: Subject<any>, unwrap: boolean = true): WebSocketSubject<any> {
     const socket$ = webSocket<any>({ url: this._wsUrl(path) });
     socket$.subscribe({
-      next: msg => subject.next(unwrap ? msg['payload'] : msg),
+      next: msg => {
+        subject.next(unwrap ? msg['payload'] : msg);
+        // See CdKickInterceptor: Angular 22 regression workaround, zone.js
+        // never triggers change detection after this async callback.
+        setTimeout(() => this.appRef.tick(), 0);
+      },
       error: err => console.error('error', err),
       complete: () => { }
     });

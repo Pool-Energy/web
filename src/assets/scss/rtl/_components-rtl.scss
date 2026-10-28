@@ -1,3 +1,5 @@
+@use "sass:map";
+@use "sass:color";
 //
 // _components-rtl.scss
 //
@@ -9,7 +11,7 @@ ul {
 
 // Margin and Padding
 
-@each $breakpoint in map-keys($grid-breakpoints) {
+@each $breakpoint in map.keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
@@ -100,7 +102,7 @@ ul {
 
 // Responsive alignment
 
-@each $breakpoint in map-keys($grid-breakpoints) {
+@each $breakpoint in map.keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
@@ -121,7 +123,7 @@ ul {
 
 // Float
 
-@each $breakpoint in map-keys($grid-breakpoints) {
+@each $breakpoint in map.keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
@@ -535,11 +537,11 @@ $value in $theme-colors {
 
             span {
                 &:before {
-                    border-right: 3px solid darken(($value), 15%);
+                    border-right: 3px solid color.adjust(($value), $lightness: -15%);
                 }
 
                 &:after {
-                    border-left: 3px solid darken(($value), 15%);
+                    border-left: 3px solid color.adjust(($value), $lightness: -15%);
                 }
             }
         }

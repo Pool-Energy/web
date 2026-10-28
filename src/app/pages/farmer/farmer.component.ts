@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { humanizer } from 'humanize-duration';
@@ -7,6 +7,7 @@ import { compare } from 'compare-versions';
 import { NgTerminal } from 'ng-terminal';
 
 import { DataService } from 'src/app/data.service';
+import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 import { tick } from '@angular/core/testing';
 
 
@@ -31,6 +32,7 @@ export class FarmerComponent implements AfterViewInit {
   // launcher
   launcher_id: any = null;
   launcher: any = {};
+  launcherLoaded: boolean = false;
 
   // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();
@@ -55,6 +57,7 @@ export class FarmerComponent implements AfterViewInit {
   partialsTable: any[] = [];
   partialsFiltered: any[] = [];
   partialsCollectionSize: number = 0;
+  partialsLoaded: boolean = false;
   partialsPage: number = 1;
   partialsPageSize: number = 100;
   partialsSuccessful: number = 0;
@@ -119,6 +122,7 @@ export class FarmerComponent implements AfterViewInit {
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.blocks$ = this._blocks$.asObservable();
     this.payoutaddrs$ = this._payoutaddrs$.asObservable();
@@ -135,11 +139,20 @@ export class FarmerComponent implements AfterViewInit {
 
     this.route.paramMap.subscribe(data => {
       this.launcher_id = data.get('id');
-      this.dataService.getLauncher(this.launcher_id).subscribe(launcher => {
-        this.launcher = launcher;
+      this.dataService.getLauncher(this.launcher_id).subscribe({
+        next: (launcher) => {
+          this.launcher = launcher;
+          this.launcherLoaded = true;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.launcherLoaded = true;
+          this.cdr.detectChanges();
+        }
       });
       this.dataService.getHarvesters({launcher: this.launcher_id}).subscribe(harvesters => {
         this.harvestersList = harvesters;
+        this.cdr.detectChanges();
       });
       this.dataService.getBlocks({launcher: this.launcher_id }).subscribe(data => {
         this.handleBlocks(data);
@@ -226,7 +239,8 @@ export class FarmerComponent implements AfterViewInit {
     obs.subscribe(
       (x) => { },
       (err) => { console.error("Something wrong occurred: " + err); },
-      () => this.difficultyAndPointsChart = {
+      () => {
+        this.difficultyAndPointsChart = {
         series: [
           {
             name: "Difficulty",
@@ -253,6 +267,7 @@ export class FarmerComponent implements AfterViewInit {
           enabled: true
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             show: false
           }
@@ -273,7 +288,14 @@ export class FarmerComponent implements AfterViewInit {
         stroke: {
           width: 2
         },
-        colors: this.getChartColorsArray('["--vz-success","--vz-info"]')
+        colors: this.getChartColorsArray('["--vz-success","--vz-info"]'),
+        tooltip: {
+          x: {
+            formatter: (val: number) => formatChartTooltipDate(val)
+          }
+        }
+        };
+        this.cdr.detectChanges();
       }
     );
   }
@@ -351,17 +373,21 @@ export class FarmerComponent implements AfterViewInit {
     this.harvesters.clear();
 
     var obs = new Observable(subscriber => {
-      this.dataService.getPartials(launcher_id, undefined, this.selectedDays).subscribe((data: any) => {
-        this.partialsCollectionSize = data['count'];
-        this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
+      this.dataService.getPartials(launcher_id, undefined, this.selectedDays).subscribe({
+        next: (data: any) => {
+          this.partialsCollectionSize = data['count'];
+          this.partialsLoaded = true;
+          this.handlePartials(subscriber, data, successes, errors, difficulty, points, hours);
+        },
+        error: (err) => subscriber.error(err)
       });
     });
 
     obs.subscribe(
       (x) => { },
-      (err) => { console.error("Something wrong occurred: " + err); },
+      (err) => { this.partialsLoaded = true; console.error("Something wrong occurred: " + err); },
       () => {
-        return [
+        const result = [
           this.partialsChart = {
             title: {
               text: "Partials successful & failed",
@@ -393,6 +419,7 @@ export class FarmerComponent implements AfterViewInit {
               enabled: false
             },
             xaxis: {
+              type: 'datetime',
               labels: {
                 show: false
               }
@@ -400,7 +427,12 @@ export class FarmerComponent implements AfterViewInit {
             stroke: {
               width: 2
             },
-            colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]')
+            colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]'),
+            tooltip: {
+              x: {
+                formatter: (val: number) => formatChartTooltipDate(val)
+              }
+            }
           },
           this.partialsTimetakenChart = {
             title: {
@@ -432,6 +464,7 @@ export class FarmerComponent implements AfterViewInit {
               enabled: false
             },
             xaxis: {
+              type: 'datetime',
               labels: {
                 show: false
               }
@@ -455,9 +488,16 @@ export class FarmerComponent implements AfterViewInit {
             stroke: {
               width: 2
             },
-            colors: this.getChartColorsArray('["--vz-info"]')
+            colors: this.getChartColorsArray('["--vz-info"]'),
+            tooltip: {
+              x: {
+                formatter: (val: number) => formatChartTooltipDate(val)
+              }
+            }
           }
-        ]
+        ];
+        this.cdr.detectChanges();
+        return result;
       }
     );
   }
@@ -498,6 +538,7 @@ export class FarmerComponent implements AfterViewInit {
           this.dataService.getHarvester({harvester: i['harvester']}).subscribe((h: any) => {
             harvester['version'] = h['results'][0]['version'] ? h['results'][0]['version'] : '';
             harvester['name'] = h['results'][0]['name'] ? h['results'][0]['name'] : '';
+            this.cdr.detectChanges();
           });
           this.harvestersTemp.set(i['harvester'], harvester);
         }
@@ -535,6 +576,7 @@ export class FarmerComponent implements AfterViewInit {
           enabled: false
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             show: false
           }
@@ -542,8 +584,14 @@ export class FarmerComponent implements AfterViewInit {
         stroke: {
           width: 2
         },
-        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]'),
+        tooltip: {
+          x: {
+            formatter: (val: number) => formatChartTooltipDate(val)
+          }
+        }
       }
+      this.cdr.detectChanges();
     });
   }
 
@@ -574,6 +622,7 @@ export class FarmerComponent implements AfterViewInit {
     this.blocksCollectionSize = data['count'];
     this._blocks$.next(data['results']);
     this.chartBlocks(data);
+    this.cdr.detectChanges();
   }
 
   private chartBlocks(data: any) {
@@ -669,6 +718,7 @@ export class FarmerComponent implements AfterViewInit {
   private handlePayouts(data: any) {
     this.payoutsCollectionSize = data['count'];
     this._payoutaddrs$.next(data['results']);
+    this.cdr.detectChanges();
   }
 
   refreshPayouts() {
@@ -683,6 +733,7 @@ export class FarmerComponent implements AfterViewInit {
     this.payouttxsCollectionSize = data['count'];
     this._payouttxs$.next(data['results']);
     this.chartPayouts(data);
+    this.cdr.detectChanges();
   }
 
   refreshPayoutTxs() {
@@ -813,6 +864,7 @@ export class FarmerComponent implements AfterViewInit {
           }
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             show: false
           }
@@ -820,8 +872,14 @@ export class FarmerComponent implements AfterViewInit {
         stroke: {
           width: 2
         },
-        colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
+        colors: this.getChartColorsArray('["--vz-warning","--vz-success"]'),
+        tooltip: {
+          x: {
+            formatter: (val: number) => formatChartTooltipDate(val)
+          }
+        }
       };
+      this.cdr.detectChanges();
     });
   }
 
@@ -857,6 +915,7 @@ export class FarmerComponent implements AfterViewInit {
     switch(msg['kind']) {
       case 'partial':
         this.handleLivePartial(msg['payload']);
+        this.cdr.detectChanges();
         break;
       case 'block':
         // A new block was farmed by this launcher: refresh the blocks tab

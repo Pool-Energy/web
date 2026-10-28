@@ -30,10 +30,16 @@ export class HorizontalTopbarComponent implements OnInit {
     // Auto-close the mobile menu (toggled via the 'menu' class on <body>,
     // see HorizontalComponent.onToggleMobileMenu()) after navigating to a
     // page, instead of leaving it open and covering the content.
+    // Also re-run the active-menu-item detection: it previously only ran
+    // once in ngAfterViewInit (this layout component is instantiated once
+    // for the whole app, not recreated per route), so top-level menu links
+    // (Farmers/Blocks/Rewards/Partials/...) never got highlighted again
+    // after the very first page load, on every subsequent in-app navigation.
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd)
     ).subscribe(() => {
       document.body.classList.remove('menu');
+      this.initActiveMenu();
     });
   }
 

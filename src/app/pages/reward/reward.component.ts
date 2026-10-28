@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -30,7 +30,8 @@ export class RewardComponent {
 
   constructor(
     private dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.rewardaddrs$ = this._rewardaddrs$.asObservable();
   }
@@ -55,6 +56,7 @@ export class RewardComponent {
 
       this.dataService.getReward(this.reward_id).subscribe((res) => {
         this.reward = res;
+        this.cdr.detectChanges();
       });
     });
   }
@@ -106,11 +108,13 @@ export class RewardComponent {
       },
       colors: this.getChartColorsArray('["--vz-primary"]')
     };
+    this.cdr.detectChanges();
   }
 
   private handleRewardAddrs(data: any) {
     this.rewardaddrsCollectionSize = data['count'];
     this._rewardaddrs$.next(data['results']);
+    this.cdr.detectChanges();
   }
 
   refreshRewardAddrs() {

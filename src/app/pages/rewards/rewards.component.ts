@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { DataService } from 'src/app/data.service';
@@ -28,7 +28,8 @@ export class RewardsComponent {
   rewardsChartData: any[] = [];
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.rewards$ = this._rewards$.asObservable();
   }
@@ -43,6 +44,7 @@ export class RewardsComponent {
       this.rewardsTotalClaimed = data['rewards_amount'] / (10 ** 12);
       this.rewardsTotalDistributed = (data['rewards_amount'] / (10 ** 12)) - data['fee'];
       this.rewardsTotalFee = (data['rewards_amount'] * data['fee']) / (10 ** 12);
+      this.cdr.detectChanges();
     })
 
     this.dataService.getRewards({
@@ -61,6 +63,7 @@ export class RewardsComponent {
         this.rewardsTotalClaimed = data['rewards_amount'] / (10 ** 12);
         this.rewardsTotalDistributed = (data['rewards_amount'] / (10 ** 12)) - data['fee'];
         this.rewardsTotalFee = (data['rewards_amount'] * data['fee']) / (10 ** 12);
+        this.cdr.detectChanges();
       });
       if(this.rewardsPage === 1) {
         this.dataService.getRewards({
@@ -80,6 +83,7 @@ export class RewardsComponent {
   private handleRewards(data: any) {
     this.rewardsCollectionSize = data['count'];
     this._rewards$.next(data['results']);
+    this.cdr.detectChanges();
   }
 
   refreshRewards() {
@@ -148,6 +152,7 @@ export class RewardsComponent {
       },
       colors: this.getChartColorsArray('["--vz-primary"]')
     };
+    this.cdr.detectChanges();
   }
 
 }

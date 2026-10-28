@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { InfoFaqComponent } from './info-faq.component';
+
+import { PagesModule } from '../pages.module';
 
 describe('InfoFaqComponent', () => {
   let component: InfoFaqComponent;
@@ -8,7 +12,11 @@ describe('InfoFaqComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InfoFaqComponent]
+      imports: [
+        PagesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
     

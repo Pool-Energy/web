@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { DataService } from 'src/app/data.service';
+import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 
 // Keep signage-point rows visible for 10 minutes: this comfortably covers
 // the pool's `partial_confirmation_delay` (Phase 2 confirmation window,
@@ -141,10 +142,23 @@ export class PartialsComponent implements OnInit, OnDestroy {
 
   private sweepTimer: any;
   private hardRefreshTimer: any;
+  private destroyed: boolean = false;
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) { }
+
+  // Angular 22 regression workaround (see CdKickInterceptor in
+  // core/interceptors): this page is entirely driven by a WebSocket stream
+  // and setInterval/setTimeout timers, neither of which go through the HTTP
+  // interceptor or the Router, so neither global safety net applies here.
+  // Guarded against firing after the component/view has been torn down
+  // (timers can still be in flight for one tick after ngOnDestroy).
+  private refresh() {
+    if(this.destroyed) { return; }
+    this.cdr.detectChanges();
+  }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -162,15 +176,18 @@ export class PartialsComponent implements OnInit, OnDestroy {
         const events = msg['payload'] as Array<any>;
         this.totalReceived += events.length;
         events.forEach((partial: any) => this.handlePartial(partial));
+        this.refresh();
         return;
       }
       if(this.paused) { return; }
       if(msg['kind'] === 'partial') {
         this.totalReceived++;
         this.handlePartial(msg['payload']);
+        this.refresh();
       } else if(msg['kind'] === 'block') {
         this.totalBlocks++;
         this.handleBlock(msg['payload']);
+        this.refresh();
       }
     });
 
@@ -183,9 +200,10 @@ export class PartialsComponent implements OnInit, OnDestroy {
         this.addToChart(partial.timestamp, this.classifyChartCategory(partial.error));
       });
       this.performChartRebuild();
+      this.refresh();
     });
 
-    this.sweepTimer = setInterval(() => { this.sweep(); this.performChartRebuild(); }, SWEEP_INTERVAL_MS);
+    this.sweepTimer = setInterval(() => { this.sweep(); this.performChartRebuild(); this.refresh(); }, SWEEP_INTERVAL_MS);
 
     // Safety net against long-running tab degradation/crashes (see
     // HARD_REFRESH_MS comment above): force a full page reload.
@@ -193,6 +211,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
     this.dataService.disconnectPartialsLive();
     if(this.sweepTimer) {
       clearInterval(this.sweepTimer);
@@ -230,12 +249,12 @@ export class PartialsComponent implements OnInit, OnDestroy {
 
   private flash(row: SPRow, field: FlashField) {
     row.flash[field] = true;
-    setTimeout(() => { row.flash[field] = false; }, FLASH_MS);
+    setTimeout(() => { row.flash[field] = false; this.refresh(); }, FLASH_MS);
   }
 
   private flashDetail(detail: PartialDetail) {
     detail.flash = true;
-    setTimeout(() => { detail.flash = false; }, FLASH_MS);
+    setTimeout(() => { detail.flash = false; this.refresh(); }, FLASH_MS);
   }
 
   // Upserts the detail entry for this partial on its row (creating it on
@@ -416,7 +435,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     if(!bucket) {
       bucket = {
         time: bucketTime,
-        label: new Date(bucketTime * 1000).toLocaleString(),
+        label: formatChartTooltipDate(bucketTime * 1000),
         valid: 0, pending: 0, red: 0, duplicate: 0,
       };
       this.chartBuckets.set(bucketTime, bucket);
@@ -467,6 +486,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.chartRebuildScheduled = false;
       this.performChartRebuild();
+      this.refresh();
     }, CHART_REBUILD_THROTTLE_MS);
   }
 
