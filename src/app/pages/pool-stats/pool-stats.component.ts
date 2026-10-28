@@ -115,7 +115,7 @@ export class PoolStatsComponent {
         "name": "Pool Size (TiB)",
         "data": (<any[]>d).filter(item => item['field'] == 'global').map((item) => {
           return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
+            "x": (new Date(item['datetime']).getTime()),
             "y": item['value'] / 1024 ** 4,
           })
         })
@@ -176,7 +176,7 @@ export class PoolStatsComponent {
         "name": "Full Percentage (%)",
         "data": (<any[]>d).filter(item => item['field'] == 'full_pct').map((item) => {
           return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
+            "x": (new Date(item['datetime']).getTime()),
             "y": item['value'],
           })
         })
@@ -237,7 +237,7 @@ export class PoolStatsComponent {
         "name": "Netspace Size (EiB)",
         "data": (<any[]>d).filter(item => item['field'] == 'size').map((item) => {
           return ({
-            "x": (new Date(item['datetime']).toLocaleString()),
+            "x": (new Date(item['datetime']).getTime()),
             "y": item['value'] / 1024 ** 4,
           })
         })
@@ -299,7 +299,7 @@ export class PoolStatsComponent {
           "name": "XCH Price ($)",
           "data": (<any[]>d).filter(item => item['field'] == 'usd').map((item) => {
             return ({
-              "x": (new Date(item['datetime']).toLocaleString()),
+              "x": (new Date(item['datetime']).getTime()),
               "y": item['value'],
             })
           })
@@ -389,7 +389,7 @@ export class PoolStatsComponent {
           "data": Object.entries(partialsByHour)
             .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
             .map(([datetime, count]) => ({
-              "x": new Date(datetime).toLocaleString(),
+              "x": new Date(datetime).getTime(),
               "y": count,
             }))
         }
