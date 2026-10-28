@@ -7,11 +7,9 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgxFilesizeModule } from 'ngx-filesize';
-import { defineElement } from '@lordicon/element';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbAccordionModule, NgbNavModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTerminalModule } from 'ng-terminal';
-import lottie from 'lottie-web';
 
 import { MaxLengthPipe } from './pipes/maxlength.pipe';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -74,8 +72,4 @@ import { JoinComponent } from './join/join.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
-export class PagesModule {
-  constructor() {
-    defineElement(lottie.loadAnimation);
-  }
-}
+export class PagesModule {}

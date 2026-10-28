@@ -38,15 +38,12 @@
               "node_modules/flatpickr/dist/flatpickr.css",
               "src/styles.scss",
               "node_modules/@ctrl/ngx-emoji-mart/picker.css",
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
               "src/assets/scss/config/material/bootstrap.scss",
               "src/assets/scss/config/material/app.scss",
               "src/assets/scss/icons.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/slick-carousel/slick/slick.min.js",
               "node_modules/apexcharts/dist/apexcharts.min.js"
             ],
             "allowedCommonJsDependencies": [
@@ -71,7 +68,6 @@
               "lodash.throttle",
               "rxjs/internal/operators",
               "moment",
-              "lottie-web",
               "ngx-lightbox",
               "ngx-masonry",
               "leaflet",
@@ -105,7 +101,12 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "."
-              ]
+              ],
+              "sass": {
+                "silenceDeprecations": [
+                  "import"
+                ]
+              }
             }
           },
           "configurations": {

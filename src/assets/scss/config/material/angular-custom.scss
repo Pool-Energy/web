@@ -1,3 +1,4 @@
+@use "sass:color";
 /*
 Template Name: Velzon - Admin & Dashboard Template
 Author: Themesbrand
@@ -511,7 +512,7 @@ File: Custom Css File
   }
 
   .ngx-slider-tick {
-    background: lighten($success, 40%) !important;
+    background: color.adjust($success, $lightness: 40%) !important;
 
     &.ngx-slider-selected {
       background: $success !important;
