@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataService } from 'src/app/data.service';
@@ -35,7 +35,8 @@ export class LoginComponent {
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +53,7 @@ export class LoginComponent {
           } else {
             this.loggingIn = false;
             this.error = true;
+            this.cdr.detectChanges();
           }
         })
       } else {
@@ -62,6 +64,7 @@ export class LoginComponent {
           error => {
             this.loggingIn = false;
             this.error = true;
+            this.cdr.detectChanges();
           }
         );
       }
@@ -73,9 +76,11 @@ export class LoginComponent {
     this.loggedIn = true;
     this.dataService.getLauncher(launcher_id).subscribe(launcher => {
       this.farmer = launcher;
+      this.cdr.detectChanges();
     });
     this.dataService.getHarvesters({launcher: launcher_id}).subscribe(harvesters => {
       this.harvesters = harvesters;
+      this.cdr.detectChanges();
     });
   }
 
@@ -108,6 +113,7 @@ export class LoginComponent {
         this.farmerPictureError = error.error?.farmer_picture;
         this.minPayoutError = error.error?.min_payout;
         this.customDifficultyError = error.error?.custom_difficulty
+        this.cdr.detectChanges();
       }
     );
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription, Observable, of, interval } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -22,7 +22,8 @@ export class JoinComponent {
   latencies: {[key: string]: number} = {};
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class JoinComponent {
       this.endpoints.forEach(endpoint => {
         this.pingLatency(endpoint.url).subscribe((latency: number) => {
           this.latencies[endpoint.url] = latency;
+          this.cdr.detectChanges();
         });
       });
     });

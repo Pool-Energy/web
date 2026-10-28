@@ -151,6 +151,7 @@ export class FarmerComponent implements AfterViewInit {
       });
       this.dataService.getHarvesters({launcher: this.launcher_id}).subscribe(harvesters => {
         this.harvestersList = harvesters;
+        this.cdr.detectChanges();
       });
       this.dataService.getBlocks({launcher: this.launcher_id }).subscribe(data => {
         this.handleBlocks(data);
@@ -237,7 +238,8 @@ export class FarmerComponent implements AfterViewInit {
     obs.subscribe(
       (x) => { },
       (err) => { console.error("Something wrong occurred: " + err); },
-      () => this.difficultyAndPointsChart = {
+      () => {
+        this.difficultyAndPointsChart = {
         series: [
           {
             name: "Difficulty",
@@ -285,6 +287,8 @@ export class FarmerComponent implements AfterViewInit {
           width: 2
         },
         colors: this.getChartColorsArray('["--vz-success","--vz-info"]')
+        };
+        this.cdr.detectChanges();
       }
     );
   }
@@ -515,6 +519,7 @@ export class FarmerComponent implements AfterViewInit {
           this.dataService.getHarvester({harvester: i['harvester']}).subscribe((h: any) => {
             harvester['version'] = h['results'][0]['version'] ? h['results'][0]['version'] : '';
             harvester['name'] = h['results'][0]['name'] ? h['results'][0]['name'] : '';
+            this.cdr.detectChanges();
           });
           this.harvestersTemp.set(i['harvester'], harvester);
         }
@@ -561,6 +566,7 @@ export class FarmerComponent implements AfterViewInit {
         },
         colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
       }
+      this.cdr.detectChanges();
     });
   }
 
@@ -591,6 +597,7 @@ export class FarmerComponent implements AfterViewInit {
     this.blocksCollectionSize = data['count'];
     this._blocks$.next(data['results']);
     this.chartBlocks(data);
+    this.cdr.detectChanges();
   }
 
   private chartBlocks(data: any) {
@@ -686,6 +693,7 @@ export class FarmerComponent implements AfterViewInit {
   private handlePayouts(data: any) {
     this.payoutsCollectionSize = data['count'];
     this._payoutaddrs$.next(data['results']);
+    this.cdr.detectChanges();
   }
 
   refreshPayouts() {
@@ -700,6 +708,7 @@ export class FarmerComponent implements AfterViewInit {
     this.payouttxsCollectionSize = data['count'];
     this._payouttxs$.next(data['results']);
     this.chartPayouts(data);
+    this.cdr.detectChanges();
   }
 
   refreshPayoutTxs() {
@@ -839,6 +848,7 @@ export class FarmerComponent implements AfterViewInit {
         },
         colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
       };
+      this.cdr.detectChanges();
     });
   }
 
@@ -874,6 +884,7 @@ export class FarmerComponent implements AfterViewInit {
     switch(msg['kind']) {
       case 'partial':
         this.handleLivePartial(msg['payload']);
+        this.cdr.detectChanges();
         break;
       case 'block':
         // A new block was farmed by this launcher: refresh the blocks tab

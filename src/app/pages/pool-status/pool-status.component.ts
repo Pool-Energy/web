@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { DataService } from 'src/app/data.service';
 
@@ -24,7 +24,8 @@ export class PoolStatusComponent {
   pool_nodes: Array<any> = new Array();
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +41,7 @@ export class PoolStatusComponent {
       this.blockchain_mempool_full_pct = data['blockchain_mempool_full_pct'] || 0;
       this.pool_wallets = data['pool_wallets'];
       this.pool_nodes = data['pool_nodes'];
+      this.cdr.detectChanges();
     });
 
     this.dataService.connectPoolStatus();
@@ -48,6 +50,7 @@ export class PoolStatusComponent {
       this.pool_nodes = data['nodes'];
       // blockchainShare needs `pool_space` (not part of the live payload,
       // computed server-side in /stats); left untouched until next full reload.
+      this.cdr.detectChanges();
     });
   }
 
