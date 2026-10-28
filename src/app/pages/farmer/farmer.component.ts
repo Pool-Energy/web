@@ -267,6 +267,7 @@ export class FarmerComponent implements AfterViewInit {
           enabled: true
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             show: false
           }
@@ -418,6 +419,7 @@ export class FarmerComponent implements AfterViewInit {
               enabled: false
             },
             xaxis: {
+              type: 'datetime',
               labels: {
                 show: false
               }
@@ -462,6 +464,7 @@ export class FarmerComponent implements AfterViewInit {
               enabled: false
             },
             xaxis: {
+              type: 'datetime',
               labels: {
                 show: false
               }
@@ -573,6 +576,7 @@ export class FarmerComponent implements AfterViewInit {
           enabled: false
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             show: false
           }
@@ -860,6 +864,7 @@ export class FarmerComponent implements AfterViewInit {
           }
         },
         xaxis: {
+          type: 'datetime',
           labels: {
             show: false
           }
