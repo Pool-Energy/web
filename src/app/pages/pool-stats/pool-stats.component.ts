@@ -3,6 +3,7 @@ import { expand } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { DataService } from 'src/app/data.service';
+import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 
 @Component({
     selector: 'app-pool-stats',
@@ -107,17 +108,6 @@ export class PoolStatsComponent {
     });
   }
 
-  // Formats a numeric ms timestamp (the x value used by all date-axis
-  // charts below) as "dd/MM/yyyy HH:mm", for the chart tooltip title.
-  // Using a formatter function instead of apexcharts' own `format`
-  // pattern string, which isn't reliably applied in this apexcharts
-  // version for `xaxis.type: 'datetime'` tooltips.
-  private formatTooltipDate(timestamp: number): string {
-    const d = new Date(timestamp);
-    const pad = (n: number) => n.toString().padStart(2, '0');
-    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  }
-
   // pool size
   getPoolSize(days: number) {
     this.dataService.getPoolSize(days).subscribe((d: any) => {
@@ -178,7 +168,7 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success"]'),
       tooltip: {
         x: {
-          formatter: (val: number) => this.formatTooltipDate(val)
+          formatter: (val: number) => formatChartTooltipDate(val)
         }
       }
     }
@@ -244,7 +234,7 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success"]'),
       tooltip: {
         x: {
-          formatter: (val: number) => this.formatTooltipDate(val)
+          formatter: (val: number) => formatChartTooltipDate(val)
         }
       }
     }
@@ -310,7 +300,7 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success"]'),
       tooltip: {
         x: {
-          formatter: (val: number) => this.formatTooltipDate(val)
+          formatter: (val: number) => formatChartTooltipDate(val)
         }
       }
     }
@@ -378,7 +368,7 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success","--vz-danger"]'),
       tooltip: {
         x: {
-          formatter: (val: number) => this.formatTooltipDate(val)
+          formatter: (val: number) => formatChartTooltipDate(val)
         }
       }
     }
@@ -488,7 +478,7 @@ export class PoolStatsComponent {
       colors: this.getChartColorsArray('["--vz-success"]'),
       tooltip: {
         x: {
-          formatter: (val: number) => this.formatTooltipDate(val)
+          formatter: (val: number) => formatChartTooltipDate(val)
         },
         y: {
           formatter: function(val: number) {

@@ -7,6 +7,7 @@ import { compare } from 'compare-versions';
 import { NgTerminal } from 'ng-terminal';
 
 import { DataService } from 'src/app/data.service';
+import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 import { tick } from '@angular/core/testing';
 
 
@@ -286,7 +287,12 @@ export class FarmerComponent implements AfterViewInit {
         stroke: {
           width: 2
         },
-        colors: this.getChartColorsArray('["--vz-success","--vz-info"]')
+        colors: this.getChartColorsArray('["--vz-success","--vz-info"]'),
+        tooltip: {
+          x: {
+            formatter: (val: number) => formatChartTooltipDate(val)
+          }
+        }
         };
         this.cdr.detectChanges();
       }
@@ -419,7 +425,12 @@ export class FarmerComponent implements AfterViewInit {
             stroke: {
               width: 2
             },
-            colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]')
+            colors: this.getChartColorsArray('["--vz-success","--vz-danger","--vz-warning"]'),
+            tooltip: {
+              x: {
+                formatter: (val: number) => formatChartTooltipDate(val)
+              }
+            }
           },
           this.partialsTimetakenChart = {
             title: {
@@ -474,7 +485,12 @@ export class FarmerComponent implements AfterViewInit {
             stroke: {
               width: 2
             },
-            colors: this.getChartColorsArray('["--vz-info"]')
+            colors: this.getChartColorsArray('["--vz-info"]'),
+            tooltip: {
+              x: {
+                formatter: (val: number) => formatChartTooltipDate(val)
+              }
+            }
           }
         ];
         this.cdr.detectChanges();
@@ -564,7 +580,12 @@ export class FarmerComponent implements AfterViewInit {
         stroke: {
           width: 2
         },
-        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]')
+        colors: this.getChartColorsArray('["--vz-success","--vz-danger"]'),
+        tooltip: {
+          x: {
+            formatter: (val: number) => formatChartTooltipDate(val)
+          }
+        }
       }
       this.cdr.detectChanges();
     });
@@ -846,7 +867,12 @@ export class FarmerComponent implements AfterViewInit {
         stroke: {
           width: 2
         },
-        colors: this.getChartColorsArray('["--vz-warning","--vz-success"]')
+        colors: this.getChartColorsArray('["--vz-warning","--vz-success"]'),
+        tooltip: {
+          x: {
+            formatter: (val: number) => formatChartTooltipDate(val)
+          }
+        }
       };
       this.cdr.detectChanges();
     });

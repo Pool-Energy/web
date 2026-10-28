@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { DataService } from 'src/app/data.service';
+import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 
 // Keep signage-point rows visible for 10 minutes: this comfortably covers
 // the pool's `partial_confirmation_delay` (Phase 2 confirmation window,
@@ -434,7 +435,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
     if(!bucket) {
       bucket = {
         time: bucketTime,
-        label: new Date(bucketTime * 1000).toLocaleString(),
+        label: formatChartTooltipDate(bucketTime * 1000),
         valid: 0, pending: 0, red: 0, duplicate: 0,
       };
       this.chartBuckets.set(bucketTime, bucket);
