@@ -66,5 +66,77 @@
         "GITHUB": "GitHub"
       }
     }
+  },
+  "FARMERS": {
+    "STATS": {
+      "DUST_STORM": "Dust storm détecté :",
+      "POOL_SPACE": "Espace du pool",
+      "ACTIVE_TOTAL_FARMERS": "Actifs / Total fermiers",
+      "EFFORT": "Effort actuel / moyen",
+      "ESTIMATE_TO_WIN": "Estimation pour gagner",
+      "CURRENT_FEE": "Frais actuel",
+      "XCH_PRICE": "Prix XCH",
+      "INFO": "Information",
+      "CHIA_DOC": "Documentation Blockchain Chia"
+    },
+    "LEADERBOARD": {
+      "TITLE": "Classement"
+    },
+    "LIST": {
+      "TITLE": "Liste des fermiers",
+      "ALL": "Tous les fermiers",
+      "LAUNCHER_ID": "ID du launcher",
+      "SINGLETON_PUZZLE_HASH": "Hash du puzzle singleton",
+      "POINTS": "Points (24 heures)",
+      "DIFFICULTY": "Difficulté",
+      "UTILIZATION_SPACE": "Espace d'utilisation",
+      "ESTIMATED_SPACE": "Espace estimé"
+    }
+  },
+  "FARMER": {
+    "STATS": {
+      "OFFLINE": "Hors ligne (pas de partials)",
+      "ONLINE": "En ligne",
+      "OFFLINE_LEFT": "Hors ligne (a quitté le pool)",
+      "ESTIMATED_SIZE": "Taille estimée",
+      "UTILIZATION_SPACE": "Espace d'utilisation"
+    },
+    "TABS": {
+      "OVERVIEW": "Vue d'ensemble",
+      "JOINED_AT": "Adhésion",
+      "POINTS": "Points (PPLNS)",
+      "DIFFICULTY": "Difficulté",
+      "ESTIMATE_TO_WIN": "Temps estimé pour gagner (ETW)",
+      "CURRENT_EFFORT": "Effort actuel",
+      "DIFFICULTY_POINTS": "Difficulté et points",
+      "PARTIALS": "Partiels",
+      "PARTIALS_24H": "Partiels (24h)",
+      "POINTS_24H": "Points (24h)",
+      "HARVESTER": "Harvesters",
+      "SUCCESSFUL_PARTIALS": "Partiels réussis",
+      "FAILED_PARTIALS": "Partiels échoués",
+      "PERFORMANCE": "Performance",
+      "SHOW_PARTIALS_FAILED_ONLY": "Afficher uniquement les partiels échoués",
+      "SHOW_PARTIALS_TOO_LATE_ONLY": "Afficher uniquement les partiels en retard"
+    }
+  },
+  "PARTIALS": {
+    "OVERVIEW": {
+      "TITLE": "Vue d'ensemble des partiels (tous les fermiers)"
+    },
+    "BUTTONS": {
+      "TOTAL_RECEIVED": "partiels",
+      "TOTAL_BLOCKS": "blocs"
+    },
+    "LIST": {
+      "TIME": "Heure",
+      "SIGNAGE_POINT": "Point de signalisation",
+      "TO_BE_VALIDATED": "À valider",
+      "VALID": "Valide",
+      "STALE": "Obsolète",
+      "DUPLICATE": "Dupliqué",
+      "INVALID": "Invalide",
+      "BLOCKS_FOUND": "Blocs trouvés"
+    }
   }
 }
