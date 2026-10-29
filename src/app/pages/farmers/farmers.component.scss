@@ -32,9 +32,15 @@
 
 .farmers-search {
     max-width: 320px;
+    display: flex;
+    align-items: center;
+
+    .input-group-text,
+    .form-control {
+        height: 34px;
+    }
 
     .form-control {
-        height: 38px;
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
     }
 }
