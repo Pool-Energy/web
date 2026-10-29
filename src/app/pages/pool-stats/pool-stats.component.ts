@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { expand } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 import { DataService } from 'src/app/data.service';
 import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
@@ -52,13 +53,14 @@ export class PoolStatsComponent {
   constructor(
     private dataService: DataService,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Pool' },
-      { label: 'Stats', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.POOL' },
+      { label: 'BREADCRUMBS.STATS', active: true }
     ];
 
     this.getPoolSize(this.poolSizeDays);
@@ -146,7 +148,7 @@ export class PoolStatsComponent {
         enabled: false
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         type: 'datetime',
@@ -212,7 +214,7 @@ export class PoolStatsComponent {
         enabled: false
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         type: 'datetime',
@@ -278,7 +280,7 @@ export class PoolStatsComponent {
         enabled: false
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         type: 'datetime',
@@ -346,7 +348,7 @@ export class PoolStatsComponent {
         enabled: false
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         type: 'datetime',
@@ -452,7 +454,7 @@ export class PoolStatsComponent {
         enabled: false
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         type: 'datetime',
@@ -515,7 +517,7 @@ export class PoolStatsComponent {
         }
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         labels: {
@@ -573,7 +575,7 @@ export class PoolStatsComponent {
         }
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         labels: {
@@ -631,7 +633,7 @@ export class PoolStatsComponent {
         }
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       xaxis: {
         labels: {

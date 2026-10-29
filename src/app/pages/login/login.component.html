@@ -1,4 +1,4 @@
-<app-breadcrumbs title="Settings" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.SETTINGS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- authentication failure -->
 @if (error) {
@@ -8,10 +8,10 @@
         <div class="card-body">
           <div class="col col-lg border-end">
             <div class="py-4 px-3" align="center">
-              <h5 class="text-muted text-uppercase fs-13">Authentication failure!</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'LOGIN.AUTH_FAILED_TITLE' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-grow-1 ms-3">
-                  <span>Authentication failure! Check your login URL and try again.</span>
+                  <span>{{ 'LOGIN.AUTH_FAILED_DESC' | translate }}</span>
                 </div>
               </div>
             </div>
@@ -52,14 +52,14 @@
       </div>
       <div class="col">
         <div class="p-2">
-          <h3 class="text-white mb-1">{{ farmer?.name || 'Undefined' }}</h3>
+          <h3 class="text-white mb-1">{{ farmer?.name || ('COMMON.UNDEFINED' | translate) }}</h3>
           <p class="text-white text-opacity-75">{{ farmer?.launcher_id }}</p>
           <div class="hstack text-white-50 gap-1">
             @if (farmer?.is_pool_member) {
-              <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+              <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{ 'COMMON.ONLINE' | translate }}</div>
             }
             @if (!farmer?.is_pool_member) {
-              <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline</div>
+              <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{ 'COMMON.OFFLINE' | translate }}</div>
             }
           </div>
         </div>
@@ -77,7 +77,7 @@
           <ul ngbNav #Light="ngbNav" [activeId]="1" class="nav nav-pills nav-custom nav-custom-light mb-3">
             <!-- global -->
             <li [ngbNavItem]="1">
-              <a ngbNavLink>Global</a>
+              <a ngbNavLink>{{ 'LOGIN.GLOBAL' | translate }}</a>
               <ng-template ngbNavContent>
                 <div class="row">
                   <div class="col-xl-12">
@@ -88,13 +88,13 @@
                           <!-- farmer name -->
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Farmer Name</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'LOGIN.FARMER_NAME' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-group-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <input class="form-control" type="text" #farmerName [value]="farmer?.name" placeholder="(not set)" />
+                                  <input class="form-control" type="text" #farmerName [value]="farmer?.name" placeholder="{{ 'LOGIN.NOT_SET' | translate }}" />
                                 </div>
                                 @if (farmerNameError) {
                                   <div class="alert alert-danger" role="alert">
@@ -107,13 +107,13 @@
                           <!-- farmer email -->
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Farmer Email</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'LOGIN.FARMER_EMAIL' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-mail-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <input class="form-control" type="text" #farmerEmail [value]="farmer?.email" placeholder="(not set)" />
+                                  <input class="form-control" type="text" #farmerEmail [value]="farmer?.email" placeholder="{{ 'LOGIN.NOT_SET' | translate }}" />
                                 </div>
                                 @if (farmerEmailError) {
                                   <div class="alert alert-danger" role="alert">
@@ -126,7 +126,7 @@
                           <!-- farmer picture -->
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Farmer Picture</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'LOGIN.FARMER_PICTURE' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-image-line display-6 text-muted"></i>
@@ -151,13 +151,13 @@
                           <!--  minimum payout -->
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Minimum Payout (XCH)</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'LOGIN.MIN_PAYOUT' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-wallet-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <input class="form-control" type="input" #minPayout [value]="farmer?.minimum_payout / 1000000000000" maxlength="14" placeholder="(not set)" />
+                                  <input class="form-control" type="input" #minPayout [value]="farmer?.minimum_payout / 1000000000000" maxlength="14" placeholder="{{ 'LOGIN.NOT_SET' | translate }}" />
                                 </div>
                                 @if (minPayoutError) {
                                   <div class="alert alert-danger" role="alert">
@@ -170,7 +170,7 @@
                           <!--  custom difficulty -->
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Difficulty</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.DIFFICULTY' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-blaze-line display-6 text-muted"></i>
@@ -180,13 +180,13 @@
                                     class="form-control" #customDifficulty
                                     (change)="setUserDefinedDifficulty($event)"
                                     [value]="farmer.custom_difficulty?.split(':')[0] || 'MEDIUM'">
-                                    <option value="LOWEST">Lowest - Double of partials sent per day</option>
-                                    <option value="LOW">Low - 50% more partials sent per day</option>
-                                    <option value="MEDIUM">Default - Around 600 partials sent per day</option>
-                                    <option value="HIGH">High - 25% less partials sent per day</option>
-                                    <option value="HIGHEST">Highest - 50% less partials sent per day</option>
-                                    <option value="CUSTOM">Custom - Number of partials sent per day</option>
-                                    <option value="EXPERT">Expert - Set manual difficulty (warning)</option>
+                                    <option value="LOWEST">{{ 'LOGIN.DIFF_LOWEST' | translate }}</option>
+                                    <option value="LOW">{{ 'LOGIN.DIFF_LOW' | translate }}</option>
+                                    <option value="MEDIUM">{{ 'LOGIN.DIFF_MEDIUM' | translate }}</option>
+                                    <option value="HIGH">{{ 'LOGIN.DIFF_HIGH' | translate }}</option>
+                                    <option value="HIGHEST">{{ 'LOGIN.DIFF_HIGHEST' | translate }}</option>
+                                    <option value="CUSTOM">{{ 'LOGIN.DIFF_CUSTOM' | translate }}</option>
+                                    <option value="EXPERT">{{ 'LOGIN.DIFF_EXPERT' | translate }}</option>
                                     {{ farmer.custom_difficulty?.split(':')[0] }}
                                   </select>
                                   <input
@@ -215,13 +215,13 @@
                           <div class="col col-lg border-end">
                             @for (harvester of harvesters.results; track harvester) {
                               <div class="py-4 px-3">
-                                <h5 class="text-muted text-uppercase fs-13">Harvester {{ harvester.harvester }} ({{ harvester.version }})</h5>
+                                <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.HARVESTER' | translate }} {{ harvester.harvester }} ({{ harvester.version }})</h5>
                                 <div class="d-flex align-items-center">
                                   <div class="flex-shrink-0">
                                     <i class="ri-window-line display-6 text-muted"></i>
                                   </div>
                                   <div class="flex-grow-1 ms-3">
-                                    <input class="form-control" type="text" [(ngModel)]="harvester.name" placeholder="Enter harvester name">
+                                    <input class="form-control" type="text" [(ngModel)]="harvester.name" placeholder="{{ 'LOGIN.HARVESTER_RENAME_PLACEHOLDER' | translate }}">
                                   </div>
                                 </div>
                               </div>
@@ -232,13 +232,11 @@
                     </div>
                     <!-- form submit -->
                     <div class="col-12" align="center">
-                      <button type="input" value="save" class="btn btn-primary" (click)="saveSettings()">Save settings</button>
+                      <button type="input" value="save" class="btn btn-primary" (click)="saveSettings()">{{ 'LOGIN.SAVE' | translate }}</button>
                     </div>
                     <div class="col-12" align="center">
                       @if (customDifficultyError) {
-                        <div class="alert alert-danger alert-global-save" role="alert">
-                          An error occurred in one of the parameters. Please check the form and try again.
-                        </div>
+                        <div class="alert alert-danger alert-global-save" role="alert">{{ 'LOGIN.SAVE_ERROR' | translate }}</div>
                       }
                     </div>
                   </div>

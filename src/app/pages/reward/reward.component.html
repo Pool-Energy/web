@@ -1,4 +1,4 @@
-<app-breadcrumbs title="Reward" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.REWARDS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- stats -->
 <div class="row">
@@ -8,7 +8,7 @@
         <div class="row row-cols-md-3 row-cols-1">
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Datetime</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.DATETIME' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-time-line display-6 text-muted"></i>
@@ -21,7 +21,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Block height</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'REWARD.BLOCK_HEIGHT' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-stack-line display-6 text-muted"></i>
@@ -36,7 +36,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Amount</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.AMOUNT' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-coin-line display-6 text-muted"></i>
@@ -49,7 +49,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Fee</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.FEE' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-exchange-line display-6 text-muted"></i>
@@ -90,7 +90,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'REWARD.FARMERS_LIST' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
@@ -98,12 +98,12 @@
             <table class="table align-middle table-nowrap table-striped-columns mb-0">
               <thead class="table-light">
                 <tr>
-                  <th scope="col">Reward ID</th>
-                  <th scope="col">Launcher ID</th>
-                  <th scope="col">Transaction</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col" style="width: 150px;">Price</th>
-                  <th scope="col" style="width: 150px;">State</th>
+                  <th scope="col">{{ 'REWARD.REWARD_ID' | translate }}</th>
+                  <th scope="col">{{ 'REWARD.LAUNCHER_ID' | translate }}</th>
+                  <th scope="col">{{ 'COMMON.TRANSACTION' | translate }}</th>
+                  <th scope="col">{{ 'COMMON.AMOUNT' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'COMMON.PRICE' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'COMMON.STATE' | translate }}</th>
                 </tr>
               </thead>
               @if ((rewardaddrs$ | async); as rewardaddrs;) {
@@ -115,7 +115,7 @@
                         <td><a [routerLink]="['/farmer', rewardaddr.launcher?.launcher_id ]">{{ (rewardaddr.launcher?.name || rewardaddr.launcher?.launcher_id || '-') }}</a></td>
                       }
                       @if (rewardaddr.launcher?.launcher_id === null) {
-                        <td><i class="ri-information-line"></i> Pool fee</td>
+                        <td><i class="ri-information-line"></i> {{ 'REWARD.POOL_FEE' | translate }}</td>
                       }
                       <td>{{ rewardaddr.transaction?.transaction }}</td>
                       <td>{{ rewardaddr.amount / 1000000000000 }} XCH</td>
@@ -125,18 +125,18 @@
                           ${{ rewardaddr.transaction.xch_price.usd * (rewardaddr.amount / 1000000000000) | number }} USD</span>
                         }
                         @if (!rewardaddr.transaction || !rewardaddr.transaction.xch_price) {
-                          <span>Unknown</span>
+                          <span>{{ 'COMMON.UNKNOWN' | translate }}</span>
                         }
                       </td>
                       <td>
                         @if (rewardaddr.transaction?.transaction) {
                           <span>
-                            <span class="badge bg-success-subtle text-success">Confirmed</span>
+                            <span class="badge bg-success-subtle text-success">{{ 'COMMON.CONFIRMED' | translate }}</span>
                           </span>
                         }
                         @if (!rewardaddr.transaction?.transaction) {
                           <span>
-                            <span class="badge bg-warning-subtle text-warning">Pending</span>
+                            <span class="badge bg-warning-subtle text-warning">{{ 'COMMON.PENDING' | translate }}</span>
                           </span>
                         }
                       </td>

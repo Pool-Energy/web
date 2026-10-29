@@ -5,6 +5,8 @@ import { humanizer } from 'humanize-duration';
 
 import { DataService } from 'src/app/data.service';
 
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
     selector: 'app-farmers',
     templateUrl: './farmers.component.html',
@@ -54,6 +56,7 @@ export class FarmersComponent {
   blocks$: Observable<any[]>;
 
   constructor(
+    private translate: TranslateService,
     private dataService: DataService,
     private cdr: ChangeDetectorRef,
   ) {
@@ -63,8 +66,8 @@ export class FarmersComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Farmers', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.FARMERS', active: true }
     ];
 
     this.dataService.getStats().subscribe((data: any) => {
@@ -134,7 +137,8 @@ export class FarmersComponent {
   humanize(seconds: number) {
     var h = humanizer();
     return h(seconds, {
-      language: "en",
+      // humanize-duration expects zh_CN for Chinese
+      language: this.translate.currentLang === 'zh' ? 'zh_CN' : (this.translate.currentLang || 'en'),
       units: ["h", "m"],
       largest: 2
     });

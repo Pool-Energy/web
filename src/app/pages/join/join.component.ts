@@ -28,8 +28,8 @@ export class JoinComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Join', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.JOIN', active: true }
     ];
 
     this.pingSubscription = interval(2000).subscribe(() => {

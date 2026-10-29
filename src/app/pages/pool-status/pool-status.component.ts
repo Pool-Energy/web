@@ -30,9 +30,9 @@ export class PoolStatusComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/'},
-      { label: 'Pool' },
-      { label: 'Status', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/'},
+      { label: 'BREADCRUMBS.POOL' },
+      { label: 'BREADCRUMBS.STATUS', active: true }
     ];
 
     this.dataService.getStats().subscribe((data: any) => {
