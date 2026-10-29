@@ -113,11 +113,14 @@
       "PARTIALS_24H": "Partials (24h)",
       "POINTS_24H": "Points (24h)",
       "HARVESTER": "Harvester(s)",
+      "HARVESTERS": "Harvesters",
       "SUCCESSFUL_PARTIALS": "Successful Partials",
       "FAILED_PARTIALS": "Failed Partials",
       "PERFORMANCE": "Performance",
       "SHOW_PARTIALS_FAILED_ONLY": "Show partials failed only",
-      "SHOW_PARTIALS_TOO_LATE_ONLY": "Show partials too late only"
+      "SHOW_PARTIALS_TOO_LATE_ONLY": "Show partials too late only",
+      "BLOCKS": "Blocks",
+      "REWARDS": "Rewards"
     }
   },
   "PARTIALS": {
