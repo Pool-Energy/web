@@ -1,11 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbDropdownModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { SimplebarAngularModule } from 'simplebar-angular';
-import { NgPipesModule } from 'ngx-pipes';
+import { FormsModule } from '@angular/forms';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbAccordionModule, NgbNavModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
@@ -52,16 +48,9 @@ import { JoinComponent } from './join/join.component';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    NgbDropdownModule,
     NgbPaginationModule,
-    NgbTypeaheadModule,
-    FlatpickrModule,
     PagesRoutingModule,
     SharedModule,
-    SimplebarAngularModule,
-    NgPipesModule,
     NgxFilesizeModule,
     NgApexchartsModule,
     NgbAccordionModule,

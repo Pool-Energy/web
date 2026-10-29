@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
@@ -11,9 +10,6 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
   ],
   imports: [
     CommonModule,
-    NgbNavModule,
-    NgbAccordionModule,
-    NgbDropdownModule,
     RouterModule,
   ],
   exports: [
