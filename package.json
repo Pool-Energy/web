@@ -56,7 +56,7 @@
     "ng-otp-input": "^1.9.3",
     "ng-terminal": "^6.5.0",
     "ng2-charts": "^11.0.0",
-    "ngx-color-picker": "^16.0.0",
+    "ngx-color-picker": "^20.1.1",
     "ngx-cookie-service": "^22.0.0",
     "ngx-csv": "^0.3.2",
     "ngx-drag-drop": "^22.1.0",
