@@ -4,7 +4,7 @@
 @if (blockchain_duststorm) {
   <div class="alert alert-warning alert-border-left" role="alert">
     <i class="ri-windy-line me-1"></i>
-    <strong>Dust storm detected:</strong> the Chia mempool is currently very congested ({{ blockchain_mempool_full_pct }}% full).
+    <strong>{{ 'FARMERS.STATS.DUST_STORM' | translate }}</strong> the Chia mempool is currently very congested ({{ blockchain_mempool_full_pct }}% full).
     Transaction fees may be temporarily required, and payout/absorb timing could be delayed.
   </div>
 }
@@ -29,7 +29,7 @@
         <div class="row row-cols-md-3 row-cols-1">
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Pool Space</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMERS.STATS.POOL_SPACE' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-earth-line display-6 text-muted"></i>
@@ -42,7 +42,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Active / Total farmers</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMERS.STATS.ACTIVE_TOTAL_FARMERS' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-group-line display-6 text-muted"></i>
@@ -55,7 +55,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Effort current / average</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMERS.STATS.EFFORT' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-scales-line display-6 text-muted"></i>
@@ -68,7 +68,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Estimate To Win</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMERS.STATS.ESTIMATE_TO_WIN' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-heart-line display-6 text-muted"></i>
@@ -81,7 +81,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Current fee</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMERS.STATS.CURRENT_FEE' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-coin-line display-6 text-muted"></i>
@@ -94,7 +94,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">XCH Price</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMERS.STATS.XCH_PRICE' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-price-tag-line display-6 text-muted"></i>
@@ -117,10 +117,10 @@
 @if (chia_consensus_fork_enabled && chia_consensus_fork_percent >= 98.5 && chia_consensus_fork_percent <= 100.0) {
   <div
     class="alert alert-{{ chia_consensus_fork_class }} alert-border-left alert-dismissible fade show" role="alert">
-    <i class="ri-alert-line me-3 align-middle"></i> <strong>Information:</strong>
+    <i class="ri-alert-line me-3 align-middle"></i> <strong>{{ 'FARMERS.STATS.INFO' | translate }}:</strong>
     Current block: {{ chia_consensus_fork_current_block }}. Next halving block: {{ chia_consensus_fork_block }}.
     Progression: <strong>{{ chia_consensus_fork_percent | number:".2-2" }}%</strong>.
-    For more details, please visit <a href="https://docs.chia.net/consensus-forks/" target="_blank">Chia Blockchain documentation</a>.
+    For more details, please visit <a href="https://docs.chia.net/consensus-forks/" target="_blank">{{ 'FARMERS.STATS.CHIA_DOC' | translate }}</a>.
   </div>
 }
 
@@ -129,7 +129,7 @@
   <div class="col-xl-12">
     <div class="card crm-widget">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Leaderboard</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'FARMERS.LEADERBOARD.TITLE' | translate }}</h4>
       </div>
       <div class="card-body p-0">
         <div class="row row-cols-md-3 row-cols-1">
@@ -159,11 +159,11 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Farmers List</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'FARMERS.LIST.TITLE' | translate }}</h4>
         <div class="form-check form-switch me-3">
           <input class="form-check-input" type="checkbox" role="switch" id="show_all_farmers"
             (change)="toggleShowAllFarmers($event)" [checked]="show_all_farmers">
-          <label class="form-check-label" for="show_all_farmers">All farmers</label>
+          <label class="form-check-label" for="show_all_farmers">{{ 'FARMERS.LIST.ALL' | translate }}</label>
         </div>
         <div class="ms-auto">
           <div class="input-group farmers-search">
@@ -181,12 +181,12 @@
                 <tr>
                   <th scope="col" style="width: 10px;">#</th>
                   <th scope="col" style="width: 30px;"></th>
-                  <th scope="col" style="width: 400px;">Launcher ID</th>
-                  <th scope="col" style="width: 300px;">Singleton Puzzle Hash</th>
-                  <th scope="col" style="width: 100px;">Points (24 hours)</th>
-                  <th scope="col" style="width: 100px;">Difficulty</th>
-                  <th scope="col" style="width: 150px;">Utilization Space</th>
-                  <th scope="col" style="width: 150px;">Estimated Space</th>
+                  <th scope="col" style="width: 400px;">{{ 'FARMERS.LIST.LAUNCHER_ID' | translate }}</th>
+                  <th scope="col" style="width: 300px;">{{ 'FARMERS.LIST.SINGLETON_PUZZLE_HASH' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'FARMERS.LIST.POINTS' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'FARMERS.LIST.DIFFICULTY' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'FARMERS.LIST.UTILIZATION_SPACE' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'FARMERS.LIST.ESTIMATED_SPACE' | translate }}</th>
                 </tr>
               </thead>
               <tbody>

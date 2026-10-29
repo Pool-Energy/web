@@ -34,14 +34,14 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header d-flex flex-wrap align-items-center gap-2">
-        <h4 class="card-title mb-0 flex-grow-1">Partials overview (all farmers)</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'PARTIALS.OVERVIEW.TITLE' | translate }}</h4>
         <div class="d-flex flex-wrap align-items-center gap-2">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-soft-info btn-sm" disabled>
-              <i class="ri-file-list-3-line align-middle"></i> {{ totalReceived }} partials
+              <i class="ri-file-list-3-line align-middle"></i> {{ totalReceived }} {{ 'PARTIALS.BUTTONS.TOTAL_RECEIVED' | translate }}
             </button>
             <button type="button" class="btn btn-soft-primary btn-sm" disabled>
-              <i class="ri-trophy-line align-middle"></i> {{ totalBlocks }} blocks
+              <i class="ri-trophy-line align-middle"></i> {{ totalBlocks }} {{ 'PARTIALS.BUTTONS.TOTAL_BLOCKS' | translate }}
             </button>
           </div>
           <div class="btn-group" role="group">
@@ -65,15 +65,14 @@
           <table class="table align-middle table-nowrap table-striped-columns mb-0">
             <thead class="table-light">
               <tr>
-                <th scope="col"></th>
-                <th scope="col">Time</th>
-                <th scope="col">Signage point</th>
-                <th scope="col" class="text-center">To be validated</th>
-                <th scope="col" class="text-center">Valid</th>
-                <th scope="col" class="text-center">Stale</th>
-                <th scope="col" class="text-center">Duplicate</th>
-                <th scope="col" class="text-center">Invalid</th>
-                <th scope="col" class="text-center">Blocks found</th>
+                <th scope="col">{{ 'PARTIALS.LIST.TIME' | translate }}</th>
+                <th scope="col">{{ 'PARTIALS.LIST.SIGNAGE_POINT' | translate }}</th>
+                <th scope="col" class="text-center">{{ 'PARTIALS.LIST.TO_BE_VALIDATED' | translate }}</th>
+                <th scope="col" class="text-center">{{ 'PARTIALS.LIST.VALID' | translate }}</th>
+                <th scope="col" class="text-center">{{ 'PARTIALS.LIST.STALE' | translate }}</th>
+                <th scope="col" class="text-center">{{ 'PARTIALS.LIST.DUPLICATE' | translate }}</th>
+                <th scope="col" class="text-center">{{ 'PARTIALS.LIST.INVALID' | translate }}</th>
+                <th scope="col" class="text-center">{{ 'PARTIALS.LIST.BLOCKS_FOUND' | translate }}</th>
               </tr>
             </thead>
             <tbody>

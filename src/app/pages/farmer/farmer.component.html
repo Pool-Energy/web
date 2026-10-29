@@ -56,16 +56,16 @@
             @if (launcher.is_pool_member) {
               <div>
                 @if (partialsCollectionSize == 0) {
-                  <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (no partials)</div>
+                  <div><i class="ri-error-warning-line ri-error-warning-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{ 'FARMER.STATS.OFFLINE' | translate }}</div>
                 }
                 @if (partialsCollectionSize > 0) {
-                  <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Online</div>
+                  <div><i class="ri-checkbox-circle-line ri-checkbox-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{ 'FARMER.STATS.ONLINE' | translate }}</div>
                 }
               </div>
             }
             @if (!launcher.is_pool_member) {
               <div>
-                <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>Offline (left the pool)
+                <i class="ri-close-circle-line ri-close-circle-colored me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{ 'FARMER.STATS.OFFLINE_LEFT' | translate }}
               </div>
             }
           }
@@ -77,13 +77,13 @@
         <div class="col-lg-6 col-4 banner-right-details">
           <div class="p-2">
             <h4 class="text-white mb-1">{{ launcher.estimated_size || 0 | filesize:{"base": 2, "standard": "iec"} }}</h4>
-            <p class="fs-14 mb-0">Estimated Size</p>
+            <p class="fs-14 mb-0">{{ 'FARMER.STATS.ESTIMATED_SIZE' | translate }}</p>
           </div>
         </div>
         <div class="col-lg-6 col-4 banner-right-details">
           <div class="p-2">
             <h4 class="text-white mb-1">{{ launcher.share_pplns * 100 | number:"2.3" }}%</h4>
-            <p class="fs-14 mb-0">Utilization Space</p>
+            <p class="fs-14 mb-0">{{ 'FARMER.STATS.UTILIZATION_SPACE' | translate }}</p>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
 
           <!-- overview -->
           <li [ngbNavItem]="1" (click)="refreshLauncherSize(launcher_id); refreshPartials(launcher_id)">
-            <a ngbNavLink>Overview</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.OVERVIEW' | translate }}</a>
             <ng-template ngbNavContent>
               <!-- launcher overview -->
               <div class="row">
@@ -110,7 +110,7 @@
                       <div class="row row-cols-md-3 row-cols-1">
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Joined At</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.JOINED_AT' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-user-line display-6 text-muted"></i>
@@ -123,7 +123,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Points (PPLNS)</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.POINTS_24H' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-pencil-line display-6 text-muted"></i>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Difficulty</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.DIFFICULTY' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-shield-line display-6 text-muted"></i>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Estimated Time to Win (ETW)</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.ESTIMATE_TO_WIN' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-bubble-chart-line display-6 text-muted"></i>
@@ -184,7 +184,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.CURRENT_EFFORT' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-bubble-chart-line display-6 text-muted"></i>
@@ -244,7 +244,7 @@
                   <div class="col-xxl-12">
                     <div class="card">
                       <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Difficulty & Points</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">{{ 'FARMER.TABS.DIFFICULTY_POINTS' | translate }}</h4>
                       </div>
                       <div class="card-body">
                         <div class="live-preview">
@@ -281,7 +281,7 @@
 
           <!-- partials -->
           <li [ngbNavItem]="2" (click)="refreshPartials(launcher_id)">
-            <a ngbNavLink>Partials</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.PARTIALS' | translate }}</a>
             <ng-template ngbNavContent>
               <!-- stats -->
               <div class="row">
@@ -291,7 +291,7 @@
                       <div class="row row-cols-md-3 row-cols-1">
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Partials (24h)</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.PARTIALS_24H' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-stack-line display-6 text-muted"></i>
@@ -304,7 +304,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Points (24h)</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.POINTS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-pencil-line display-6 text-muted"></i>
@@ -317,7 +317,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Harvester(s)</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.HARVESTER' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-computer-line display-6 text-muted"></i>
@@ -330,7 +330,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Successful Partials</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.SUCCESSFUL_PARTIALS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-checkbox-circle-line display-6 text-muted"></i>
@@ -343,7 +343,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Failed Partials</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.FAILED_PARTIALS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-error-warning-line display-6 text-muted"></i>
@@ -356,7 +356,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Performance</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.PERFORMANCE' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-line-chart-line display-6 text-muted"></i>
@@ -450,13 +450,13 @@
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <div class="d-flex align-items-center gap-3">
                     <div class="form-check form-switch form-switch-left form-switch-md">
-                      <label for="partials-failed-only" class="form-label text-muted">Show partials failed only</label>
+                      <label for="partials-failed-only" class="form-label text-muted">{{ 'FARMER.TABS.SHOW_PARTIALS_FAILED_ONLY' | translate }}</label>
                       <input class="form-check-input code-switcher" type="checkbox" id="partials-failed-only"
                         (click)="togglePartialsFailed($event)"
                         [checked]="partialsShowFailed">
                     </div>
                     <div class="form-check form-switch form-switch-left form-switch-md">
-                      <label for="partials-too-late-only" class="form-label text-muted">Show partials too late only</label>
+                      <label for="partials-too-late-only" class="form-label text-muted">{{ 'FARMER.TABS.SHOW_PARTIALS_TOO_LATE_ONLY' | translate }}</label>
                       <input class="form-check-input code-switcher" type="checkbox" id="partials-too-late-only"
                         (click)="togglePartialsTooLate($event)"
                         [checked]="partialsShowTooLate">
@@ -743,7 +743,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Current Effort</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.CURRENT_EFFORT' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-scales-line display-6 text-muted"></i>
