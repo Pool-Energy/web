@@ -1,4 +1,4 @@
-<app-breadcrumbs title="Blocks" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.BLOCKS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- stats -->
 <div class="row">
@@ -8,7 +8,7 @@
         <div class="row row-cols-md-3 row-cols-1">
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Total blocks found</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'BLOCKS.TOTAL_BLOCKS_FOUND' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-trophy-line display-6 text-muted"></i>
@@ -21,7 +21,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Est. time per block</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'BLOCKS.EST_TIME_PER_BLOCK' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-time-line display-6 text-muted"></i>
@@ -34,7 +34,7 @@
           </div>
           <div class="col col-lg border-end">
             <div class="py-4 px-3">
-              <h5 class="text-muted text-uppercase fs-13">Current effort</h5>
+              <h5 class="text-muted text-uppercase fs-13">{{ 'BLOCKS.CURRENT_EFFORT' | translate }}</h5>
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-scales-line display-6 text-muted"></i>
@@ -56,14 +56,14 @@
   <div class="col-xxl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Blocks Charts</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'BLOCKS.CHART_TITLE' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
           <div ngbAccordion>
             <div ngbAccordionItem id="per-day" [collapsed]="false">
               <h2 ngbAccordionHeader class="accordion-header border-0 bg-transparent">
-                <button ngbAccordionButton> Blocks per day</button>
+                <button ngbAccordionButton> {{ 'BLOCKS.BLOCKS_PER_DAY' | translate }}</button>
               </h2>
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody>
@@ -83,7 +83,7 @@
             </div>
             <div ngbAccordionItem id="per-effort">
               <h2 ngbAccordionHeader class="accordion-header border-0 bg-transparent">
-                <button ngbAccordionButton> Blocks per effort</button>
+                <button ngbAccordionButton> {{ 'BLOCKS.BLOCKS_PER_EFFORT' | translate }}</button>
               </h2>
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody>
@@ -114,7 +114,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Blocks Found</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'BLOCKS.TITLE_FOUND' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
@@ -122,14 +122,14 @@
             <table class="table align-middle table-nowrap table-striped-columns mb-0">
               <thead class="table-light">
                 <tr>
-                  <th scope="col" style="width: 150px;">Height</th>
-                  <th scope="col" style="width: 250px;">Date</th>
-                  <th scope="col" style="width: 300px;">Farmer</th>
+                  <th scope="col" style="width: 150px;">{{ 'COMMON.HEIGHT' | translate }}</th>
+                  <th scope="col" style="width: 250px;">{{ 'COMMON.DATE' | translate }}</th>
+                  <th scope="col" style="width: 300px;">{{ 'BLOCKS.FARMER' | translate }}</th>
                   <th scope="col" style="width: 30px;"></th>
-                  <th scope="col" style="width: 300px;">Singleton</th>
-                  <th scope="col" style="width: 200px;">Pool Reward</th>
-                  <th scope="col" style="width: 150px;">Pool Space</th>
-                  <th scope="col" style="width: 100px;">Pool Effort</th>
+                  <th scope="col" style="width: 300px;">{{ 'BLOCKS.SINGLETON' | translate }}</th>
+                  <th scope="col" style="width: 200px;">{{ 'BLOCKS.POOL_REWARD' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'BLOCKS.POOL_SPACE' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'BLOCKS.POOL_EFFORT' | translate }}</th>
                 </tr>
               </thead>
               @if ((blocks$ | async); as blocks;) {
@@ -155,7 +155,7 @@
                           <span
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
-                            title="This reward has been taken as a fee by Gigahorse">
+                            title="{{ 'COMMON.GIGAHORSE_TITLE' | translate }}">
                             <i class="mdi mdi-horse mdi-horse-color"></i>
                           </span>
                         }
@@ -165,16 +165,16 @@
                       <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                       <td>
                         @if (block.luck == -1) {
-                          <span class="badge bg-warning-subtle text-warning">Unknown</span>
+                          <span class="badge bg-warning-subtle text-warning">{{ 'COMMON.UNKNOWN' | translate }}</span>
                         }
                         @if (block.luck < 100) {
-                          <span class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
+                          <span class="badge bg-success-subtle text-success" nbgToolTip="{{ 'BLOCKS.LUCKY' | translate }}">{{ block.luck }}%</span>
                         }
                         @if (block.luck >= 100 && block.luck <= 200) {
-                          <span class="badge bg-warning-subtle text-warning" nbgToolTip="Average">{{ block.luck }}%</span>
+                          <span class="badge bg-warning-subtle text-warning" nbgToolTip="{{ 'BLOCKS.AVERAGE' | translate }}">{{ block.luck }}%</span>
                         }
                         @if (block.luck > 200) {
-                          <span class="badge bg-danger-subtle text-danger" nbgToolTip="Unlucky">{{ block.luck }}%</span>
+                          <span class="badge bg-danger-subtle text-danger" nbgToolTip="{{ 'BLOCKS.UNLUCKY' | translate }}">{{ block.luck }}%</span>
                         }
                       </td>
                     </tr>

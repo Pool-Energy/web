@@ -1,11 +1,11 @@
-<app-breadcrumbs title="Partials" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.PARTIALS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- activity chart -->
 <div class="row">
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Live activity (last {{ 12 }}h)</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'PARTIALS.LIST.ACTIVITY' | translate:{ hours: 12 } }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
@@ -52,10 +52,10 @@
               @if (paused) {
                 <i class="ri-play-line align-middle"></i>
               }
-              {{ paused ? 'Resume' : 'Pause' }}
+              {{ paused ? ('PARTIALS.BUTTONS.RESUME' | translate) : ('PARTIALS.BUTTONS.PAUSE' | translate) }}
             </button>
             <button type="button" class="btn btn-soft-secondary btn-sm" (click)="clear()">
-              <i class="ri-delete-bin-line align-middle"></i> Clear
+              <i class="ri-delete-bin-line align-middle"></i> {{ 'PARTIALS.BUTTONS.CLEAR' | translate }}
             </button>
           </div>
         </div>
@@ -134,7 +134,7 @@
                   </td>
                   <td class="text-center" [class.flash-cell]="row.flash.blocks_found">
                     @if (row.blocks_found) {
-                      <span class="badge bg-primary fs-6 px-2 py-1" title="Matched by closest timestamp, within 2 minutes">
+                      <span class="badge bg-primary fs-6 px-2 py-1" title="{{ 'PARTIALS.LIST.MATCHED_TOOLTIP' | translate }}">
                         <i class="ri-trophy-line align-middle"></i> {{ row.blocks_found }}
                       </span>
                     }
@@ -152,14 +152,14 @@
                             <table class="table table-sm align-middle table-nowrap mb-0">
                               <thead>
                                 <tr>
-                                  <th scope="col">Farmer</th>
-                                  <th scope="col">Harvester</th>
-                                  <th scope="col">Plot ID</th>
-                                  <th scope="col">Size</th>
-                                  <th scope="col">Chia version</th>
-                                  <th scope="col" class="text-center">Points</th>
-                                  <th scope="col" class="text-center">Status</th>
-                                  <th scope="col" class="text-center">Resolved in</th>
+                                  <th scope="col">{{ 'PARTIALS.LIST.FARMER' | translate }}</th>
+                                  <th scope="col">{{ 'COMMON.HARVESTER' | translate }}</th>
+                                  <th scope="col">{{ 'PARTIALS.LIST.PLOT_ID' | translate }}</th>
+                                  <th scope="col">{{ 'COMMON.SIZE' | translate }}</th>
+                                  <th scope="col">{{ 'PARTIALS.LIST.CHIA_VERSION' | translate }}</th>
+                                  <th scope="col" class="text-center">{{ 'COMMON.POINTS' | translate }}</th>
+                                  <th scope="col" class="text-center">{{ 'COMMON.STATUS' | translate }}</th>
+                                  <th scope="col" class="text-center">{{ 'PARTIALS.LIST.RESOLVED_IN' | translate }}</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -186,19 +186,19 @@
                                     </td>
                                     <td class="text-center">
                                       @if (detail.status === 'pending') {
-                                        <span class="badge bg-warning-subtle text-warning">To be validated</span>
+                                        <span class="badge bg-warning-subtle text-warning">{{ 'PARTIALS.LIST.TO_BE_VALIDATED' | translate }}</span>
                                       }
                                       @if (detail.status === 'valid') {
-                                        <span class="badge bg-success-subtle text-success">Valid</span>
+                                        <span class="badge bg-success-subtle text-success">{{ 'PARTIALS.LIST.VALID' | translate }}</span>
                                       }
                                       @if (detail.status === 'stale') {
-                                        <span class="badge bg-danger-subtle text-danger" title="{{ detail.error }}">{{ detail.error || 'Stale' }}</span>
+                                        <span class="badge bg-danger-subtle text-danger" title="{{ detail.error }}">{{ detail.error || ('PARTIALS.LIST.STALE' | translate) }}</span>
                                       }
                                       @if (detail.status === 'duplicate') {
-                                        <span class="badge bg-secondary-subtle text-secondary">Duplicate</span>
+                                        <span class="badge bg-secondary-subtle text-secondary">{{ 'PARTIALS.LIST.DUPLICATE' | translate }}</span>
                                       }
                                       @if (detail.status === 'invalid') {
-                                        <span class="badge bg-danger-subtle text-danger" title="{{ detail.error }}">Invalid</span>
+                                        <span class="badge bg-danger-subtle text-danger" title="{{ detail.error }}">{{ 'PARTIALS.LIST.INVALID' | translate }}</span>
                                       }
                                     </td>
                                     <td class="text-center">{{ detail.time_taken ? (detail.time_taken | number:'1.2-2') + 's' : '-' }}</td>
@@ -206,14 +206,14 @@
                                 }
                                 @if (row.partials.size === 0) {
                                   <tr>
-                                    <td colspan="8" class="text-center text-muted">No partial retained for this signage point.</td>
+                                    <td colspan="8" class="text-center text-muted">{{ 'PARTIALS.LIST.NO_PARTIAL_RETAINED' | translate }}</td>
                                   </tr>
                                 }
                               </tbody>
                             </table>
                             @if (row.partials.size >= 200) {
                               <div class="text-muted small mt-2">
-                                Showing the most recent 200 partials for this signage point &mdash; older ones have been dropped from this live view.
+                                {{ 'PARTIALS.LIST.SHOWING_200' | translate }}
                               </div>
                             }
                           </div>
@@ -225,7 +225,7 @@
               }
               @if (orderedRows.length === 0) {
                 <tr>
-                  <td colspan="9" class="text-center text-muted">Waiting for live partials...</td>
+                  <td colspan="9" class="text-center text-muted">{{ 'PARTIALS.LIST.WAITING' | translate }}</td>
                 </tr>
               }
             </tbody>

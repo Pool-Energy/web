@@ -1,4 +1,4 @@
-<app-breadcrumbs title="Join" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.JOIN" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- latency -->
 <div class="row">
@@ -9,7 +9,7 @@
           @for (endpoint of endpoints; track endpoint) {
             <div class="col col-lg border-end">
               <div class="py-4 px-3">
-                <h5 class="text-muted fs-13">Latency from {{ endpoint.name }} ({{ endpoint.url }})</h5>
+                <h5 class="text-muted fs-13">{{ 'JOIN.LATENCY' | translate:{ name: endpoint.name, url: endpoint.url } }}</h5>
                 <div class="d-flex align-items-center">
                   <div class="flex-shrink-0">
                     @if (latencies[endpoint.url] < 40) {
@@ -44,22 +44,22 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">REQUIREMENTS</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'JOIN.REQUIREMENTS' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
           <div class="row">
             <p>
-              Make sure you are using official Chia client supporting pool plots, <strong>version 2.7.0 or later</strong>.
-              You can <a href="https://docs.chia.net/pool-farming/" target="_blank">show official Chia instruction here</a>.
+              {{ 'JOIN.REQ_CLIENT_PART1' | translate }} <strong>{{ 'JOIN.REQ_CLIENT_VERSION' | translate }}</strong>.
+              {{ 'JOIN.REQ_CLIENT_PART2' | translate }} <a href="https://docs.chia.net/pool-farming/" target="_blank">{{ 'JOIN.REQ_CLIENT_LINK' | translate }}</a>.
             </p>
             <br />
             <p>
-              Before joining pool, your node and wallet must be fully synchronized with Chia blockchain.
+              {{ 'JOIN.REQ_SYNC' | translate }}
             </p>
             <br />
             <p>
-              You are going to need 1 Mojo (0.000000000001 XCH) which you can get through the official Faucet website :
+              {{ 'JOIN.REQ_MOJO' | translate }}
               <a href="https://faucet.chia.net" target="_blank">https://faucet.chia.net</a>
             </p>
           </div>
@@ -74,13 +74,13 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">POOL ADDRESS</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'JOIN.POOL_ADDRESS' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
           <div class="row">
             <p>
-              Global server: <strong><a href="https://chia.pool.energy" target="_blank">https://chia.pool.energy</a></strong>
+              {{ 'JOIN.GLOBAL_SERVER' | translate }} <strong><a href="https://chia.pool.energy" target="_blank">https://chia.pool.energy</a></strong>
             </p>
           </div>
         </div>
@@ -94,23 +94,23 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">JOIN POOL FROM CLI</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'JOIN.JOIN_CLI' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
           <div class="row">
             <p>
-              Get your wallet ID: <code>chia plotnft show</code>
+              {{ 'JOIN.CLI_WALLET_ID' | translate }} <code>chia plotnft show</code>
             </p>
             <br />
             <p>
-              Joining <strong>Pool.Energy</strong> pool with: <code>chia plotnft join -i WALLET_ID -u https://chia.pool.energy</code>
+              {{ 'JOIN.CLI_JOIN_PART1' | translate }} <strong>Pool.Energy</strong> {{ 'JOIN.CLI_JOIN_PART2' | translate }} <code>chia plotnft join -i WALLET_ID -u https://chia.pool.energy</code>
             </p>
             <br />
             <p>
-              It will ask for your confirmation, check all details and confirm with Y.
+              {{ 'JOIN.CLI_CONFIRM_1' | translate }}
               <br />
-              Wait few minutes and enjoy! 🎉
+              {{ 'JOIN.CLI_CONFIRM_2' | translate }}
             </p>
           </div>
         </div>

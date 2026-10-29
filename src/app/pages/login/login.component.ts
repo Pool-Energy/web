@@ -41,8 +41,8 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Settings', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.SETTINGS', active: true }
     ];
 
     this.route.queryParams.subscribe((data: {[key: string]: any}) => {

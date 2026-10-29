@@ -3,6 +3,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { DataService } from 'src/app/data.service';
 
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
     selector: 'app-blocks',
     templateUrl: './blocks.component.html',
@@ -32,6 +34,7 @@ export class BlocksComponent {
   blocksPerEffortChartData: any[] = [];
 
   constructor(
+    private translate: TranslateService,
     private dataService: DataService,
     private cdr: ChangeDetectorRef,
   ) {
@@ -40,8 +43,8 @@ export class BlocksComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Blocks', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.BLOCKS', active: true }
     ];
 
     this.dataService.getStats().subscribe((data: any) => {
@@ -113,7 +116,7 @@ export class BlocksComponent {
 
     this.blocksPerDayChart = {
       series: [{
-        name: "Block(s)",
+        name: this.translate.instant('CHART.BLOCKS'),
         data: seriesBlocks.reverse(),
       }],
       legend: {
@@ -137,7 +140,7 @@ export class BlocksComponent {
 
     this.blocksPerEffortChart = {
       series: [{
-        name: "Effort",
+        name: this.translate.instant('CHART.EFFORT'),
         data: seriesEffort.reverse(),
       }],
       legend: {

@@ -14,8 +14,8 @@ export class InfoFaqComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Info', link: '/' },
-      { label: 'FAQ', active: true }
+      { label: 'BREADCRUMBS.INFO', link: '/' },
+      { label: 'BREADCRUMBS.FAQ', active: true }
     ];
   }
 

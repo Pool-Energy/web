@@ -25,9 +25,9 @@ export class PoolLogsComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Pool' },
-      { label: 'Logs', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.POOL' },
+      { label: 'BREADCRUMBS.LOGS', active: true }
     ];
 
     this.log$ = this.dataService.log$;

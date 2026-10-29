@@ -1,11 +1,11 @@
-<app-breadcrumbs title="Farmers" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.FARMERS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- dust storm -->
 @if (blockchain_duststorm) {
   <div class="alert alert-warning alert-border-left" role="alert">
     <i class="ri-windy-line me-1"></i>
-    <strong>{{ 'FARMERS.STATS.DUST_STORM' | translate }}</strong> the Chia mempool is currently very congested ({{ blockchain_mempool_full_pct }}% full).
-    Transaction fees may be temporarily required, and payout/absorb timing could be delayed.
+    <strong>{{ 'FARMERS.STATS.DUST_STORM' | translate }}</strong> {{ 'FARMERS.STATS.DUST_STORM_DESC' | translate:{ pct: blockchain_mempool_full_pct } }}
+    {{ 'FARMERS.STATS.DUST_STORM_DELAY' | translate }}
   </div>
 }
 
@@ -118,9 +118,9 @@
   <div
     class="alert alert-{{ chia_consensus_fork_class }} alert-border-left alert-dismissible fade show" role="alert">
     <i class="ri-alert-line me-3 align-middle"></i> <strong>{{ 'FARMERS.STATS.INFO' | translate }}:</strong>
-    Current block: {{ chia_consensus_fork_current_block }}. Next halving block: {{ chia_consensus_fork_block }}.
-    Progression: <strong>{{ chia_consensus_fork_percent | number:".2-2" }}%</strong>.
-    For more details, please visit <a href="https://docs.chia.net/consensus-forks/" target="_blank">{{ 'FARMERS.STATS.CHIA_DOC' | translate }}</a>.
+    {{ 'FARMERS.STATS.HALVING_CURRENT' | translate:{ block: chia_consensus_fork_current_block, next: chia_consensus_fork_block } }}
+    {{ 'FARMERS.STATS.HALVING_PROGRESS' | translate }} <strong>{{ chia_consensus_fork_percent | number:".2-2" }}%</strong>.
+    {{ 'FARMERS.STATS.HALVING_VISIT' | translate }} <a href="https://docs.chia.net/consensus-forks/" target="_blank">{{ 'FARMERS.STATS.CHIA_DOC' | translate }}</a>.
   </div>
 }
 
@@ -168,7 +168,7 @@
         <div class="ms-auto">
           <div class="input-group farmers-search">
             <span class="input-group-text"><i class="ri-search-line"></i></span>
-            <input type="text" class="form-control" placeholder="Search farmers" aria-label="Search farmers"
+            <input type="text" class="form-control" placeholder="{{ 'FARMERS.LIST.SEARCH_PLACEHOLDER' | translate }}" aria-label="{{ 'FARMERS.LIST.SEARCH_PLACEHOLDER' | translate }}"
               [value]="searchTerm" (input)="onSearchInput($event)" autocomplete="off">
           </div>
         </div>
@@ -195,7 +195,7 @@
                     <td scope="row">
                       @if (last_block?.farmed_by.launcher_id == launcher.launcher_id) {
                         <span
-                          ngbTooltip="Won the last block">
+                          [ngbTooltip]="'FARMERS.LIST.WON_LAST_BLOCK' | translate">
                           <i class="ri-trophy-fill trophy-style"></i>
                         </span>
                       }

@@ -14,8 +14,8 @@ export class InfoTeamComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Info', link: '/' },
-      { label: 'Team', active: true }
+      { label: 'BREADCRUMBS.INFO', link: '/' },
+      { label: 'BREADCRUMBS.TEAM', active: true }
     ];
   }
 

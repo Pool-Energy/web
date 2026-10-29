@@ -14,8 +14,8 @@ export class InfoFeeComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Info', link: '/' },
-      { label: 'Fee', active: true }
+      { label: 'BREADCRUMBS.INFO', link: '/' },
+      { label: 'BREADCRUMBS.FEE', active: true }
     ];
   }
 

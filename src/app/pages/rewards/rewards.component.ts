@@ -3,6 +3,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { DataService } from 'src/app/data.service';
 
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
     selector: 'app-rewards',
     templateUrl: './rewards.component.html',
@@ -28,6 +30,7 @@ export class RewardsComponent {
   rewardsChartData: any[] = [];
 
   constructor(
+    private translate: TranslateService,
     private dataService: DataService,
     private cdr: ChangeDetectorRef,
   ) {
@@ -36,8 +39,8 @@ export class RewardsComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Rewards', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.REWARDS', active: true }
     ];
 
     this.dataService.getStats().subscribe((data: any) => {
@@ -142,7 +145,7 @@ export class RewardsComponent {
         }
       },
       noData: {
-        text: "Loading..."
+        text: this.translate.instant('COMMON.LOADING')
       },
       dataLabels: {
         enabled: true,

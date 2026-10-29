@@ -41,8 +41,8 @@ export class RewardComponent {
       this.reward_id = data.get('id');
 
       this.breadCrumbItems = [
-        { label: 'Home', link: '/' },
-        { label: 'Rewards', link: '/rewards' },
+        { label: 'BREADCRUMBS.HOME', link: '/' },
+        { label: 'BREADCRUMBS.REWARDS', link: '/rewards' },
         { label: this.reward_id, active: true }
       ];
 

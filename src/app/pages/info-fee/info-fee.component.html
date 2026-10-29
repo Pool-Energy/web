@@ -1,18 +1,18 @@
-<app-breadcrumbs title="Fee" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.FEE" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- fee -->
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Pool Fee</h4>
+                <h4 class="card-title mb-0 flex-grow-1">{{ 'FEE.TITLE' | translate }}</h4>
             </div>
             <div class="card-body">
                 <div class="live-preview">
                     <div class="row">
                         <p>
-                            Currently we charge 0.75% fee. That fee is subtracted from each farmer's reward.
-                            For example, if in a given round the farmer is due a share of 0.05 XCH, then 0.75% of that (0.000375 XCH) will be kept as a pool fee and the rest (0.049625 XCH) will be credited to the farmer.
+                            {{ 'FEE.DESC_1' | translate }}
+                            {{ 'FEE.DESC_2' | translate }}
                         </p>
                     </div>
                 </div>

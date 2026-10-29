@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { DataService } from 'src/app/data.service';
 import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
@@ -147,6 +148,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
   ) { }
 
   // Angular 22 regression workaround (see CdKickInterceptor in
@@ -162,8 +164,8 @@ export class PartialsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Home', link: '/' },
-      { label: 'Partials', active: true }
+      { label: 'BREADCRUMBS.HOME', link: '/' },
+      { label: 'BREADCRUMBS.PARTIALS', active: true }
     ];
 
     this.dataService.connectPartialsLive();
@@ -498,10 +500,10 @@ export class PartialsComponent implements OnInit, OnDestroy {
 
     const categories = buckets.map((b) => b.label);
     const series = [
-      { name: 'Valid', data: buckets.map((b) => b.valid) },
-      { name: 'To be validated', data: buckets.map((b) => b.pending) },
-      { name: 'Invalid / reverted', data: buckets.map((b) => b.red) },
-      { name: 'Duplicate', data: buckets.map((b) => b.duplicate) },
+      { name: this.translate.instant('CHART.VALID'), data: buckets.map((b) => b.valid) },
+      { name: this.translate.instant('CHART.TO_BE_VALIDATED'), data: buckets.map((b) => b.pending) },
+      { name: this.translate.instant('CHART.INVALID_REVERTED'), data: buckets.map((b) => b.red) },
+      { name: this.translate.instant('CHART.DUPLICATE'), data: buckets.map((b) => b.duplicate) },
     ];
 
     // Only rebuild the full chart config (chart/xaxis/colors/...) when the
@@ -536,7 +538,7 @@ export class PartialsComponent implements OnInit, OnDestroy {
           enabled: false,
         },
         noData: {
-          text: 'Loading...',
+          text: this.translate.instant('COMMON.LOADING'),
         },
         xaxis: {
           categories: categories,

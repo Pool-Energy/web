@@ -1,11 +1,11 @@
-<app-breadcrumbs title="Status" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.STATUS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- dust storm -->
 @if (blockchain_duststorm) {
   <div class="alert alert-warning alert-border-left" role="alert">
     <i class="ri-windy-line me-1"></i>
-    <strong>Dust storm detected:</strong> the Chia mempool is currently very congested ({{ blockchain_mempool_full_pct }}% full).
-    Transaction fees may be temporarily required, and payout/absorb timing could be delayed.
+    <strong>{{ 'POOL_STATUS.DUST_STORM' | translate }}</strong> {{ 'FARMERS.STATS.DUST_STORM_DESC' | translate:{ pct: blockchain_mempool_full_pct } }}
+    {{ 'FARMERS.STATS.DUST_STORM_DELAY' | translate }}
   </div>
 }
 
@@ -15,7 +15,7 @@
       <div class="row row-cols-md-3 row-cols-1">
         <div class="col col-lg border-end">
           <div class="py-4 px-3">
-            <h5 class="text-muted text-uppercase fs-13">Blockchain Height</h5>
+            <h5 class="text-muted text-uppercase fs-13">{{ 'POOL_STATUS.BLOCKCHAIN_HEIGHT' | translate }}</h5>
             <div class="d-flex align-items-center">
               <div class="flex-shrink-0">
                 <i class="ri-stack-line display-6 text-muted"></i>
@@ -30,7 +30,7 @@
         </div>
         <div class="col col-lg border-end">
           <div class="py-4 px-3">
-            <h5 class="text-muted text-uppercase fs-13">Pool Share</h5>
+            <h5 class="text-muted text-uppercase fs-13">{{ 'POOL_STATUS.POOL_SHARE' | translate }}</h5>
             <div class="d-flex align-items-center">
               <div class="flex-shrink-0">
                 <i class="ri-pencil-line display-6 text-muted"></i>
@@ -43,20 +43,20 @@
         </div>
         <div class="col col-lg border-end">
           <div class="py-4 px-3">
-            <h5 class="text-muted text-uppercase fs-13">API Status</h5>
+            <h5 class="text-muted text-uppercase fs-13">{{ 'POOL_STATUS.API_STATUS' | translate }}</h5>
             <div class="d-flex align-items-center">
               <div class="flex-shrink-0">
                 <i class="ri-checkbox-circle-line display-6 text-muted"></i>
               </div>
               <div class="flex-grow-1 ms-3">
-                <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
+                <h2 class="mb-0"><span class="counter-value">{{ 'POOL_STATUS.HEALTHY' | translate }}</span></h2>
               </div>
             </div>
           </div>
         </div>
         <div class="col col-lg border-end">
           <div class="py-4 px-3">
-            <h5 class="text-muted text-uppercase fs-13">Nodes Status</h5>
+            <h5 class="text-muted text-uppercase fs-13">{{ 'POOL_STATUS.NODES_STATUS' | translate }}</h5>
             <div class="d-flex align-items-center">
               <div class="flex-shrink-0">
                 @if (poolStatus === 'healthy') {
@@ -72,13 +72,13 @@
               <div class="flex-grow-1 ms-3">
                 <h2 class="mb-0">
                   @if (poolStatus === 'healthy') {
-                    <span class="counter-value">Ok</span>
+                    <span class="counter-value">{{ 'POOL_STATUS.OK' | translate }}</span>
                   }
                   @if (poolStatus === 'degraded') {
-                    <span class="counter-value">Degraded</span>
+                    <span class="counter-value">{{ 'POOL_STATUS.DEGRADED' | translate }}</span>
                   }
                   @if (poolStatus === 'critical') {
-                    <span class="counter-value">Critical</span>
+                    <span class="counter-value">{{ 'POOL_STATUS.CRITICAL' | translate }}</span>
                   }
                 </h2>
               </div>
@@ -87,14 +87,14 @@
         </div>
         <div class="col col-lg border-end">
           <div class="py-4 px-3">
-            <h5 class="text-muted text-uppercase fs-13">Wallets Status</h5>
+            <h5 class="text-muted text-uppercase fs-13">{{ 'POOL_STATUS.WALLETS_STATUS' | translate }}</h5>
             @if (!pool_wallets) {
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <i class="ri-close-circle-line display-6 text-muted"></i>
                 </div>
                 <div class="flex-grow-1 ms-3">
-                  <h2 class="mb-0"><span class="counter-value">Unknown</span></h2>
+                  <h2 class="mb-0"><span class="counter-value">{{ 'COMMON.UNKNOWN' | translate }}</span></h2>
                 </div>
               </div>
             }
@@ -104,7 +104,7 @@
                   <i class="ri-close-circle-line display-6 text-muted"></i>
                 </div>
                 <div class="flex-grow-1 ms-3">
-                  <h2 class="mb-0"><span class="counter-value">Unhealthy</span></h2>
+                  <h2 class="mb-0"><span class="counter-value">{{ 'POOL_STATUS.UNHEALTHY' | translate }}</span></h2>
                 </div>
               </div>
             }
@@ -114,7 +114,7 @@
                   <i class="ri-checkbox-circle-line display-6 text-muted"></i>
                 </div>
                 <div class="flex-grow-1 ms-3">
-                  <h2 class="mb-0"><span class="counter-value">Healthy</span></h2>
+                  <h2 class="mb-0"><span class="counter-value">{{ 'POOL_STATUS.HEALTHY' | translate }}</span></h2>
                 </div>
               </div>
             }
@@ -130,7 +130,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Pool wallets</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'POOL_STATUS.POOL_WALLETS' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
@@ -138,12 +138,12 @@
             <table class="table align-middle table-nowrap table-striped-columns mb-0">
               <thead class="table-light">
                 <tr>
-                  <th scope="col" style="width: 100px;">Name</th>
-                  <th scope="col" style="width: 600px;">Address</th>
-                  <th scope="col" style="width: 100px;">Fingerprint</th>
-                  <th scope="col" style="width: 150px;">Amount</th>
-                  <th scope="col" style="width: 100px;">Height</th>
-                  <th scope="col" style="width: 100px;">Status</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.NAME' | translate }}</th>
+                  <th scope="col" style="width: 600px;">{{ 'COMMON.ADDRESS' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.FINGERPRINT' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'COMMON.AMOUNT' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.HEIGHT' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.STATUS' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -160,13 +160,13 @@
                     <td>{{ wallet.height || '-' }}</td>
                     <td>
                       @if (wallet.synced && !wallet.syncing) {
-                        <span class="badge bg-success-subtle text-success">Synced</span>
+                        <span class="badge bg-success-subtle text-success">{{ 'COMMON.SYNCED' | translate }}</span>
                       }
                       @if (!wallet.synced && wallet.syncing) {
-                        <span class="badge bg-warning-subtle text-warning">Syncing</span>
+                        <span class="badge bg-warning-subtle text-warning">{{ 'COMMON.SYNCING' | translate }}</span>
                       }
                       @if (!wallet.synced && !wallet.syncing) {
-                        <span class="badge bg-danger-subtle text-danger">Not synced</span>
+                        <span class="badge bg-danger-subtle text-danger">{{ 'COMMON.NOT_SYNCED' | translate }}</span>
                       }
                     </td>
                   </tr>
@@ -185,7 +185,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Pool nodes</h4>
+        <h4 class="card-title mb-0 flex-grow-1">{{ 'POOL_STATUS.POOL_NODES' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="live-preview">
@@ -193,15 +193,15 @@
             <table class="table align-middle table-nowrap table-striped-columns mb-0">
               <thead class="table-light">
                 <tr>
-                  <th scope="col" style="width: 100px;">Name</th>
-                  <th scope="col" style="width: 150px;">Location</th>
-                  <th scope="col" style="width: 70px;">Version</th>
-                  <th scope="col" style="width: 100px;">Height</th>
-                  <th scope="col" style="width: 100px;">Mempool</th>
-                  <th scope="col" style="width: 100px;">Available</th>
-                  <th scope="col" style="width: 100px;">Role</th>
-                  <th scope="col" style="width: 100px;">Status</th>
-                  <th scope="col" style="width: 140px;">Progress</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.NAME' | translate }}</th>
+                  <th scope="col" style="width: 150px;">{{ 'COMMON.LOCATION' | translate }}</th>
+                  <th scope="col" style="width: 70px;">{{ 'COMMON.VERSION' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.HEIGHT' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.MEMPOOL' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.AVAILABLE' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.ROLE' | translate }}</th>
+                  <th scope="col" style="width: 100px;">{{ 'COMMON.STATUS' | translate }}</th>
+                  <th scope="col" style="width: 140px;">{{ 'COMMON.PROGRESS' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -228,35 +228,35 @@
                     </td>
                     <td>
                       @if (node.available && node.enabled) {
-                        <span class="badge bg-success-subtle text-success">Yes</span>
+                        <span class="badge bg-success-subtle text-success">{{ 'COMMON.YES' | translate }}</span>
                       }
                       @if (node.available && !node.enabled) {
-                        <span class="badge bg-warning-subtle text-warning">Maintenance</span>
+                        <span class="badge bg-warning-subtle text-warning">{{ 'POOL_STATUS.MAINTENANCE' | translate }}</span>
                       }
                       @if (!node.available && node.enabled) {
-                        <span class="badge bg-danger-subtle text-danger">No</span>
+                        <span class="badge bg-danger-subtle text-danger">{{ 'COMMON.NO' | translate }}</span>
                       }
                     </td>
                     <td>
                       @if (node.available && node.primary) {
-                        <span class="badge bg-success-subtle text-success">Primary</span>
+                        <span class="badge bg-success-subtle text-success">{{ 'POOL_STATUS.PRIMARY' | translate }}</span>
                       }
                       @if (node.available && !node.primary) {
-                        <span class="badge bg-info-subtle text-info">Standby</span>
+                        <span class="badge bg-info-subtle text-info">{{ 'POOL_STATUS.STANDBY' | translate }}</span>
                       }
                       @if (!node.available) {
-                        <span class="badge bg-danger-subtle text-danger">Unavailable</span>
+                        <span class="badge bg-danger-subtle text-danger">{{ 'POOL_STATUS.UNAVAILABLE' | translate }}</span>
                       }
                     </td>
                     <td>
                       @if (node.available && node.synced) {
-                        <span class="badge bg-success-subtle text-success">Synced</span>
+                        <span class="badge bg-success-subtle text-success">{{ 'COMMON.SYNCED' | translate }}</span>
                       }
                       @if (node.available && !node.synced) {
-                        <span class="badge bg-danger-subtle text-danger">Not synced</span>
+                        <span class="badge bg-danger-subtle text-danger">{{ 'COMMON.NOT_SYNCED' | translate }}</span>
                       }
                       @if (!node.available) {
-                        <span class="badge bg-danger-subtle text-danger">Unavailable</span>
+                        <span class="badge bg-danger-subtle text-danger">{{ 'POOL_STATUS.UNAVAILABLE' | translate }}</span>
                       }
                     </td>
                     <td>
