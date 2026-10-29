@@ -64,40 +64,7 @@ File: Main Css File
 @import "../../components/list-group";
 
 // Plugins
-@import "../../plugins/custom-scrollbar";
-@import "../../plugins/prismjs";
-@import "../../plugins/sweetalert2";
-@import "../../plugins/dropzone";
-@import "../../plugins/range-slider";
-@import "../../plugins/sortablejs";
-@import "../../plugins/tour";
-@import "../../plugins/swiper";
-@import "../../plugins/multijs";
-@import "../../plugins/colorpicker";
-@import "../../plugins/filepond";
-@import "../../plugins/form-input-spin";
-@import "../../plugins/ckeditor";
-@import "../../plugins/quilljs";
-@import "../../plugins/gridjs";
-@import "../../plugins/listjs";
 @import "../../plugins/apexcharts";
-@import "../../plugins/chartjs";
-@import "../../plugins/echarts";
-@import "../../plugins/google-map";
-@import "../../plugins/autocomplete";
-@import "../../plugins/vector-maps";
-@import "../../plugins/leaflet-maps";
-@import "../../plugins/fullcalendar";
-@import "../../plugins/emoji-picker";
-@import "../../plugins/datatables";
-@import "../../plugins/select2";
-
-// Plugins
-@import "../../plugins/toastify";
-@import "../../plugins/choices";
-@import "../../plugins/flatpicker";
-@import "../../plugins/flag-input";
-@import "../../plugins/form-wizard";
 
 // Pages
 @import "../../pages/authentication";
@@ -127,9 +94,3 @@ File: Main Css File
 
 // Custom Scss
 @import "./custom.scss";
-
-// RTL Set
-// @import "../../rtl/components-rtl";
-// @import "../../rtl/layouts-rtl";
-// @import "../../rtl/pages-rtl";
-// @import "../../rtl/plugins-rtl";
