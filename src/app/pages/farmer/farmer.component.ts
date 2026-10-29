@@ -178,7 +178,8 @@ export class FarmerComponent implements AfterViewInit {
   humanize(seconds: number) {
     var h = humanizer();
     return h(seconds, {
-      language: this.translate.currentLang || 'en',
+      // humanize-duration expects zh_CN for Chinese
+      language: this.translate.currentLang === 'zh' ? 'zh_CN' : (this.translate.currentLang || 'en'),
       units: ["y", "mo", "w", "h", "m", "s"],
       largest: 2
     });
