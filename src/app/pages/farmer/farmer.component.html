@@ -550,7 +550,7 @@
 
           <!-- harvesters -->
           <li [ngbNavItem]="3" (click)="refreshHarvesters(launcher_id)">
-            <a ngbNavLink>Harvesters</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.HARVESTERS' | translate }}</a>
             <ng-template ngbNavContent>
               <!-- harvesters stats -->
               @if (harvestersData.length === 0) {
@@ -700,7 +700,7 @@
 
           <!-- blocks -->
           <li [ngbNavItem]="4" (click)="refreshBlocks()">
-            <a ngbNavLink>Blocks</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.BLOCKS' | translate }}</a>
             <ng-template ngbNavContent>
               <!-- blocks stats -->
               <div class="row">
@@ -910,7 +910,7 @@
 
           <!-- rewards -->
           <li [ngbNavItem]="5" (click)="getRewards(); refreshPayouts(); refreshPayoutTxs()">
-            <a ngbNavLink>Rewards</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.REWARDS' | translate }}</a>
             <ng-template ngbNavContent>
               <!-- rewards stats -->
               <div class="row">
