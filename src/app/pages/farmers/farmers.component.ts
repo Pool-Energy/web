@@ -45,6 +45,9 @@ export class FarmersComponent {
   launchersCollectionSize: number = 0;
   launchersPage: number = 1;
   launchersPageSize: number = 20;
+  searchTerm: string = '';
+
+  private _search$ = new Subject<string>();
 
   // blocks
   _blocks$: Subject<any[]> = new Subject<any[]>();
@@ -114,6 +117,13 @@ export class FarmersComponent {
         this.refreshLaunchers();
       }
     });
+
+    // Debounce the farmer search box before hitting the API.
+    this._search$.pipe(debounceTime(300)).subscribe((term: string) => {
+      this.searchTerm = term;
+      this.launchersPage = 1;
+      this.refreshLaunchers();
+    });
   }
 
   ngOnDestroy(): void {
@@ -158,8 +168,14 @@ export class FarmersComponent {
     this.dataService.getLaunchers({
       offset: (this.launchersPage - 1) * this.launchersPageSize,
       limit: this.launchersPageSize,
-      points_pplns__gt: this.farmers_points_min
+      points_pplns__gt: this.farmers_points_min,
+      search: this.searchTerm || undefined
     }).subscribe(this.handleLaunchers.bind(this));
+  }
+
+  onSearchInput(event: any) {
+    const term: string = event?.target?.value ?? '';
+    this._search$.next((term || '').trim());
   }
 
   toggleShowAllFarmers(event: any) {
