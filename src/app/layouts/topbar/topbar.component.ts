@@ -106,7 +106,12 @@ export class TopbarComponent implements OnInit {
 
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.svg', lang: 'en' },
-    { text: 'Français', flag: 'assets/images/flags/fr.svg', lang: 'fr' }
+    { text: 'Français', flag: 'assets/images/flags/fr.svg', lang: 'fr' },
+    { text: 'Deutsch', flag: 'assets/images/flags/de.svg', lang: 'de' },
+    { text: 'Español', flag: 'assets/images/flags/es.svg', lang: 'es' },
+    { text: 'Nederlands', flag: 'assets/images/flags/nl.svg', lang: 'nl' },
+    { text: 'Türkçe', flag: 'assets/images/flags/tr.svg', lang: 'tr' },
+    { text: '中文', flag: 'assets/images/flags/china.svg', lang: 'zh' }
   ];
 
   setLanguage(text: string, lang: string, flag: string) {
