@@ -29,3 +29,12 @@
 .td-center {
     text-align: center;
 }
+
+.farmers-search {
+    max-width: 320px;
+
+    .form-control {
+        height: 38px;
+        font-size: 0.875rem;
+    }
+}
