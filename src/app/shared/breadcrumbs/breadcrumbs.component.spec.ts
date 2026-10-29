@@ -4,6 +4,7 @@ import { BreadcrumbsComponent } from './breadcrumbs.component';
 
 import { SharedModule } from '../shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
@@ -13,6 +14,7 @@ describe('BreadcrumbsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        TranslateModule.forRoot({ defaultLanguage: 'en' }),
         SharedModule,
       ],
     })
