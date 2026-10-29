@@ -1,5 +1,4 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
@@ -30,7 +29,6 @@ export function createTranslateLoader(http: HttpClient): any {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CommonModule,
     SharedModule,
     LayoutsModule,
   ],

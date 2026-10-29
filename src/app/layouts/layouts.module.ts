@@ -1,13 +1,10 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { SimplebarAngularModule } from 'simplebar-angular';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { LanguageService } from '../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LayoutComponent } from './layout.component';
 import { TopbarComponent } from './topbar/topbar.component';
@@ -27,12 +24,7 @@ import { HorizontalTopbarComponent } from './horizontal-topbar/horizontal-topbar
     CommonModule,
     RouterModule,
     NgbDropdownModule,
-    NgbNavModule,
-    SimplebarAngularModule,
-    TranslateModule,
-    FormsModule,
-    NgbCollapseModule,
-    ReactiveFormsModule
+    TranslateModule
   ],
   providers: [LanguageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
