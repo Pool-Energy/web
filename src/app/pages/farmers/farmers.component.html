@@ -16,7 +16,7 @@
     role="alert">
     <i class="ri-alarm-warning-line me-1"></i> {{ message.name }} ({{ message.datetime | date }}): {{ message.message }}
     @if (message.closing) {
-      <button type="button" class="btn-close" (click)="closeMessage(i)" aria-label="Close"></button>
+      <button type="button" class="btn-close" (click)="closeMessage(i)" aria-label="{{ 'COMMON.CLOSE' | translate }}"></button>
     }
   </div>
 }
@@ -195,7 +195,7 @@
                     <td scope="row">
                       @if (last_block?.farmed_by.launcher_id == launcher.launcher_id) {
                         <span
-                          [ngbTooltip]="'FARMERS.LIST.WON_LAST_BLOCK' | translate">
+                          attr.ngbTooltip="{{ 'FARMERS.LIST.WON_LAST_BLOCK' | translate }}">
                           <i class="ri-trophy-fill trophy-style"></i>
                         </span>
                       }

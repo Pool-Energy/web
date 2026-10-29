@@ -1,4 +1,4 @@
-<app-breadcrumbs title="Farmer" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="BREADCRUMBS.FARMER" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- message -->
 @if (launcher.message) {
@@ -38,7 +38,7 @@
       <div class="p-2">
         <h3 class="text-white mb-1">
           @if (launcherLoaded) {
-            {{ launcher.name || 'Undefined' }}
+            {{ launcher.name || ('COMMON.UNDEFINED' | translate) }}
           } @else {
             <span class="placeholder-glow"><span class="placeholder col-6"></span></span>
           }
@@ -145,7 +145,7 @@
                                 @if (!launcher.custom_difficulty) {
                                   <h2 class="mb-0">
                                     {{ launcher.difficulty }}
-                                    <span class="custom-difficulty">(auto)</span>
+                                    <span class="custom-difficulty">{{ 'COMMON.AUTO' | translate }}</span>
                                   </h2>
                                 }
                                 @if (launcher.custom_difficulty) {
@@ -213,7 +213,7 @@
                   <div class="col-xxl-12">
                     <div class="card">
                       <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Estimated Size</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">{{ 'FARMER.STATS.ESTIMATED_SIZE' | translate }}</h4>
                       </div>
                       <div class="card-body">
                         <div class="live-preview">
@@ -272,7 +272,7 @@
               @if (partialsCollectionSize === 0) {
                 <div class="col-xxl-12">
                   <div class="alert alert-info alert-border-left" role="alert">
-                    No data found.
+                    {{ 'FARMER.STATS.NO_DATA' | translate }}
                   </div>
                 </div>
               }
@@ -442,7 +442,7 @@
               @if (partialsCollectionSize === 0) {
                 <div class="col-xxl-12">
                   <div class="alert alert-info alert-border-left" role="alert">
-                    No partial found.
+                    {{ 'FARMER.TABS.NO_PARTIAL' | translate }}
                   </div>
                 </div>
               }
@@ -463,11 +463,11 @@
                     </div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
-                    <label for="daysSelect" class="form-label text-muted mb-0">Partials:</label>
+                    <label for="daysSelect" class="form-label text-muted mb-0">{{ 'FARMER.TABS.PARTIALS_LABEL' | translate }}</label>
                     <select id="daysSelect" class="form-select form-select-sm" [(ngModel)]="selectedDays" (change)="onDaysChange()" style="width: auto;">
                       @for (day of daysOptions; track day) {
                         <option [value]="day">
-                          {{ day }} day{{ day > 1 ? 's' : '' }}
+                          {{ day }} {{ (day > 1 ? 'COMMON.DAYS' : 'COMMON.DAY') | translate }}
                         </option>
                       }
                     </select>
@@ -479,14 +479,14 @@
                   <table class="table align-middle table-nowrap table-striped-columns mb-0">
                     <thead class="table-light">
                       <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Difficulty</th>
-                        <th scope="col">Harvester</th>
-                        <th scope="col">Plot Filename</th>
-                        <th scope="col" style="width: 100px;">Plot Size</th>
-                        <th scope="col" style="width: 150px;">Chia Version</th>
-                        <th scope="col" style="width: 100px;">Time Taken</th>
-                        <th scope="col" style="width: 200px;">State</th>
+                        <th scope="col">{{ 'COMMON.DATE' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.DIFFICULTY' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.HARVESTER' | translate }}</th>
+                        <th scope="col">{{ 'FARMER.TABS.PLOT_FILENAME' | translate }}</th>
+                        <th scope="col" style="width: 100px;">{{ 'COMMON.PLOT_SIZE' | translate }}</th>
+                        <th scope="col" style="width: 150px;">{{ 'COMMON.CHIA_VERSION' | translate }}</th>
+                        <th scope="col" style="width: 100px;">{{ 'COMMON.TIME_TAKEN' | translate }}</th>
+                        <th scope="col" style="width: 200px;">{{ 'COMMON.STATE' | translate }}</th>
                       </tr>
                     </thead>
                     @if (partialsTable) {
@@ -525,7 +525,7 @@
                                 <span class="badge bg-danger-subtle text-danger">{{ partial.error }}</span>
                               }
                               @if (!partial.error) {
-                                <span class="badge bg-success-subtle text-success">SUCCESS</span>
+                                <span class="badge bg-success-subtle text-success">{{ 'FARMER.TABS.SUCCESS' | translate }}</span>
                               }
                             </td>
                           </tr>
@@ -556,7 +556,7 @@
               @if (harvestersData.length === 0) {
                 <div class="col-xxl-12">
                   <div class="alert alert-info alert-border-left" role="alert">
-                    No harvester found.
+                    {{ 'FARMER.TABS.NO_HARVESTER' | translate }}
                   </div>
                 </div>
               }
@@ -568,7 +568,7 @@
                         <div class="row row-cols-md-3 row-cols-1">
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Harvester</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.HARVESTER' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-stack-line display-6 text-muted"></i>
@@ -595,7 +595,7 @@
                           </div>
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Total Points</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.TOTAL_POINTS' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-pencil-line display-6 text-muted"></i>
@@ -608,7 +608,7 @@
                           </div>
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Partials Successful</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.PARTIALS_SUCCESSFUL' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-checkbox-circle-line display-6 text-muted"></i>
@@ -621,7 +621,7 @@
                           </div>
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Partials Failed</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.PARTIALS_FAILED' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-error-warning-line display-6 text-muted"></i>
@@ -634,13 +634,13 @@
                           </div>
                           <div class="col col-lg border-end">
                             <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Chia Version</h5>
+                              <h5 class="text-muted text-uppercase fs-13">{{ 'COMMON.CHIA_VERSION' | translate }}</h5>
                               <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                   <i class="ri-bubble-chart-line display-6 text-muted"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <h2 class="mb-0"><span class="counter-value">{{ harvester[1]?.version || "Unknown" }}</span></h2>
+                                  <h2 class="mb-0"><span class="counter-value">{{ harvester[1]?.version || ('COMMON.UNKNOWN' | translate) }}</span></h2>
                                 </div>
                               </div>
                             </div>
@@ -654,16 +654,15 @@
                     @if (supportHarvesterVersion(harvester[1]?.version) == 'critical') {
                       <div
                         class="alert alert-danger alert-border-left alert-dismissible fade show" role="alert">
-                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Critical:</strong>
-                        Version {{ harvester[1]?.version }} is not supported by pool. Please upgrade your harvester to the latest version.
-                        Minimum version {{ criticalChiaVersion }} is required, currently your partials will not be accepted.
+                        <i class="ri-alert-line me-3 align-middle"></i> <strong>{{ 'FARMER.TABS.CRITICAL_TITLE' | translate }}</strong>
+                        {{ 'FARMER.TABS.CRITICAL_MSG' | translate:{ version: harvester[1]?.version, min: criticalChiaVersion } }}
                       </div>
                     }
                     @if (supportHarvesterVersion(harvester[1]?.version) == 'warning') {
                       <div
                         class="alert alert-warning alert-border-left alert-dismissible fade show" role="alert">
-                        <i class="ri-alert-line me-3 align-middle"></i> <strong>Warning:</strong>
-                        Version {{ harvester[1]?.version }} is supported by pool but upgrade your harvester to the latest version if possible.
+                        <i class="ri-alert-line me-3 align-middle"></i> <strong>{{ 'FARMER.TABS.WARNING_TITLE' | translate }}</strong>
+                        {{ 'FARMER.TABS.WARNING_MSG' | translate:{ version: harvester[1]?.version } }}
                       </div>
                     }
                   </div>
@@ -710,7 +709,7 @@
                       <div class="row row-cols-md-3 row-cols-1">
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Total Blocks</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.TOTAL_BLOCKS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-trophy-line display-6 text-muted"></i>
@@ -723,7 +722,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Average Effort</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.AVERAGE_EFFORT' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-scales-line display-6 text-muted"></i>
@@ -763,7 +762,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Est. time per block</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.EST_TIME_PER_BLOCK' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-time-line display-6 text-muted"></i>
@@ -816,7 +815,7 @@
               @if (blocksCollectionSize == 0) {
                 <div class="col-xxl-12">
                   <div class="alert alert-info alert-border-left" role="alert">
-                    No block found.
+                    {{ 'FARMER.TABS.NO_BLOCK' | translate }}
                   </div>
                 </div>
               }
@@ -825,14 +824,14 @@
                   <table class="table align-middle table-nowrap table-striped-columns mb-0">
                     <thead class="table-light">
                       <tr>
-                        <th scope="col" style="width: 150px;">Height</th>
-                        <th scope="col" style="width: 250px;">Date</th>
+                        <th scope="col" style="width: 150px;">{{ 'COMMON.HEIGHT' | translate }}</th>
+                        <th scope="col" style="width: 250px;">{{ 'COMMON.DATE' | translate }}</th>
                         <th scope="col" style="width: 30px;"></th>
-                        <th scope="col" style="width: 300px;">Singleton</th>
-                        <th scope="col" style="width: 100px;">Price</th>
-                        <th scope="col" style="width: 150px;">Pool Reward</th>
-                        <th scope="col" style="width: 150px;">Pool size</th>
-                        <th scope="col" style="width: 100px;">Pool effort</th>
+                        <th scope="col" style="width: 300px;">{{ 'BLOCKS.SINGLETON' | translate }}</th>
+                        <th scope="col" style="width: 100px;">{{ 'COMMON.PRICE' | translate }}</th>
+                        <th scope="col" style="width: 150px;">{{ 'BLOCKS.POOL_REWARD' | translate }}</th>
+                        <th scope="col" style="width: 150px;">{{ 'FARMER.TABS.POOL_SIZE' | translate }}</th>
+                        <th scope="col" style="width: 100px;">{{ 'BLOCKS.POOL_EFFORT' | translate }}</th>
                       </tr>
                     </thead>
                     @if ((blocks$ | async); as blocks;) {
@@ -853,7 +852,7 @@
                                 <span
                                   data-bs-toggle="tooltip"
                                   data-bs-placement="top"
-                                  title="This reward has been taken as a fee by Gigahorse">
+                                  title="{{ 'COMMON.GIGAHORSE_TITLE' | translate }}">
                                   <i class="mdi mdi-horse mdi-horse-color"></i>
                                 </span>
                               }
@@ -864,16 +863,16 @@
                             <td>{{ block.pool_space | filesize:{"base": 2, "standard": "iec"} }}</td>
                             <td>
                               @if (block.luck == -1) {
-                                <span class="badge bg-warning-subtle text-warning">Unknown</span>
+                                <span class="badge bg-warning-subtle text-warning">{{ 'COMMON.UNKNOWN' | translate }}</span>
                               }
                               @if (block.luck < 100) {
-                                <span class="badge bg-success-subtle text-success" nbgToolTip="Lucky">{{ block.luck }}%</span>
+                                <span class="badge bg-success-subtle text-success" attr.nbgToolTip="{{ 'BLOCKS.LUCKY' | translate }}">{{ block.luck }}%</span>
                               }
                               @if (block.luck >= 100 && block.luck <= 200) {
-                                <span class="badge bg-warning-subtle text-warning" nbgToolTip="Average">{{ block.luck }}%</span>
+                                <span class="badge bg-warning-subtle text-warning" attr.nbgToolTip="{{ 'BLOCKS.AVERAGE' | translate }}">{{ block.luck }}%</span>
                               }
                               @if (block.luck > 200) {
-                                <span class="badge bg-danger-subtle text-danger" nbgToolTip="Unlucky">{{ block.luck }}%</span>
+                                <span class="badge bg-danger-subtle text-danger" attr.nbgToolTip="{{ 'BLOCKS.UNLUCKY' | translate }}">{{ block.luck }}%</span>
                               }
                             </td>
                           </tr>
@@ -892,7 +891,7 @@
                         <button
                           (click)="csvDownloadBlocks()"
                           class="btn btn-primary download-button">
-                          Download CSV
+                          {{ 'FARMER.TABS.DOWNLOAD_CSV' | translate }}
                         </button>
                       }
                     </div>
@@ -920,7 +919,7 @@
                       <div class="row row-cols-md-3 row-cols-1">
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Last 24 hours</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.LAST_24_HOURS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-line display-6 text-muted"></i>
@@ -935,7 +934,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Today</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.TODAY' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-line display-6 text-muted"></i>
@@ -950,7 +949,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Yesterday</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.YESTERDAY' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-line display-6 text-muted"></i>
@@ -965,7 +964,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Last 7 days</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.LAST_7_DAYS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-line display-6 text-muted"></i>
@@ -980,7 +979,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Last 30 days</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.LAST_30_DAYS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-line display-6 text-muted"></i>
@@ -1028,7 +1027,7 @@
               @if (payoutsCollectionSize == 0) {
                 <div class="col-xxl-12">
                   <div class="alert alert-info alert-border-left" role="alert">
-                    No reward found.
+                    {{ 'FARMER.TABS.NO_REWARD' | translate }}
                   </div>
                 </div>
               }
@@ -1037,11 +1036,11 @@
                   <table class="table align-middle table-nowrap table-striped-columns mb-0">
                     <thead class="table-light">
                       <tr>
-                        <th scope="col" style="width: 50px;">Reward ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Block(s)</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col" style="width: 150px;">Paid</th>
+                        <th scope="col" style="width: 50px;">{{ 'REWARD.REWARD_ID' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.DATE' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.BLOCKS' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.AMOUNT' | translate }}</th>
+                        <th scope="col" style="width: 150px;">{{ 'FARMER.TABS.PAID' | translate }}</th>
                       </tr>
                     </thead>
                     @if ((payoutaddrs$ | async); as payoutaddrs;) {
@@ -1057,15 +1056,15 @@
                             <td>
                               @if (payoutaddr.transaction && payoutaddr.transaction?.confirmed_block_index) {
                                 <span
-                                class="badge bg-success-subtle text-success">Confirmed</span>
+                                class="badge bg-success-subtle text-success">{{ 'COMMON.CONFIRMED' | translate }}</span>
                               }
                               @if (payoutaddr.transaction && !payoutaddr.transaction?.confirmed_block_index) {
                                 <span
-                                class="badge bg-warning-subtle text-warning">Progress</span>
+                                class="badge bg-warning-subtle text-warning">{{ 'FARMER.TABS.PAYOUT_PROGRESS' | translate }}</span>
                               }
                               @if (!payoutaddr.transaction) {
                                 <span
-                                class="badge bg-warning-subtle text-warning">Pending</span>
+                                class="badge bg-warning-subtle text-warning">{{ 'COMMON.PENDING' | translate }}</span>
                               }
                             </td>
                           </tr>
@@ -1090,7 +1089,7 @@
 
           <!-- payouts -->
           <li [ngbNavItem]="6" (click)="refreshPayoutTxs()">
-            <a ngbNavLink>Payouts</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.PAYOUTS' | translate }}</a>
             <ng-template ngbNavContent>
               <!-- payouts stats -->
               <div class="row">
@@ -1100,7 +1099,7 @@
                       <div class="row row-cols-md-3 row-cols-1">
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Total Transaction(s)</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.TOTAL_TRANSACTIONS' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-swap-line display-6 text-muted"></i>
@@ -1115,7 +1114,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Total Paid</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.TOTAL_PAID' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-3-line display-6 text-muted"></i>
@@ -1130,7 +1129,7 @@
                         </div>
                         <div class="col col-lg border-end">
                           <div class="py-4 px-3">
-                            <h5 class="text-muted text-uppercase fs-13">Total Unpaid</h5>
+                            <h5 class="text-muted text-uppercase fs-13">{{ 'FARMER.TABS.TOTAL_UNPAID' | translate }}</h5>
                             <div class="d-flex align-items-center">
                               <div class="flex-shrink-0">
                                 <i class="ri-wallet-line display-6 text-muted"></i>
@@ -1178,7 +1177,7 @@
               @if (payouttxsCollectionSize == 0) {
                 <div class="col-xxl-12">
                   <div class="alert alert-info alert-border-left" role="alert">
-                    No payout found.
+                    {{ 'FARMER.TABS.NO_PAYOUT' | translate }}
                   </div>
                 </div>
               }
@@ -1187,11 +1186,11 @@
                   <table class="table align-middle table-nowrap table-striped-columns mb-0">
                     <thead class="table-light">
                       <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Transaction</th>
-                        <th scope="col">Confirmed Block</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">{{ 'COMMON.DATE' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.TRANSACTION' | translate }}</th>
+                        <th scope="col">{{ 'FARMER.TABS.CONFIRMED_BLOCK' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.AMOUNT' | translate }}</th>
+                        <th scope="col">{{ 'COMMON.PRICE' | translate }}</th>
                       </tr>
                     </thead>
                     @if ((payouttxs$ | async); as payouttxs;) {
@@ -1206,7 +1205,7 @@
                               <td>{{ payouttx.xch_price?.usd * (payouttx.amount / 1000000000000) | number }} USD</td>
                             }
                             @if (!payouttx.xch_price) {
-                              <td>Unknown</td>
+                              <td>{{ 'COMMON.UNKNOWN' | translate }}</td>
                             }
                           </tr>
                         }
@@ -1224,7 +1223,7 @@
                         <button
                           (click)="csvDownloadPayouts()"
                           class="btn btn-primary download-button">
-                          Download CSV
+                          {{ 'FARMER.TABS.DOWNLOAD_CSV' | translate }}
                         </button>
                       }
                     </div>
@@ -1242,7 +1241,7 @@
 
           <!-- logs -->
           <li [ngbNavItem]="7" (click)="viewLogs()">
-            <a ngbNavLink>Logs</a>
+            <a ngbNavLink>{{ 'FARMER.TABS.LOGS' | translate }}</a>
             <ng-template ngbNavContent>
               <div class="row col-lg-12" style="height: 720px;">
                 <ng-terminal #term [draggable]="false"></ng-terminal>

@@ -212,10 +212,13 @@
     "FEE": "Frais",
     "TEAM": "Équipe",
     "FAQ": "FAQ",
-    "PARTIALS": "Partiels"
+    "PARTIALS": "Partiels",
+    "FARMER": "Fermier"
   },
   "TOPBAR": {
-    "JOIN_POOL": "Rejoindre notre pool"
+    "JOIN_POOL": "Rejoindre notre pool",
+    "LANGUAGE_ALT": "Langue de l'en-tête",
+    "USER_IMAGE_ALT": "Image utilisateur"
   },
   "COMMON": {
     "DATE": "Date",
@@ -260,7 +263,8 @@
     "GIGAHORSE_TITLE": "Cette récompense a été prélevée comme frais par Gigahorse",
     "PROGRESS": "Progression",
     "DAY": "jour",
-    "DAYS": "jours"
+    "DAYS": "jours",
+    "CLOSE": "Fermer"
   },
   "CHART": {
     "BLOCKS": "Bloc(s)",

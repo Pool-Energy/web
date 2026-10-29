@@ -9,6 +9,7 @@ import { NgTerminal } from 'ng-terminal';
 import { DataService } from 'src/app/data.service';
 import { formatChartTooltipDate } from 'src/app/shared/chart-utils';
 import { tick } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -123,6 +124,7 @@ export class FarmerComponent implements AfterViewInit {
     private dataService: DataService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
   ) {
     this.blocks$ = this._blocks$.asObservable();
     this.payoutaddrs$ = this._payoutaddrs$.asObservable();
@@ -131,8 +133,8 @@ export class FarmerComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Farmers', link: '/farmers' },
-      { label: 'Details', active: true }
+      { label: 'BREADCRUMBS.FARMERS', link: '/farmers' },
+      { label: 'BREADCRUMBS.DETAILS', active: true }
     ];
 
     window.onresize = () => this.truncateRequired = window.innerWidth <= 1200;
@@ -176,7 +178,7 @@ export class FarmerComponent implements AfterViewInit {
   humanize(seconds: number) {
     var h = humanizer();
     return h(seconds, {
-      language: "en",
+      language: this.translate.currentLang || 'en',
       units: ["y", "mo", "w", "h", "m", "s"],
       largest: 2
     });
@@ -243,12 +245,12 @@ export class FarmerComponent implements AfterViewInit {
         this.difficultyAndPointsChart = {
         series: [
           {
-            name: "Difficulty",
+            name: this.translate.instant('CHART.DIFFICULTY'),
             type: "line",
             data: Array.from(difficulty, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
           },
           {
-            name: "Points",
+            name: this.translate.instant('CHART.POINTS'),
             type: "column",
             data: Array.from(points, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
           }
@@ -275,13 +277,13 @@ export class FarmerComponent implements AfterViewInit {
         yaxis: [
           {
             title: {
-              text: "Difficulty",
+              text: this.translate.instant('CHART.DIFFICULTY'),
             }
           },
           {
             opposite: true,
             title: {
-              text: "Points",
+              text: this.translate.instant('CHART.POINTS'),
             }
           }
         ],
@@ -390,17 +392,17 @@ export class FarmerComponent implements AfterViewInit {
         const result = [
           this.partialsChart = {
             title: {
-              text: "Partials successful & failed",
+              text: this.translate.instant('CHART.PARTIALS_TITLE'),
               align: "left"
             },
             series: [
               {
-                name: "Successful Partials",
+                name: this.translate.instant('CHART.SUCCESSFUL_PARTIALS'),
                 type: "area",
                 data: Array.from(successes, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
               },
               {
-                name: "Failed Partials",
+                name: this.translate.instant('CHART.FAILED_PARTIALS'),
                 type: "area",
                 data: Array.from(errors, (i) => { return { "x": new Date(i[0] * 1000), "y": i[1] }; }).reverse()
               }
@@ -436,12 +438,12 @@ export class FarmerComponent implements AfterViewInit {
           },
           this.partialsTimetakenChart = {
             title: {
-              text: "Partial Time Taken",
+              text: this.translate.instant('CHART.PARTIAL_TIME_TAKEN'),
               align: "left"
             },
             series: [
               {
-                name: "Partial Time Taken",
+                name: this.translate.instant('CHART.PARTIAL_TIME_TAKEN'),
                 data: Array.from(this.partialsTable, (i) => {
                   return {
                     "x": new Date(i['timestamp'] * 1000),
@@ -638,7 +640,7 @@ export class FarmerComponent implements AfterViewInit {
 
     this.blocksPerDayChart = {
       series: [{
-        name: "Block(s)",
+        name: this.translate.instant('CHART.BLOCKS'),
         data: seriesBlocks.reverse(),
       }],
       legend: {
@@ -757,7 +759,7 @@ export class FarmerComponent implements AfterViewInit {
 
     this.payoutsPerDayChart = {
       series: [{
-        name: "Amount (XCH)",
+        name: this.translate.instant('CHART.AMOUNT_XCH'),
         data: seriesPayouts.reverse(),
       }],
       legend: {
@@ -834,11 +836,11 @@ export class FarmerComponent implements AfterViewInit {
       this.launcherSizeChart = {
         series: [
           {
-            name: "Size (8h average)",
+            name: this.translate.instant('CHART.SIZE_8H'),
             data: launcherSizeSeries8h
           },
           {
-            name: "Size (24h average)",
+            name: this.translate.instant('CHART.SIZE_24H'),
             data: launcherSizeSeries24h
           }
         ],

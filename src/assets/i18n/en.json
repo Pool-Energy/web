@@ -212,10 +212,13 @@
     "FEE": "Fee",
     "TEAM": "Team",
     "FAQ": "FAQ",
-    "PARTIALS": "Partials"
+    "PARTIALS": "Partials",
+    "FARMER": "Farmer"
   },
   "TOPBAR": {
-    "JOIN_POOL": "Join our pool"
+    "JOIN_POOL": "Join our pool",
+    "LANGUAGE_ALT": "Header Language",
+    "USER_IMAGE_ALT": "User image"
   },
   "COMMON": {
     "DATE": "Date",
@@ -260,7 +263,8 @@
     "GIGAHORSE_TITLE": "This reward has been taken as a fee by Gigahorse",
     "PROGRESS": "Progress",
     "DAY": "day",
-    "DAYS": "days"
+    "DAYS": "days",
+    "CLOSE": "Close"
   },
   "CHART": {
     "BLOCKS": "Block(s)",

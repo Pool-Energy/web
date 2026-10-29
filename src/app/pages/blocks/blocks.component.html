@@ -168,13 +168,13 @@
                           <span class="badge bg-warning-subtle text-warning">{{ 'COMMON.UNKNOWN' | translate }}</span>
                         }
                         @if (block.luck < 100) {
-                          <span class="badge bg-success-subtle text-success" nbgToolTip="{{ 'BLOCKS.LUCKY' | translate }}">{{ block.luck }}%</span>
+                          <span class="badge bg-success-subtle text-success" attr.nbgToolTip="{{ 'BLOCKS.LUCKY' | translate }}">{{ block.luck }}%</span>
                         }
                         @if (block.luck >= 100 && block.luck <= 200) {
-                          <span class="badge bg-warning-subtle text-warning" nbgToolTip="{{ 'BLOCKS.AVERAGE' | translate }}">{{ block.luck }}%</span>
+                          <span class="badge bg-warning-subtle text-warning" attr.nbgToolTip="{{ 'BLOCKS.AVERAGE' | translate }}">{{ block.luck }}%</span>
                         }
                         @if (block.luck > 200) {
-                          <span class="badge bg-danger-subtle text-danger" nbgToolTip="{{ 'BLOCKS.UNLUCKY' | translate }}">{{ block.luck }}%</span>
+                          <span class="badge bg-danger-subtle text-danger" attr.nbgToolTip="{{ 'BLOCKS.UNLUCKY' | translate }}">{{ block.luck }}%</span>
                         }
                       </td>
                     </tr>
