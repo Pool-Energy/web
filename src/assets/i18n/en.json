@@ -66,5 +66,77 @@
         "GITHUB": "Github"
       }
     }
+  },
+  "FARMERS": {
+    "STATS": {
+      "DUST_STORM": "Dust storm detected:",
+      "POOL_SPACE": "Pool Space",
+      "ACTIVE_TOTAL_FARMERS": "Active / Total farmers",
+      "EFFORT": "Effort current / average",
+      "ESTIMATE_TO_WIN": "Estimate To Win",
+      "CURRENT_FEE": "Current fee",
+      "XCH_PRICE": "XCH Price",
+      "INFO": "Information",
+      "CHIA_DOC": "Chia Blockchain documentation"
+    },
+    "LEADERBOARD": {
+      "TITLE": "Leaderboard"
+    },
+    "LIST": {
+      "TITLE": "Farmers List",
+      "ALL": "All farmers",
+      "LAUNCHER_ID": "Launcher ID",
+      "SINGLETON_PUZZLE_HASH": "Singleton Puzzle Hash",
+      "POINTS": "Points (24 hours)",
+      "DIFFICULTY": "Difficulty",
+      "UTILIZATION_SPACE": "Utilization Space",
+      "ESTIMATED_SPACE": "Estimated Space"
+    }
+  },
+  "FARMER": {
+    "STATS": {
+      "OFFLINE": "Offline (no partials)",
+      "ONLINE": "Online",
+      "OFFLINE_LEFT": "Offline (left the pool)",
+      "ESTIMATED_SIZE": "Estimated Size",
+      "UTILIZATION_SPACE": "Utilization Space"
+    },
+    "TABS": {
+      "OVERVIEW": "Overview",
+      "JOINED_AT": "Joined At",
+      "POINTS": "Points (PPLNS)",
+      "DIFFICULTY": "Difficulty",
+      "ESTIMATE_TO_WIN": "Estimated Time to Win (ETW)",
+      "CURRENT_EFFORT": "Current Effort",
+      "DIFFICULTY_POINTS": "Difficulty & Points",
+      "PARTIALS": "Partials",
+      "PARTIALS_24H": "Partials (24h)",
+      "POINTS_24H": "Points (24h)",
+      "HARVESTER": "Harvester(s)",
+      "SUCCESSFUL_PARTIALS": "Successful Partials",
+      "FAILED_PARTIALS": "Failed Partials",
+      "PERFORMANCE": "Performance",
+      "SHOW_PARTIALS_FAILED_ONLY": "Show partials failed only",
+      "SHOW_PARTIALS_TOO_LATE_ONLY": "Show partials too late only"
+    }
+  },
+  "PARTIALS": {
+    "OVERVIEW": {
+      "TITLE": "Partials overview (all farmers)"
+    },
+    "BUTTONS": {
+      "TOTAL_RECEIVED": "partials",
+      "TOTAL_BLOCKS": "blocks"
+    },
+    "LIST": {
+      "TIME": "Time",
+      "SIGNAGE_POINT": "Signage point",
+      "TO_BE_VALIDATED": "To be validated",
+      "VALID": "Valid",
+      "STALE": "Stale",
+      "DUPLICATE": "Duplicate",
+      "INVALID": "Invalid",
+      "BLOCKS_FOUND": "Blocks found"
+    }
   }
 }
