@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class LanguageService {
 
-  public languages: string[] = ['en'];
+  public languages: string[] = ['en', 'fr'];
 
   constructor(
     public translate: TranslateService,
@@ -20,9 +20,10 @@ export class LanguageService {
       browserLang = this.cookieService.get('lang');
     }
     else {
-      browserLang = translate.getBrowserLang();
+      browserLang = this.translate.getBrowserLang();
     }
-    translate.use(browserLang.match(/en/) ? browserLang : 'en');
+    const baseLang: string = (browserLang || 'en').toString().split('-')[0].toLowerCase();
+    this.translate.use(this.languages.includes(baseLang) ? baseLang : 'en');
   }
 
   public setLanguage(lang: any) {

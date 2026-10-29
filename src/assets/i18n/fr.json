@@ -1,0 +1,70 @@
+{
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menu"
+    },
+    "DASHBOARD": {
+      "TEXT": "Tableaux de bord"
+    },
+    "FARMERS": {
+      "TEXT": "Fermiers"
+    },
+    "BLOCKS": {
+      "TEXT": "Blocs"
+    },
+    "REWARDS": {
+      "TEXT": "Récompenses"
+    },
+    "PARTIALS": {
+      "TEXT": "Partiels"
+    },
+    "CHIA": {
+      "TEXT": "Chia",
+      "LIST": {
+        "BLOCKCHAIN_STATE": "État du blockchain",
+        "ECOSYSTEM_ACT": "Activité de l'écosystème",
+        "MEMPOOL_TXS_FEES": "Mempool, transactions et frais",
+        "NAKAMOTO_COEF": "Coefficient de Nakamoto",
+        "PEER_INFO": "Infos des pairs"
+      }
+    },
+    "POOL": {
+      "TEXT": "Pool",
+      "LIST": {
+        "STATUS": "Statut",
+        "STATS": "Stats",
+        "LOGS": "Journaux"
+      }
+    },
+    "API": {
+      "TEXT": "API",
+      "LIST": {
+        "SWAGGER": "Swagger",
+        "REDOC": "Redoc",
+        "BROWSER": "Navigateur"
+      }
+    },
+    "INFO": {
+      "TEXT": "Info",
+      "LIST": {
+        "FAQ": "FAQ",
+        "FEE": "Frais",
+        "TEAM": "Équipe",
+        "GITHUB": "GitHub"
+      }
+    },
+    "CONTACT": {
+      "TEXT": "Contact",
+      "LIST": {
+        "TELEGRAM": "Telegram",
+        "BLUESKY": "Bluesky",
+        "XING": "X",
+        "REDDIT": "Reddit",
+        "YOUTUBE": "Youtube",
+        "FACEBOOK": "Facebook",
+        "DISCORD": "Discord",
+        "GITHUB": "GitHub"
+      }
+    }
+  }
+}
