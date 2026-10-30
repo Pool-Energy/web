@@ -6,7 +6,7 @@ import { NgxFilesizeModule } from 'ngx-filesize';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbAccordionModule, NgbNavModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTerminalModule } from 'ng-terminal';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { MaxLengthPipe } from './pipes/maxlength.pipe';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -58,7 +58,7 @@ import { JoinComponent } from './join/join.component';
     NgbNavModule,
     NgbCollapseModule,
     NgTerminalModule,
-    TranslateModule
+    TranslatePipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

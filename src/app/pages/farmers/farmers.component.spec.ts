@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxFilesizeModule } from 'ngx-filesize';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { FarmersComponent } from './farmers.component';
 
@@ -19,8 +19,8 @@ describe('FarmersComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         NgxFilesizeModule,
-        TranslateModule.forRoot({ defaultLanguage: 'en' }),
       ],
+      providers: [provideTranslateService()],
     })
     .compileComponents();
     
