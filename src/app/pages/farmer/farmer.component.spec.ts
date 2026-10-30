@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { FarmerComponent } from './farmer.component';
 
@@ -21,8 +21,8 @@ describe('FarmerComponent', () => {
         RouterTestingModule,
         NgxFilesizeModule,
         NgbNavModule,
-        TranslateModule.forRoot({ defaultLanguage: 'en' }),
       ],
+      providers: [provideTranslateService()],
     })
     .compileComponents();
     

@@ -136,9 +136,11 @@ export class FarmersComponent {
   // common
   humanize(seconds: number) {
     var h = humanizer();
+    // currentLang is a signal since ngx-translate v18, so read its value once
+    const lang = this.translate.currentLang() || 'en';
     return h(seconds, {
       // humanize-duration expects zh_CN for Chinese
-      language: this.translate.currentLang === 'zh' ? 'zh_CN' : (this.translate.currentLang || 'en'),
+      language: lang === 'zh' ? 'zh_CN' : lang,
       units: ["h", "m"],
       largest: 2
     });

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { InfoTeamComponent } from './info-team.component';
 
@@ -17,8 +17,8 @@ describe('InfoTeamComponent', () => {
         PagesModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        TranslateModule.forRoot({ defaultLanguage: 'en' }),
       ],
+      providers: [provideTranslateService()],
     })
     .compileComponents();
     
