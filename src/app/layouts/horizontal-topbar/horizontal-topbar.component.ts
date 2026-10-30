@@ -1,7 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
@@ -19,8 +18,7 @@ export class HorizontalTopbarComponent implements OnInit {
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, public translate: TranslateService) {
-    translate.setDefaultLang('en');
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {

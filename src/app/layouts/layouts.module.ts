@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { LanguageService } from '../core/services/language.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { LayoutComponent } from './layout.component';
 import { TopbarComponent } from './topbar/topbar.component';
@@ -24,7 +24,7 @@ import { HorizontalTopbarComponent } from './horizontal-topbar/horizontal-topbar
     CommonModule,
     RouterModule,
     NgbDropdownModule,
-    TranslateModule
+    TranslatePipe
   ],
   providers: [LanguageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
