@@ -2,7 +2,7 @@
 # docker build environment #
 ############################
 
-FROM node:26.12.1-bookworm AS build
+FROM node:26.13.0-bookworm AS build
 
 WORKDIR /build
 
