@@ -15,7 +15,7 @@ RUN npm ci && \
 # docker final environment #
 ############################
 
-FROM caddy:2.11.7-alpine
+FROM caddy:2.11.8-alpine
 
 EXPOSE 8080
 
